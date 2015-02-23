@@ -2,6 +2,7 @@
 #define __MAINMENU_SCENE_H__
 
 #include "cocos2d.h"
+#include "GameScene.h"
 
 class MainMenu : public cocos2d::Layer
 {
@@ -14,6 +15,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(MainMenu);
+    
+    void GoToGameScene(cocos2d::Ref *pSender);
 };
 
 #endif // __MAINMENU_SCENE_H__
