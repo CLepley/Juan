@@ -159,18 +159,18 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         CCLOG("origian ----- %f,%f",origin.x,origin.y);
         CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
         
-            if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width) {
+            if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width && bgTopLeft.x < origin.x - visibleSize.width && bgBottomRight.x > visibleSize.width*2) {
                 // middle of screen
                 bg -> setPosition(newLocation.x, newLocation.y);
             }
-            else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width)){
+            else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width &&  bgBottomRight.x > visibleSize.width*2)){
                 // bottom and top of screen
                 bg-> setPositionX(newLocation.x);
             }
-            else if ((bgTopLeft.x > origin.x - visibleSize.width || bgTopRight.x < origin.x) && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
-                // left and right of screen
+            else if ((bgTopLeft.x > origin.x - visibleSize.width || bgBottomRight.x < visibleSize.width*2)  && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
                 bg-> setPositionY(newLocation.y);
             }
+        
        
     }
     
