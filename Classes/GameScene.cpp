@@ -157,8 +157,13 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         
         CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
         CCLOG("screen top left ----- %f,%f",origin.x,origin.y);
+        CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
             
-            
+        
+        if (bgBottomRight.x < 1280 || bgBottomRight.x > 1920) {
+            bg->setPosition(Point(bg -> getPosition()));
+        } else {
+       
             if (bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)){
                 // bottom of screen
                 CCLOG("bottom of screen");
@@ -177,6 +182,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             else{
                 bg -> setPosition(newLocation.x, newLocation.y);
             }
+       }
     }
     
     
