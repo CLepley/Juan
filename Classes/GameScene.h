@@ -6,6 +6,11 @@
 class GameScreen : public cocos2d::Layer
 {
 public:
+    // setting the Physics world
+    cocos2d::PhysicsWorld* sceneWorld;
+    void setPhysicsWorld( cocos2d::PhysicsWorld* world)
+    { this->sceneWorld = world; }; // c++ inline
+
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
 
@@ -14,6 +19,15 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScreen);
+    
+    void initPhysicsSprites();
+    void update(float delta);
+    void setUpPhysicsScreenBody();
+    
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+
 };
 
 #endif // __Game_SCENE_H__
