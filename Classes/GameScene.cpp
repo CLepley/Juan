@@ -155,34 +155,23 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             Point bgBottomLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
             Point bgBottomRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
         
-        CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
-        CCLOG("screen top left ----- %f,%f",origin.x,origin.y);
+        //CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
+        CCLOG("origian ----- %f,%f",origin.x,origin.y);
         CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
-            
         
-        if (bgBottomRight.x < 1280 || bgBottomRight.x > 1920) {
-            bg->setPosition(Point(bg -> getPosition()));
-        } else {
-       
-            if (bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)){
-                // bottom of screen
-                CCLOG("bottom of screen");
-                bg-> setPositionX(newLocation.x);
-               // bg -> setPosition(newLocation.x + origin.x, newLocation.y + origin.y);
-            }
-            else if (0){
-                // top of screem
-                CCLOG("top of screen");
-                bg-> setPositionX(newLocation.x);
-            }
-            else if (bgTopLeft.x > origin.x - visibleSize.width){
-                // left of screen
-                bg-> setPositionY(newLocation.y);
-            }
-            else{
+            if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width) {
+                // middle of screen
                 bg -> setPosition(newLocation.x, newLocation.y);
             }
-       }
+            else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width)){
+                // bottom and top of screen
+                bg-> setPositionX(newLocation.x);
+            }
+            else if ((bgTopLeft.x > origin.x - visibleSize.width || bgTopRight.x < origin.x) && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
+                // left and right of screen
+                bg-> setPositionY(newLocation.y);
+            }
+       
     }
     
     
