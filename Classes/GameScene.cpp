@@ -82,6 +82,40 @@ void GameScreen::initPhysicsSprites(){
     bg -> setScale(0.5);
     this -> addChild(bg);
     
+    // Juan
+    juan = Sprite::create("juan.png");
+    juan -> setPosition(origin + Point(visibleSize.width/2 + visibleSize.width/4,
+                                       juan -> getContentSize().height/2));
+    auto juanPhysicsBody = PhysicsBody::createBox(Size(juan->getContentSize().width, juan->getContentSize().height));
+    //this -> addChild(juan);
+    
+    // Inventory
+    inventory = Sprite::create("Inventory.png");
+    inventory -> setPosition(origin + Point(inventory->getContentSize().width/2,
+                                            visibleSize.height - inventory->getContentSize().height));
+    this -> addChild(inventory);
+    
+    // Wooden square
+    wood_square = Sprite::create("wood_block_square.png");
+    wood_square -> setPosition(Point(inventory->getPositionX(),
+                                     inventory->getPositionY() - inventory->getContentSize().height/2 - wood_square->getContentSize().height/2));
+    this -> addChild(wood_square);
+    
+    // Wooden short block
+    wood_block_short = Sprite::create("wood_block_short.png");
+    wood_block_short -> setPosition(Point(inventory->getPositionX(),
+                                          wood_square->getPositionY() - wood_square->getContentSize().height));
+    this -> addChild(wood_block_short);
+    
+    
+    // Wooden long block
+    wood_block_long = Sprite::create("wood_block_long.png");
+    wood_block_long -> setPosition(Point(inventory->getPositionX(),
+                                         wood_block_short->getPositionY() - wood_block_short->getContentSize().height*2));
+    this->addChild(wood_block_long);
+    
+    
+    
     // touch listener
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener -> setSwallowTouches(true);
@@ -94,6 +128,8 @@ void GameScreen::initPhysicsSprites(){
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
     // Add listener for ball and box
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, bg);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), wood_square);
+    
     
     
     // cannonBall
@@ -126,8 +162,28 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
+    // Create bounding boxes for inventory items
+    cocos2d::Rect wood_square_box = wood_square -> boundingBox();
+    cocos2d::Rect wood_block_long_box = wood_block_long -> boundingBox();
+    cocos2d::Rect wood_block_short_box = wood_block_short -> boundingBox();
+    
+    
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
-    if ( target == bg )
+    
+    
+    if (target == wood_square) {
+        if (rect.containsPoint(locationInNode)) {
+            newSquare = Sprite::create("wood_block_square.png");
+            newSquare -> setPosition(Point(touch->getLocation()));
+            this -> addChild(newSquare);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+   
+    else if ( target == bg )
     {
         if (rect.containsPoint(locationInNode))
         {
@@ -169,8 +225,16 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
+    cocos2d::Point touchLoc = touch -> getLocation();
+    cocos2d::Point delta = touch->getDelta();
+    
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
-    if ( target == bg){
+    if (target == wood_square) {
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        newSquare->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if ( target == bg){
             Point currentLocation;
             Point oldLocation;
             Point newLocation;
