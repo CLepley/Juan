@@ -17,7 +17,7 @@ Sprite *wood_block_long;
 Sprite *wood_block_short;
 Sprite *newSquare;
 // holds all spirtes used
-Sprite *buldingList[50];
+Sprite *buildingList[50];
 // tracks number of sprites used
 int numBlocks = 0;
 
@@ -191,10 +191,10 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         if (rect.containsPoint(locationInNode)) {
             // creates then adds new block to array of sprites to hold all building objects used
             if (numBlocks < 50){
-                buldingList[numBlocks] = Sprite::create("wood_block_square.png");
-                buldingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buldingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buldingList[numBlocks]);
+                buildingList[numBlocks] = Sprite::create("wood_block_square.png");
+                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+                buildingList[numBlocks]-> setTag(numBlocks);
+                this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
             //newSquare = Sprite::create("wood_block_square.png");
@@ -210,10 +210,10 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         if (rect.containsPoint(locationInNode)) {
             // creates then adds new block to array of sprites to hold all building objects used
             if (numBlocks < 50){
-                buldingList[numBlocks] = Sprite::create("wood_block_short.png");
-                buldingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buldingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buldingList[numBlocks]);
+                buildingList[numBlocks] = Sprite::create("wood_block_short.png");
+                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+                buildingList[numBlocks]-> setTag(numBlocks);
+                this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
             //newSquare = Sprite::create("wood_block_square.png");
@@ -229,10 +229,10 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         if (rect.containsPoint(locationInNode)) {
             // creates then adds new block to array of sprites to hold all building objects used
             if (numBlocks < 50){
-                buldingList[numBlocks] = Sprite::create("wood_block_long.png");
-                buldingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buldingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buldingList[numBlocks]);
+                buildingList[numBlocks] = Sprite::create("wood_block_long.png");
+                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+                buildingList[numBlocks]-> setTag(numBlocks);
+                this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
             //newSquare = Sprite::create("wood_block_square.png");
@@ -293,17 +293,17 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     if (target == wood_square) {
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
-        buldingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if (target == wood_block_short) {
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
-        buldingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if (target == wood_block_long) {
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
-        buldingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if ( target == bg){
             Point currentLocation;
@@ -348,10 +348,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
-                    tempCurrentPoint = buldingList[i]-> getPosition();
+                    tempCurrentPoint = buildingList[i]-> getPosition();
                     tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                     tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                    buldingList[i]-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                    buildingList[i]-> setPosition(tempNewPoint.x,tempNewPoint.y);
                 }
             }
             else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width &&  bgBottomRight.x > visibleSize.width*2)){
@@ -370,10 +370,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 cannonBall-> setPositionX(tempNewPoint.x);
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
-                    tempCurrentPoint = buldingList[i]-> getPosition();
+                    tempCurrentPoint = buildingList[i]-> getPosition();
                     tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                     tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                    buldingList[i]-> setPositionX(tempNewPoint.x);
+                    buildingList[i]-> setPositionX(tempNewPoint.x);
                 }
             }
             else if ((bgTopLeft.x > origin.x - visibleSize.width || bgBottomRight.x < visibleSize.width*2)  && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
@@ -392,10 +392,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 cannonBall-> setPositionY(tempNewPoint.y);
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
-                    tempCurrentPoint = buldingList[i]-> getPosition();
+                    tempCurrentPoint = buildingList[i]-> getPosition();
                     tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                     tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                    buldingList[i]-> setPositionY(tempNewPoint.y);
+                    buildingList[i]-> setPositionY(tempNewPoint.y);
                 }
             }
     }
@@ -415,7 +415,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     if (target == wood_square || target == wood_block_short || target == wood_block_long){
         for (int i = 0; i < numBlocks - 1 ; i++){
-            if (buldingList[numBlocks-1]-> getBoundingBox().intersectsRect(buldingList[i]->getBoundingBox())){
+            if (buildingList[numBlocks-1]-> getBoundingBox().intersectsRect(buildingList[i]->getBoundingBox())){
                 // blocks are touching ileagle move
                 // remove the block from scene and list
                 // TODO make it slide back into place
@@ -425,12 +425,12 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             }
         }
         if (isTouching){
-            this-> removeChild(buldingList[numBlocks-1]);
+            this-> removeChild(buildingList[numBlocks-1]);
             numBlocks--;
         }
         else {
-            auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buldingList[numBlocks-1]-> getContentSize().width,buldingList[numBlocks-1]-> getContentSize().height));
-            buldingList[numBlocks-1] -> setPhysicsBody(newBlockPhysicisBody);
+            auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]-> getContentSize().width,buildingList[numBlocks-1]-> getContentSize().height));
+            buildingList[numBlocks-1] -> setPhysicsBody(newBlockPhysicisBody);
         }
     }
 }
