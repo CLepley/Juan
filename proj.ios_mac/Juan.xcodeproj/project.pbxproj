@@ -61,6 +61,11 @@
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
+		761DFE591A9EA33D00A1C4AC /* wood_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE561A9EA33D00A1C4AC /* wood_block_long.png */; };
+		761DFE5A1A9EA33D00A1C4AC /* wood_block_short.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE571A9EA33D00A1C4AC /* wood_block_short.png */; };
+		761DFE5D1A9EA5E200A1C4AC /* juan.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE5C1A9EA5E200A1C4AC /* juan.png */; };
+		761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE621A9EB42200A1C4AC /* Inventory.png */; };
+		761DFE651A9EB60100A1C4AC /* wood_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE641A9EB60100A1C4AC /* wood_block_square.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -157,6 +162,11 @@
 		521A8E6219F0C34300D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		761DFE561A9EA33D00A1C4AC /* wood_block_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_long.png; sourceTree = "<group>"; };
+		761DFE571A9EA33D00A1C4AC /* wood_block_short.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_short.png; sourceTree = "<group>"; };
+		761DFE5C1A9EA5E200A1C4AC /* juan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = juan.png; sourceTree = "<group>"; };
+		761DFE621A9EB42200A1C4AC /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
+		761DFE641A9EB60100A1C4AC /* wood_block_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_square.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -211,6 +221,11 @@
 			children = (
 				071AC7EF1A9D079A00084BE9 /* testbg.jpg */,
 				0760CDD01A9BC6F2007B779A /* play.png */,
+				761DFE561A9EA33D00A1C4AC /* wood_block_long.png */,
+				761DFE621A9EB42200A1C4AC /* Inventory.png */,
+				761DFE5C1A9EA5E200A1C4AC /* juan.png */,
+				761DFE641A9EB60100A1C4AC /* wood_block_square.png */,
+				761DFE571A9EA33D00A1C4AC /* wood_block_short.png */,
 				0735DBC51A9BB92C004A4B64 /* juanTitle.png */,
 				0773EB201A6974B400ED19BD /* fonts */,
 				0773EB221A6974B400ED19BD /* ipad */,
@@ -466,7 +481,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = MDDB52YB8L;
+						DevelopmentTeam = LNA6V76NN7;
 					};
 				};
 			};
@@ -531,8 +546,10 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				071AC7F01A9D079A00084BE9 /* testbg.jpg in Resources */,
 				0760CDD11A9BC6F2007B779A /* play.png in Resources */,
+				761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
+				761DFE5A1A9EA33D00A1C4AC /* wood_block_short.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */,
 				0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */,
@@ -542,8 +559,11 @@
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				761DFE591A9EA33D00A1C4AC /* wood_block_long.png in Resources */,
+				761DFE651A9EB60100A1C4AC /* wood_block_square.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
+				761DFE5D1A9EA5E200A1C4AC /* juan.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
