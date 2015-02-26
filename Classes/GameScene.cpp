@@ -6,10 +6,6 @@ Vec2 initalLocation;
 Point origin;
 Size visibleSize;
 Sprite *bg;
-
-
-
-
 Sprite *cannon;
 Sprite *cannonBall;
 
