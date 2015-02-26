@@ -6,13 +6,14 @@ Vec2 initalLocation;
 Point origin;
 Size visibleSize;
 Sprite *bg;
-
+Sprite *cannon;
+Sprite *cannonBall;
 
 Scene* GameScreen::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
-    //scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = GameScreen::create();
 
@@ -66,7 +67,7 @@ void GameScreen::setUpPhysicsScreenBody()
     auto edgeNode = Node::create();
     edgeNode -> setPosition( origin + Point ( visibleSize.width /2 ,
                                              visibleSize.height/2));
-    edgeNode -> setPhysicsBody(edgeBody);
+    //edgeNode -> setPhysicsBody(edgeBody);
     this -> addChild(edgeNode);
 }
 void GameScreen::initPhysicsSprites(){
@@ -74,10 +75,11 @@ void GameScreen::initPhysicsSprites(){
     // background
     bg = Sprite::create("testbg.jpg");
     bg ->setPosition(origin + Point(visibleSize.width/2, visibleSize.height/2));
-    auto backgroundPhysicisBody = PhysicsBody::createBox(Size(bg-> getContentSize().width,bg-> getContentSize().height));
-    //bg -> setPhysicsBody(backgroundPhysicisBody); // attach
+    auto backgroundPhysicisBody = PhysicsBody::createBox(Size(bg-> getContentSize().width,bg-> getContentSize().height/10));
+    backgroundPhysicisBody-> setDynamic(false);
+    backgroundPhysicisBody-> setPositionOffset(Vec2(0,-297));
+    bg -> setPhysicsBody(backgroundPhysicisBody); // attach
     bg -> setScale(0.5);
-
     this -> addChild(bg);
     
     // touch listener
@@ -92,6 +94,25 @@ void GameScreen::initPhysicsSprites(){
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
     // Add listener for ball and box
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, bg);
+    
+    
+    // cannonBall
+    cannonBall = Sprite::create("cannonball.png");
+    cannonBall-> setPosition(origin + Point(30,-50));
+    cannonBall-> setScale(0.01);
+    cannonBall-> setFlippedX(true);
+    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250);
+    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
+    this-> addChild(cannonBall);
+    
+    // cannon
+    cannon = Sprite::create("cannon.png");
+    cannon-> setPosition(origin + Point(20,-50));
+    cannon-> setScale(0.2);
+    cannon-> setFlippedX(true);
+    this-> addChild(cannon);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener ->clone(), cannon);
+
     
 }
 
@@ -110,6 +131,19 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     {
         if (rect.containsPoint(locationInNode))
         {
+            return true; // found it, so swallow it
+            // to allow the ball AND box to be simulataneously touched, do not swallow and return false
+        }
+        else
+        {
+            return false; // let the next thing on the list check it. do not swallow
+        }
+    }
+    if ( target == cannon )
+    {
+        if (rect.containsPoint(locationInNode))
+        {
+            cannonBall->getPhysicsBody()->setVelocity(Vec2(150,150));
             return true; // found it, so swallow it
             // to allow the ball AND box to be simulataneously touched, do not swallow and return false
         }
@@ -140,7 +174,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             Point currentLocation;
             Point oldLocation;
             Point newLocation;
-            
+        
+            Point tempCurrentPoint;
+            Point tempNewPoint;
+        
             
             initalLocation = bg -> getPosition();
             currentLocation = touch -> getLocation();
@@ -149,26 +186,48 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             newLocation.x = initalLocation.x + currentLocation.x - oldLocation.x;
             newLocation.y = initalLocation.y + currentLocation.y - oldLocation.y;
-            
+            tempCurrentPoint = cannon-> getPosition();
+            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+        
             Point bgTopLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
             Point bgTopRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
             Point bgBottomLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
             Point bgBottomRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
         
         //CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
-        CCLOG("origian ----- %f,%f",origin.x,origin.y);
-        CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
+        //CCLOG("origian ----- %f,%f",origin.x,origin.y);
+        //CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
         
             if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width && bgTopLeft.x < origin.x - visibleSize.width && bgBottomRight.x > visibleSize.width*2) {
                 // middle of screen
                 bg -> setPosition(newLocation.x, newLocation.y);
+                // move other sprites
+                cannon-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
             }
             else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width &&  bgBottomRight.x > visibleSize.width*2)){
                 // bottom and top of screen
                 bg-> setPositionX(newLocation.x);
+                // move other sprites
+                cannon-> setPositionX(tempNewPoint.x);
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPositionX(tempNewPoint.x);
             }
             else if ((bgTopLeft.x > origin.x - visibleSize.width || bgBottomRight.x < visibleSize.width*2)  && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
+                // left and right
                 bg-> setPositionY(newLocation.y);
+                // move other sprites
+                cannon-> setPositionY(tempNewPoint.y);
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPositionY(tempNewPoint.y);
             }
         
        
