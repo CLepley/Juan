@@ -177,16 +177,9 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     Point locationInNode = target->convertToNodeSpace(touch->getLocation());
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
-    
-    // Create bounding boxes for inventory items
-    cocos2d::Rect wood_square_box = wood_square -> boundingBox();
-    cocos2d::Rect wood_block_long_box = wood_block_long -> boundingBox();
-    cocos2d::Rect wood_block_short_box = wood_block_short -> boundingBox();
-    
+
     
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
-    
-    
     if (target == wood_square) {
         if (rect.containsPoint(locationInNode)) {
             // creates then adds new block to array of sprites to hold all building objects used
@@ -194,6 +187,20 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
                 buildingList[numBlocks] = Sprite::create("wood_block_square.png");
                 buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
                 buildingList[numBlocks]-> setTag(numBlocks);
+                
+                // create a listener for a touch
+                auto touchListener = EventListenerTouchOneByOne::create();
+                touchListener -> setSwallowTouches(true);
+                // setup the callback
+                touchListener -> onTouchMoved =
+                CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+                touchListener -> onTouchBegan =
+                CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+                touchListener -> onTouchEnded =
+                CC_CALLBACK_2(GameScreen::onTouchEnded, this);
+                // Add listener
+                _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, buildingList[numBlocks]);
+                
                 this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
@@ -213,6 +220,19 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
                 buildingList[numBlocks] = Sprite::create("wood_block_short.png");
                 buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
                 buildingList[numBlocks]-> setTag(numBlocks);
+                // create a listener for a touch
+                auto touchListener = EventListenerTouchOneByOne::create();
+                touchListener -> setSwallowTouches(true);
+                // setup the callback
+                touchListener -> onTouchMoved =
+                CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+                touchListener -> onTouchBegan =
+                CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+                touchListener -> onTouchEnded =
+                CC_CALLBACK_2(GameScreen::onTouchEnded, this);
+                // Add listener
+                _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, buildingList[numBlocks]);
+
                 this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
@@ -232,6 +252,20 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
                 buildingList[numBlocks] = Sprite::create("wood_block_long.png");
                 buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
                 buildingList[numBlocks]-> setTag(numBlocks);
+                
+                // create a listener for a touch
+                auto touchListener = EventListenerTouchOneByOne::create();
+                touchListener -> setSwallowTouches(true);
+                // setup the callback
+                touchListener -> onTouchMoved =
+                CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+                touchListener -> onTouchBegan =
+                CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+                touchListener -> onTouchEnded =
+                CC_CALLBACK_2(GameScreen::onTouchEnded, this);
+                // Add listener
+                _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, buildingList[numBlocks]);
+
                 this-> addChild(buildingList[numBlocks]);
                 numBlocks++;
             }
@@ -269,11 +303,21 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
+    
     else
     {
-        // some other object is being tested
-        return true; // swallow
+        // check if any of the items in buildingList are selected
+        for (int i = 0; i < numBlocks; i++) {
+            if (target == buildingList[i]) {
+                if (rect.containsPoint(locationInNode)) {
+                    return true;
+                }
+            }
+        }
+        return false; 
     }
+    
+
 }
 
 void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
@@ -288,6 +332,16 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     
     cocos2d::Point touchLoc = touch -> getLocation();
     cocos2d::Point delta = touch->getDelta();
+    
+    // check if any of the items in buildingList are selected
+    for (int i = 0; i < numBlocks; i++) {
+        if (target == buildingList[i]) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[i]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+            break;
+        }
+    }
     
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     if (target == wood_square) {
@@ -399,6 +453,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 }
             }
     }
+    
 }
 
 void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
