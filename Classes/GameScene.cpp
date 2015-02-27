@@ -33,7 +33,7 @@ Scene* GameScreen::createScene()
     auto layer = GameScreen::create();
 
     // turn gravity on and apply it to the scene
-    scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
+    scene->getPhysicsWorld() -> setGravity(Vect(0, -150.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
     
     // add layer as a child to scene

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0711F30D1AA00EF6001A97E0 /* BuildingObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */; };
+		0711F30F1AA011FC001A97E0 /* cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0711F30E1AA011FC001A97E0 /* cannon.png */; };
 		071AC7F01A9D079A00084BE9 /* testbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 071AC7EF1A9D079A00084BE9 /* testbg.jpg */; };
 		0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0735DBC51A9BB92C004A4B64 /* juanTitle.png */; };
 		075A17951A75F22F008195CB /* ducky.png in Resources */ = {isa = PBXBuildFile; fileRef = 075A17941A75F22F008195CB /* ducky.png */; };
@@ -108,6 +110,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuildingObject.cpp; sourceTree = "<group>"; };
+		0711F30C1AA00EF6001A97E0 /* BuildingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingObject.h; sourceTree = "<group>"; };
+		0711F30E1AA011FC001A97E0 /* cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cannon.png; sourceTree = "<group>"; };
 		071AC7EF1A9D079A00084BE9 /* testbg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testbg.jpg; sourceTree = "<group>"; };
 		0735DBC51A9BB92C004A4B64 /* juanTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = juanTitle.png; sourceTree = "<group>"; };
 		075A17941A75F22F008195CB /* ducky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ducky.png; sourceTree = "<group>"; };
@@ -221,6 +226,7 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0711F30E1AA011FC001A97E0 /* cannon.png */,
 				076C20051A9EC071005B6F30 /* cannonball.png */,
 				071AC7EF1A9D079A00084BE9 /* testbg.jpg */,
 				0760CDD01A9BC6F2007B779A /* play.png */,
@@ -384,6 +390,8 @@
 				46880B8619C43A87006E1F66 /* MainMenuScene.cpp */,
 				07B930651A67784D009C3642 /* GameScene.h */,
 				07B930641A67784D009C3642 /* GameScene.cpp */,
+				0711F30C1AA00EF6001A97E0 /* BuildingObject.h */,
+				0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -554,6 +562,7 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				761DFE5A1A9EA33D00A1C4AC /* wood_block_short.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				0711F30F1AA011FC001A97E0 /* cannon.png in Resources */,
 				0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */,
 				076C20061A9EC071005B6F30 /* cannonball.png in Resources */,
 				0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */,
@@ -589,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0711F30D1AA00EF6001A97E0 /* BuildingObject.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* MainMenuScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
