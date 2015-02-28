@@ -18,8 +18,8 @@ Scene* MainMenu::createScene()
     return scene;
 }
 void MainMenu::GoToGameScene(cocos2d::Ref *pSender){
-    auto scene = GameScreen::createScene();
-    Director::getInstance()->pushScene(TransitionFade::create(1.0, scene));
+    //auto scene = GameScreen::createScene();
+    //Director::getInstance()->pushScene(TransitionFade::create(1.0, scene));
 }
 
 // on "init" you need to initialize your instance
@@ -37,11 +37,11 @@ bool MainMenu::init()
     auto menuTitle =
     MenuItemImage::create("juanTitle.png",
                           "juanTitle.png");
-    auto playItem = MenuItemImage::create("play.png", "play.png", CC_CALLBACK_1(MainMenu::GoToGameScene, this));
+    //auto playItem = MenuItemImage::create("play.png", "play.png", CC_CALLBACK_1(MainMenu::GoToGameScene, this));
     
-    auto menu = Menu::create(menuTitle, playItem, NULL);
-    menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
-    this->addChild(menu);
+    //auto menu = Menu::create(menuTitle, playItem, NULL);
+    //menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
+    //this->addChild(menu);
     
     return true;
 }

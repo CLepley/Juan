@@ -2,6 +2,7 @@
 #define __Game_SCENE_H__
 
 #include "cocos2d.h"
+#include "BuildingObject.h"
 
 class GameScreen : public cocos2d::Layer
 {
@@ -27,6 +28,8 @@ public:
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    bool physicsOnContactBegin(const cocos2d::PhysicsContact &contact);
+    void doSomething();
 
 };
 
