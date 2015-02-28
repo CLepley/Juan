@@ -312,11 +312,21 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
+    
     else
     {
-        // some other object is being tested
-        return true; // swallow
+        // check if any of the items in buildingList are selected
+        for (int i = 0; i < numBlocks; i++) {
+            if (target == buildingList[i]) {
+                if (rect.containsPoint(locationInNode)) {
+                    return true;
+                }
+            }
+        }
+        return false; 
     }
+    
+
 }
 
 void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
@@ -331,6 +341,16 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     
     cocos2d::Point touchLoc = touch -> getLocation();
     cocos2d::Point delta = touch->getDelta();
+    
+    // check if any of the items in buildingList are selected
+    for (int i = 0; i < numBlocks; i++) {
+        if (target == buildingList[i]) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[i]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+            break;
+        }
+    }
     
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     
@@ -447,6 +467,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             }
         }
     }
+    
 }
 
 void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
