@@ -76,8 +76,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
         resDirOrders.push_back("iphone");
         
         glview->setDesignResolutionSize(640, 960, ResolutionPolicy::NO_BORDER);
-    }
-    else { //non retina iphone and android devices
+    } else if (750 == screenSize.width || 1334 == screenSize.height) {
+        //Iphone 6
+        resDirOrders.push_back("iphonehd");
+        CCLOG("iphone 6");
+        
+        glview -> setDesignResolutionSize(750, 1334, ResolutionPolicy::NO_BORDER);
+    } else { //non retina iphone and android devices
         if ( 1080 < screenSize.width) {// android devices that have a high resolution
             resDirOrders.push_back("iphonehd");
             resDirOrders.push_back("iphone");
@@ -98,7 +103,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     //auto scene = MainMenu::createScene();
     auto scene = GameScreen::createScene();
-
+    //auto scene = TestScreen::createScene();
     // run
     director->runWithScene(scene);
 

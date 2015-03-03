@@ -2,6 +2,7 @@
 #define __Game_SCENE_H__
 
 #include "cocos2d.h"
+#include "BuildingObject.h"
 
 class GameScreen : public cocos2d::Layer
 {
