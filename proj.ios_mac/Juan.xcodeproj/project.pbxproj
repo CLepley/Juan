@@ -25,10 +25,7 @@
 		07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190B91AA5DAE100EAD6A1 /* zoom.png */; };
 		07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07E190BB1AA5DB7B00EAD6A1 /* circle_body.plist */; };
 		07E190BE1AA5DB7B00EAD6A1 /* triangle_body.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07E190BC1AA5DB7B00EAD6A1 /* triangle_body.plist */; };
-		07E190D21AA5DBC500EAD6A1 /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190BF1AA5DBC500EAD6A1 /* down_arrow.png */; };
-		07E190D31AA5DBC500EAD6A1 /* glass_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C01AA5DBC500EAD6A1 /* glass_block_long.png */; };
 		07E190D41AA5DBC500EAD6A1 /* glass_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C11AA5DBC500EAD6A1 /* glass_block_square.png */; };
-		07E190D51AA5DBC500EAD6A1 /* glass_block_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C21AA5DBC500EAD6A1 /* glass_block_triangle.png */; };
 		07E190D61AA5DBC500EAD6A1 /* inv_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C31AA5DBC500EAD6A1 /* inv_bg.png */; };
 		07E190D71AA5DBC500EAD6A1 /* inv_glass_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C41AA5DBC500EAD6A1 /* inv_glass_circle.png */; };
 		07E190D81AA5DBC500EAD6A1 /* inv_glass_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C51AA5DBC500EAD6A1 /* inv_glass_long.png */; };
@@ -41,7 +38,6 @@
 		07E190DF1AA5DBC500EAD6A1 /* inv_wood_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CC1AA5DBC500EAD6A1 /* inv_wood_circle.png */; };
 		07E190E01AA5DBC500EAD6A1 /* inv_wood_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CD1AA5DBC500EAD6A1 /* inv_wood_long.png */; };
 		07E190E11AA5DBC500EAD6A1 /* inv_wood_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CE1AA5DBC500EAD6A1 /* inv_wood_square.png */; };
-		07E190E21AA5DBC500EAD6A1 /* inv_wood_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CF1AA5DBC500EAD6A1 /* inv_wood_triangle.png */; };
 		07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */; };
 		07E190E41AA5DBC500EAD6A1 /* wood_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */; };
 		07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */; };
@@ -628,9 +624,6 @@
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
-				07E190D51AA5DBC500EAD6A1 /* glass_block_triangle.png in Resources */,
-				07E190D21AA5DBC500EAD6A1 /* down_arrow.png in Resources */,
-				07E190E21AA5DBC500EAD6A1 /* inv_wood_triangle.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */,
 				07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */,
@@ -656,7 +649,6 @@
 				07E190E01AA5DBC500EAD6A1 /* inv_wood_long.png in Resources */,
 				0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */,
 				076C20061A9EC071005B6F30 /* cannonball.png in Resources */,
-				07E190D31AA5DBC500EAD6A1 /* glass_block_long.png in Resources */,
 				0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */,
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,

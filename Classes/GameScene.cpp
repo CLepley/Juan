@@ -153,24 +153,6 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly->buildingObjectSprite -> getPhysicsBody()-> setTag(-1);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
-    // Inventory
-    inventory = Sprite::create("Inventory.png");
-    inventory -> setPosition(origin + Point(inventory->getContentSize().width/2,
-                                            visibleSize.height - inventory->getContentSize().height));
-    this -> addChild(inventory);
-    
-    // Wooden square
-    wood_square = Sprite::create("wood_block_square.png");
-    wood_square -> setPosition(Point(inventory->getPositionX(),
-                                     inventory->getPositionY() - inventory->getContentSize().height/2 - wood_square->getContentSize().height/2));
-    this -> addChild(wood_square);
-    
-    // Wooden short block
-    wood_block_short = Sprite::create("wood_block_short.png");
-    wood_block_short -> setPosition(Point(inventory->getPositionX(),
-                                          wood_square->getPositionY() - wood_square->getContentSize().height));
-    this -> addChild(wood_block_short);
-    
     // Inventory background
     inv_bg = Sprite::create("inv_bg.png");
     inv_bg -> setPosition(origin + Point(visibleSize.width - inv_bg->getContentSize().width/2,
@@ -296,6 +278,7 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
 
+    originalTouchPositionY = touch->getLocation().y;
     
     t = clock();
     
