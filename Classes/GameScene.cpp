@@ -10,7 +10,6 @@ Size visibleSize;
 Sprite *bg;
 Sprite *cannon;
 Sprite *cannonBall;
-Sprite *juan;
 Sprite *inventory;
 Sprite *wood_square;
 Sprite *wood_block_long;
@@ -35,7 +34,6 @@ Scene* GameScreen::createScene()
     //scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = GameScreen::create();
-    
     // turn gravity on and apply it to the scene
     scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
@@ -64,6 +62,9 @@ bool GameScreen::init()
     
     // set background to white
     glClearColor(1,1,1,1.0);
+    // set up sprite sheet
+    cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("spritesheet.plist");
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
