@@ -296,10 +296,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
 
-    // Create bounding boxes for inventory items
-    cocos2d::Rect wood_square_box = wood_square -> boundingBox();
-    cocos2d::Rect wood_block_long_box = wood_block_long -> boundingBox();
-    cocos2d::Rect wood_block_short_box = wood_block_short -> boundingBox();
     
     t = clock();
     
