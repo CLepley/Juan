@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "MainMenuScene.h"
 
+#include "PEShapeCache_X3_0.h"
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -30,6 +32,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
+    
+     PEShapeCache::getInstance()->addBodysWithFile("triangle_body.plist");
+    PEShapeCache::getInstance()->addBodysWithFile("circle_body.plist");
 
     // turn on display FPS
     //director->setDisplayStats(true);
