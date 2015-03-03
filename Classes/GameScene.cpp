@@ -458,6 +458,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) {
                            target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
                            target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11] ||
                            target == inv_bg)) {
+        t = clock();
         for (int i = 0; i < 12; i++) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
