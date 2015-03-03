@@ -25,7 +25,7 @@ class BuildingObject {
         void setObjectHealth(int hp);
         int getObjectHealth();
         
-        void calcDamage();
+        void calcDamage(int dmg);
 };
 
 

@@ -18,7 +18,6 @@ cocos2d::Size visibleSize;
 Sprite *bg;
 Sprite *cannon;
 Sprite *cannonBall;
-Sprite *juan;
 Sprite *inventory;
 Sprite *wood_square;
 Sprite *wood_block_long;
@@ -26,13 +25,18 @@ Sprite *wood_block_short;
 Sprite *newSquare;
 // holds all spirtes used
 BuildingObject *buildingList[50];
+// juan sprite
+BuildingObject *theJuanAndOnly;
 // tracks number of sprites used
 int numBlocks = 0;
 cocos2d::ui::TextField* textField;
 int typeTouched;
+// sprite sheet
+SpriteFrameCache* cache;
+// game mode   0 = building; 1 = attack;
+int gameMode = 0;
 
-
-
+GameScreen THIS;
 int cDen = 6;
 int bDen = 2;
 
@@ -46,7 +50,6 @@ Scene* GameScreen::createScene()
     //scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = GameScreen::create();
-    
     // turn gravity on and apply it to the scene
     scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
@@ -73,6 +76,9 @@ bool GameScreen::init()
     
     // set background to white
     glClearColor(1,1,1,1.0);
+    // set up sprite sheet
+    cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("spritesheet.plist");
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -120,11 +126,15 @@ void GameScreen::initPhysicsSprites(){
     this -> addChild(bg);
     
     // Juan
-    juan = Sprite::create("juan.png");
-    juan -> setPosition(origin + Point(visibleSize.width/2 + visibleSize.width/4,
-                                       juan -> getContentSize().height/2));
-    //auto juanPhysicsBody = PhysicsBody::createBox(Size(juan->getContentSize().width, juan->getContentSize().height));
-    //this -> addChild(juan);
+    theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 45), -1);
+    
+    auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width/2, theJuanAndOnly->buildingObjectSprite->getContentSize().height/2));
+    theJuanAndOnly-> buildingObjectSprite-> setPhysicsBody(juanPhysicsBody);
+    theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCollisionBitmask(0x01);
+    theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
+    theJuanAndOnly->buildingObjectSprite -> getPhysicsBody()->setContactTestBitmask(0x1);
+    theJuanAndOnly->buildingObjectSprite -> getPhysicsBody()-> setTag(-1);
+    this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
     // Inventory
     inventory = Sprite::create("Inventory.png");
@@ -194,6 +204,36 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
 {
     //CCLOG("nodeA velocity %f,%f", contact.getShapeA()->getBody()->getVelocity().x, contact.getShapeA()->getBody()->getVelocity().y);
     //CCLOG("nodeB velocity %f,%f", contact.getShapeB()->getBody()->getVelocity().x, contact.getShapeB()->getBody()->getVelocity().y);
+    if ( gameMode ==  1){
+        int nodeAForce = contact.getShapeA()->getBody()->getVelocity().x + contact.getShapeA()->getBody()->getVelocity().y;
+        int nodeBForce = contact.getShapeB()->getBody()->getVelocity().x + contact.getShapeB()->getBody()->getVelocity().y;
+        int finalForce = 0;
+        
+        if (nodeAForce < 0){
+            nodeAForce = nodeAForce * -1;
+        }
+        if (nodeBForce < 0){
+            nodeBForce = nodeBForce * -1;
+        }
+        finalForce = (nodeAForce - nodeBForce) / 20;
+        if (finalForce < 0){
+            finalForce = finalForce * -1;
+        }
+        //CCLOG("get tag: %d", contact.getShapeA()->getBody()->getTag());
+
+        if (contact.getShapeA()->getBody()->getTag() >= 0){
+            buildingList[contact.getShapeA()->getBody()->getTag()] -> calcDamage(finalForce);
+        }
+        else if ( contact.getShapeA()->getBody()->getTag() == -1){
+            theJuanAndOnly->calcDamage(finalForce);
+        }
+        if (contact.getShapeB()->getBody()->getTag() >= 0) {
+            buildingList[contact.getShapeB()->getBody()->getTag()] -> calcDamage(finalForce);
+        }
+        else if (contact.getShapeB()->getBody()->getTag() == -1){
+            theJuanAndOnly->calcDamage(finalForce);
+        }
+    }
     return true;
 }
 
@@ -207,7 +247,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
 
-    
     // Create bounding boxes for inventory items
     cocos2d::Rect wood_square_box = wood_square -> boundingBox();
     cocos2d::Rect wood_block_long_box = wood_block_long -> boundingBox();
@@ -329,6 +368,7 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     {
         if (rect.containsPoint(locationInNode))
         {
+            gameMode = 1;
             // cannonBall
             auto cannonBall = Sprite::create("cannonball.png");
             cannonBall-> setPosition(Point(cannon-> getPositionX() + 5,cannon-> getPositionY() - 20));
@@ -339,10 +379,12 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
                                                                     PhysicsMaterial(cDen,0.2,1));
             cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
             this-> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(280,240));
+            cannonBall->getPhysicsBody()->setVelocity(Vec2(170,100));
             cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
             cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
             cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
+            cannonBall-> setTag(-1);
+            cannonBall->getPhysicsBody()->setTag(-2);
             auto cannonoBallContactListener = EventListenerPhysicsContact::create();
             cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
                                                                          this);
@@ -448,6 +490,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             // middle of screen
             bg -> setPosition(newLocation.x, newLocation.y);
             // move other sprites
+            // juan
+            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
+            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+            theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
             // connon
             tempCurrentPoint = cannon-> getPosition();
             tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
@@ -470,6 +517,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             // bottom and top of screen
             bg-> setPositionX(newLocation.x);
             // move other sprites
+            // juan
+            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
+            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+            theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.x);
             // connon
             tempCurrentPoint = cannon-> getPosition();
             tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
@@ -492,6 +544,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             // left and right
             bg-> setPositionY(newLocation.y);
             // move other sprites
+            // juan
+            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
+            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+            theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.y);
             // connon
             tempCurrentPoint = cannon-> getPosition();
             tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
@@ -537,12 +594,13 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             }
         }
         if (isTouching){
-            //this-> removeChild(buildingList[numBlocks-1]);
-            //numBlocks--;
+            this-> removeChild(buildingList[numBlocks-1]->buildingObjectSprite);
+            numBlocks--;
         }
         else {
             auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width,buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().height)                                             ,PhysicsMaterial(bDen,0.5,1));
             buildingList[numBlocks-1]->buildingObjectSprite -> setPhysicsBody(newBlockPhysicisBody);
+            buildingList[numBlocks-1]->buildingObjectSprite -> getPhysicsBody()->setTag(numBlocks-1);
             buildingList[numBlocks-1]->buildingObjectSprite->getPhysicsBody()->setCollisionBitmask(0x01);
             buildingList[numBlocks-1]->buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
             buildingList[numBlocks-1]->buildingObjectSprite -> getPhysicsBody()->setContactTestBitmask(0x1);
