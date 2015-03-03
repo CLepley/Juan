@@ -747,7 +747,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
              target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) {
         
         for (int i = 0; i < numBlocks - 1 ; i++){
-            if (buildingList[numBlocks-1]->buildingObjectSprite-> getBoundingBox().intersectsRect(buildingList[i]->buildingObjectSprite->getBoundingBox())){
+            if (buildingList[numBlocks-1]->buildingObjectSprite-> getBoundingBox().intersectsRect(buildingList[i]->buildingObjectSprite->getBoundingBox()) && buildingList[i]->buildingObjectSprite->getPhysicsBody()->isEnabled()){
                 // blocks are touching ileagle move
                 // remove the block from scene and list
                 // TODO make it slide back into place
