@@ -1,23 +1,12 @@
-//
-//  TestScene.cpp
-//  Juan
-//
-//  Created by chris Lepley on 2/27/15.
-//
-//
-
 #include "GameScene.h"
-#include <UITextField.h>
-
+#include <vector>
 #include "PEShapeCache_X3_0.h"
-
-using namespace std;
 
 USING_NS_CC;
 
 Vec2 initalLocation;
-cocos2d::Point origin;
-cocos2d::Size visibleSize;
+Point origin;
+Size visibleSize;
 // background sprite
 Sprite *bg;
 Sprite *cannon;
@@ -27,17 +16,11 @@ Sprite *wood_square;
 Sprite *wood_block_long;
 Sprite *wood_block_short;
 Sprite *newSquare;
+Sprite *zoom;
 Sprite *inv_bg;
 Sprite *inv_items[12];
-Sprite *down_arrow;
-Sprite *up_arrow;
-int inv_page;
-bool scroll = true;
-float originalPositionY[12];
-float originalTouchPositionY;
-clock_t t;
-int num = 0;
 Sprite *option;
+int inv_page;
 
 
 // holds all spirtes used
@@ -46,12 +29,25 @@ BuildingObject *buildingList[50];
 BuildingObject *theJuanAndOnly;
 // tracks number of sprites used
 int numBlocks = 0;
-cocos2d::ui::TextField* textField;
+float originalPositionY[12];
+float originalTouchPositionY;
+clock_t t;
+int num = 0;
+
+
+bool zoomed = false;
+bool scroll = true;
+
+Vec2 cannonPosition;
+Vec2 zoomPosition;
+Vec2 originalBackgroundPosition;
+cocos2d::Camera*      _camera;
 int typeTouched;
 // sprite sheet
 SpriteFrameCache* cache;
 // game mode   0 = building; 1 = attack;
 int gameMode = 0;
+
 
 GameScreen THIS;
 int cDen = 6;
@@ -70,7 +66,9 @@ Scene* GameScreen::createScene()
     // turn gravity on and apply it to the scene
     scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
-
+    
+    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    
     // add layer as a child to scene
     scene->addChild(layer);
     
@@ -101,15 +99,6 @@ bool GameScreen::init()
     initPhysicsSprites();
     scheduleUpdate();
     
-    // Create the textfield
-    textField = cocos2d::ui::TextField::create("input words here","fonts/Marker Felt.ttf",30);
-    textField->ignoreContentAdaptWithSize(false);
-    textField->setContentSize(Size(240, 160));
-    textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
-    textField->setTextVerticalAlignment(TextVAlignment::CENTER);
-    textField->setPosition(origin + Point(100,100));
-    textField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
-    //this->addChild(textField);
     
     return true;
 }
@@ -117,6 +106,20 @@ bool GameScreen::init()
 void GameScreen::update(float delta)
 {
     // do something?
+    /*
+     static float scale = 1.0;
+     //    this -> setScale( scale);
+     Vec2 p = bg -> getPhysicsBody() -> getPosition();
+     CCLOG("scale %f location %f %f ", scale, p.x, p.y);
+     scale = scale * 0.999;
+     */
+    
+    //    bg -> getPhysicsBody()  -> setPositionOffset(Vec2(0,-297));
+    
+    
+    
+    
+    
 }
 
 void GameScreen::setUpPhysicsScreenBody()
@@ -135,12 +138,15 @@ void GameScreen::initPhysicsSprites(){
     // background
     bg = Sprite::create("testbg.jpg");
     bg ->setPosition(origin + Point(visibleSize.width/2, visibleSize.height/2));
-    auto backgroundPhysicisBody = PhysicsBody::createBox(Size(bg-> getContentSize().width,bg-> getContentSize().height/10));
+    originalBackgroundPosition = bg ->getPosition();
+    auto backgroundPhysicisBody = PhysicsBody::createBox(Size(bg-> getContentSize().width,bg-> getContentSize().height/10));  //
     backgroundPhysicisBody-> setDynamic(false);
-    backgroundPhysicisBody-> setPositionOffset(Vec2(0,-297));
+    backgroundPhysicisBody-> setPositionOffset(Vec2(0,-297));  // move down 297 ?
     bg -> setPhysicsBody(backgroundPhysicisBody); // attach
     bg -> setScale(0.5);
     this -> addChild(bg);
+    Vec2 p = bg -> getPhysicsBody() -> getPosition();
+    CCLOG("bg location %f %f ", p.x, p.y);
     
     // Juan
     theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 45), -1);
@@ -159,6 +165,14 @@ void GameScreen::initPhysicsSprites(){
                                                   visibleSize.height/2));
     inv_bg->setOpacity(50);
     this->addChild(inv_bg);
+    
+    
+    // Zoom Sprite
+    zoom = Sprite::create("zoom.png");
+    zoom -> setScale(0.1  );
+    zoom -> setPosition(origin.x + ((zoom->getContentSize().width * 0.125) / 2), origin.y + ((zoom ->getContentSize().height * 0.125) /2));
+    this -> addChild(zoom);
+    zoomPosition = zoom->convertToWorldSpace(zoom->getPosition());
     
     // Inventory items
     // Create items
@@ -203,12 +217,17 @@ void GameScreen::initPhysicsSprites(){
     CC_CALLBACK_2(GameScreen::onTouchBegan, this);
     touchListener -> onTouchEnded =
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
-   
+    
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, bg);
     for (int i = 0; i < 12; i++) {
         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), inv_items[i]);
     }
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), inv_bg);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), zoom);
+
+    
+    
+    
     
     // cannonBall
     cannonBall = Sprite::create("cannonball.png");
@@ -217,17 +236,25 @@ void GameScreen::initPhysicsSprites(){
     cannonBall-> setFlippedX(true);
     auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250,
                                                             // density, restitution, friction,
-                                                            PhysicsMaterial(cDen,0.2,1));
+                                                            PhysicsMaterial(5,1,1));
     cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
     this-> addChild(cannonBall);
     
     // cannon
     cannon = Sprite::create("cannon.png");
-    cannon-> setPosition(origin + Point(20,-50));
+    cannon-> setPosition(origin + Vec2(20,-50));
     cannon-> setScale(0.2);
     cannon-> setFlippedX(true);
-    this-> addChild(cannon);
+    this -> addChild(cannon);
+    
+    
+    //CCLOG("Position of cannon %f %f", cannon->getPosition().x, cannon->getPosition().y);
+    
+    
+    cannonPosition = cannon->convertToWorldSpace(cannon->getPosition());
+    
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener ->clone(), cannon);
+    
     
     
 }
@@ -268,7 +295,7 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
     return true;
 }
 
-bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
+bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     // This gets the highest priority sprite that was registered. (even though it might not be the one touched
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
     
@@ -289,8 +316,8 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
     num = 0;
     scroll = true;
     
-    // test each sprite to see if touched, the highest priority one will be checked on the first callback
     
+    // test each sprite to see if touched, the highest priority one will be checked on the first callback
     if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
          target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
          target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11] ||
@@ -300,48 +327,13 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
         } else {
             return false;
         }
-        /*
-        for (int i=0; i < numBlocks; i++){
-            if (target == buildingList[i]->buildingObjectSprite) {
-                if (rect.containsPoint(locationInNode)) {
-                    return true;
-                }
-            }
     
-        }
-        */
-        
-        
-    }
-/*
-    else if (target == wood_square) {
+    } else if (target == zoom) {
         if (rect.containsPoint(locationInNode)) {
-            // creates then adds new block to array of sprites to hold all building objects used
-            if (numBlocks < 50){
-                buildingList[numBlocks] = new BuildingObject(1,touch->getLocation(),numBlocks);
-                
-                // create a listener for a touch
-                auto touchListener = EventListenerTouchOneByOne::create();
-                touchListener -> setSwallowTouches(true);
-                // setup the callback
-                touchListener -> onTouchMoved =
-                CC_CALLBACK_2(GameScreen::onTouchMoved, this);
-                touchListener -> onTouchBegan =
-                CC_CALLBACK_2(GameScreen::onTouchBegan, this);
-                touchListener -> onTouchEnded =
-                CC_CALLBACK_2(GameScreen::onTouchEnded, this);
-                // Add listener
-                _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, buildingList[numBlocks]->buildingObjectSprite);
-                
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                numBlocks++;
-            }
+            CCLOG("Zoomed");
             return true;
-        } else {
-            return false;
         }
     }
-*/
     else if ( target == bg )
     {
         if (rect.containsPoint(locationInNode))
@@ -399,13 +391,13 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
                 }
             }
         }
-        return false; 
+        return false;
     }
+    
     
 }
 
-
-void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) {
+void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     // This gets the highest priority sprite that was registered. (even though it might not be the one touched
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
     
@@ -459,11 +451,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) {
             option = inv_items[0];
             numBlocks++;
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-    }
-    else if (target == inv_items[1]) {
+    } else if (target == inv_items[1]) {
         num++;
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
@@ -616,111 +604,121 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) {
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
         buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-    }
+    
+    } else if ( target == bg){
+        if (!zoomed) {
+            Point currentLocation;
+            Point oldLocation;
+            Point newLocation;
+            
+            Point tempCurrentPoint;
+            Point tempNewPoint;
+            
+            
+            initalLocation = bg -> getPosition();
+            currentLocation = touch -> getLocation();
+            oldLocation = touch -> getPreviousLocation();
+            
+            
+            newLocation.x = initalLocation.x + currentLocation.x - oldLocation.x;
+            newLocation.y = initalLocation.y + currentLocation.y - oldLocation.y;
+            
+            
+            Point bgTopLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
+            Point bgTopRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
+            Point bgBottomLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
+            Point bgBottomRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
+            
+            //CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
+            //CCLOG("origian ----- %f,%f",origin.x,origin.y);
+            //CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
+            
+            if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width && bgTopLeft.x < origin.x - visibleSize.width && bgBottomRight.x > visibleSize.width*2) {
+                // middle of screen
+                bg -> setPosition(newLocation.x, newLocation.y);
+                // move other sprites
+                // juan
+                tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                // connon
+                tempCurrentPoint = cannon-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
 
-    else if ( target == bg){
-        Point currentLocation;
-        Point oldLocation;
-        Point newLocation;
-        
-        Point tempCurrentPoint;
-        Point tempNewPoint;
-        
-        initalLocation = bg -> getPosition();
-        currentLocation = touch -> getLocation();
-        oldLocation = touch -> getPreviousLocation();
-        
-        newLocation.x = initalLocation.x + currentLocation.x - oldLocation.x;
-        newLocation.y = initalLocation.y + currentLocation.y - oldLocation.y;
-        
-        Point bgTopLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
-        Point bgTopRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y + (bg -> getContentSize().height/2));
-        Point bgBottomLeft = Point(newLocation.x - (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
-        Point bgBottomRight = Point(newLocation.x + (bg -> getContentSize().width/2), newLocation.y - (bg -> getContentSize().height/2));
-        
-        //CCLOG("backgorund top left - %f,%f",bgTopLeft.x,bgTopLeft.y);
-        //CCLOG("origian ----- %f,%f",origin.x,origin.y);
-        //CCLOG("bottom right ---- %f,%f", bgBottomRight.x, bgBottomRight.y);
-        
-        if (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + visibleSize.height*2 && bgTopLeft.x < origin.x - visibleSize.width && bgTopLeft.x < origin.x - visibleSize.width && bgBottomRight.x > visibleSize.width*2) {
-            // middle of screen
-            bg -> setPosition(newLocation.x, newLocation.y);
-            // move other sprites
-            // juan
-            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
-            // connon
-            tempCurrentPoint = cannon-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannon-> setPosition(tempNewPoint.x,tempNewPoint.y);
-            // cannon ball
-            tempCurrentPoint = cannonBall-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
-            // moves the sprites that were used for building
-            for (int i =0; i < numBlocks; i++){
-                tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+                // connon
+                tempCurrentPoint = cannon-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                buildingList[i]->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                cannon-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                // cannon ball
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                // moves the sprites that were used for building
+                for (int i =0; i < numBlocks; i++){
+                    tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    buildingList[i]->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                }
             }
-        }
-        else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width &&  bgBottomRight.x > visibleSize.width*2)){
-            // bottom and top of screen
-            bg-> setPositionX(newLocation.x);
-            // move other sprites
-            // juan
-            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.x);
-            // connon
-            tempCurrentPoint = cannon-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannon-> setPositionX(tempNewPoint.x);
-            // cannon ball
-            tempCurrentPoint = cannonBall-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannonBall-> setPositionX(tempNewPoint.x);
-            // moves the sprites that were used for building
-            for (int i =0; i < numBlocks; i++){
-                tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+            else if ((bgBottomLeft.y > 0 || bgTopLeft.y < origin.y + (visibleSize.height*2)) && (bgTopLeft.x < origin.x - visibleSize.width &&  bgBottomRight.x > visibleSize.width*2)){
+                // bottom and top of screen
+                bg-> setPositionX(newLocation.x);
+                // move other sprites
+                // juan
+                tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                buildingList[i]->buildingObjectSprite-> setPositionX(tempNewPoint.x);
+                theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.x);
+                // connon
+                tempCurrentPoint = cannon-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannon-> setPositionX(tempNewPoint.x);
+                // cannon ball
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPositionX(tempNewPoint.x);
+                // moves the sprites that were used for building
+                for (int i =0; i < numBlocks; i++){
+                    tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    buildingList[i]->buildingObjectSprite-> setPositionX(tempNewPoint.x);
+                }
             }
-        }
-        else if ((bgTopLeft.x > origin.x - visibleSize.width || bgBottomRight.x < visibleSize.width*2)  && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
-            // left and right
-            bg-> setPositionY(newLocation.y);
-            // move other sprites
-            // juan
-            tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.y);
-            // connon
-            tempCurrentPoint = cannon-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannon-> setPositionY(tempNewPoint.y);
-            // cannon ball
-            tempCurrentPoint = cannonBall-> getPosition();
-            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-            cannonBall-> setPositionY(tempNewPoint.y);
-            // moves the sprites that were used for building
-            for (int i =0; i < numBlocks; i++){
-                tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+            else if ((bgTopLeft.x > origin.x - visibleSize.width || bgBottomRight.x < visibleSize.width*2)  && (bgBottomLeft.y < 0 && bgTopLeft.y > origin.y + (visibleSize.height*2))){
+                // left and right
+                bg-> setPositionY(newLocation.y);
+                // move other sprites
+                // juan
+                tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                buildingList[i]->buildingObjectSprite-> setPositionY(tempNewPoint.y);
+                theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.y);
+                // connon
+                tempCurrentPoint = cannon-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannon-> setPositionY(tempNewPoint.y);
+                // cannon ball
+                tempCurrentPoint = cannonBall-> getPosition();
+                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                cannonBall-> setPositionY(tempNewPoint.y);
+                // moves the sprites that were used for building
+                for (int i =0; i < numBlocks; i++){
+                    tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    buildingList[i]->buildingObjectSprite-> setPositionY(tempNewPoint.y);
+                }
             }
         }
     }
@@ -729,6 +727,16 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) {
 
 void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     // This gets the highest priority sprite that was registered. (even though it might not be the one touched
+    
+    
+    // while zoomed, any touch will zoom out (for now)
+    if ( _camera && zoomed )
+    {
+        _camera -> removeFromParent();
+        zoom -> setVisible(true);
+        zoomed = false;
+    }
+    
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
     
     //target will be the sprite with the highest priority that registered a listener
@@ -739,10 +747,8 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     bool isTouching = false;
     
-    if (scroll == true) {
-        // do nothing
-    }
-    else if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
+    
+    if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
              target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
              target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) {
         
@@ -758,8 +764,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         if (isTouching){
             this-> removeChild(buildingList[numBlocks-1]->buildingObjectSprite);
             numBlocks--;
-        }
-        else {
+        } else {
             
             // Attach triangle physics body to triangle blocks
             if (option == inv_items[1] || option == inv_items[5] || option == inv_items[9]) {
@@ -792,14 +797,30 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             addEventListenerWithSceneGraphPriority(boxContactListener, this);
         }
         
+    } else if (target == zoom) {
+        if (!zoomed) {
+            Vec2 bgDifference = bg ->getPosition() - originalBackgroundPosition;
+            
+            // hacky hard coded numbers for now....
+            auto s = Director::getInstance()->getWinSize();
+            _camera = Camera::createPerspective(31.5f, (GLfloat)s.width/s.height, 1, 5000);
+            _camera->setPosition3D(Vec3(origin.x + visibleSize.width /2 + bgDifference.x, origin.y + visibleSize.height/2 + bgDifference.y, 4000));
+            addChild(_camera);
+            
+            zoomed = true;
+            zoom -> setVisible(false);
+            return;
+        }
         
     }
-}
 
-void GameScreen::doSomething(){
-    CCLOG("%s",textField->getString().c_str());
+    
+    
+    // if zoomed, on any touch, zoom in
+    
+    
+    
 }
-
 
 
 
