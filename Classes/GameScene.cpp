@@ -1,5 +1,9 @@
 #include "GameScene.h"
 #include <vector>
+#include <iostream>
+#include <time.h>
+
+using namespace std;
 
 USING_NS_CC;
 
@@ -16,6 +20,17 @@ Sprite *wood_square;
 Sprite *wood_block_long;
 Sprite *wood_block_short;
 Sprite *newSquare;
+Sprite *inv_bg;
+Sprite *inv_items[12];
+Sprite *down_arrow;
+Sprite *up_arrow;
+int inv_page;
+bool scroll = true;
+float originalPositionY[12];
+float originalTouchPositionY;
+clock_t t;
+int num = 0;
+
 // holds all spirtes used
 Sprite *buildingList[50];
 // tracks number of sprites used
@@ -58,6 +73,8 @@ bool GameScreen::init()
     
     // set background to white
     glClearColor(1,1,1,1.0);
+    
+    
 
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -94,6 +111,7 @@ void GameScreen::initPhysicsSprites(){
     bg -> setScale(0.5);
     this -> addChild(bg);
     
+    
     // Juan
     juan = Sprite::create("juan.png");
     juan -> setPosition(origin + Point(visibleSize.width/2 + visibleSize.width/4,
@@ -101,31 +119,46 @@ void GameScreen::initPhysicsSprites(){
     //auto juanPhysicsBody = PhysicsBody::createBox(Size(juan->getContentSize().width, juan->getContentSize().height));
     //this -> addChild(juan);
     
-    // Inventory
-    inventory = Sprite::create("Inventory.png");
-    inventory -> setPosition(origin + Point(inventory->getContentSize().width/2,
-                                            visibleSize.height - inventory->getContentSize().height));
-    this -> addChild(inventory);
-    
-    // Wooden square
-    wood_square = Sprite::create("wood_block_square.png");
-    wood_square -> setPosition(Point(inventory->getPositionX(),
-                                     inventory->getPositionY() - inventory->getContentSize().height/2 - wood_square->getContentSize().height/2));
-    this -> addChild(wood_square);
-    
-    // Wooden short block
-    wood_block_short = Sprite::create("wood_block_short.png");
-    wood_block_short -> setPosition(Point(inventory->getPositionX(),
-                                          wood_square->getPositionY() - wood_square->getContentSize().height));
-    this -> addChild(wood_block_short);
     
     
-    // Wooden long block
-    wood_block_long = Sprite::create("wood_block_long.png");
-    wood_block_long -> setPosition(Point(inventory->getPositionX(),
-                                         wood_block_short->getPositionY() - wood_block_short->getContentSize().height*2));
-    this->addChild(wood_block_long);
+    // Inventory background
+    inv_bg = Sprite::create("inv_bg.png");
+    inv_bg -> setPosition(origin + Point(visibleSize.width - inv_bg->getContentSize().width/2,
+                                                  visibleSize.height/2));
+    inv_bg->setOpacity(50);
+    this->addChild(inv_bg);
     
+    // Inventory items
+    // Create items
+    inv_items[0] = Sprite::create("inv_wood_square.png");
+    inv_items[1] = Sprite::create("inv_wood_triangle.png");
+    inv_items[2] = Sprite::create("inv_wood_circle.png");
+    inv_items[3] = Sprite::create("inv_wood_long.png");
+    inv_items[4] = Sprite::create("inv_stone_square.png");
+    inv_items[5] = Sprite::create("inv_stone_triangle.png");
+    inv_items[6] = Sprite::create("inv_stone_circle.png");
+    inv_items[7] = Sprite::create("inv_stone_long.png");
+    inv_items[8] = Sprite::create("inv_glass_square.png");
+    inv_items[9] = Sprite::create("inv_glass_triangle.png");
+    inv_items[10] = Sprite::create("inv_glass_circle.png");
+    inv_items[11] = Sprite::create("inv_glass_long.png");
+    
+    
+    
+    // Set position of items
+    // Wood
+    inv_items[0] ->setPosition(inv_bg->getPositionX(),
+                               origin.y + visibleSize.height - 0.75 * inv_items[0]->getContentSize().height);
+    
+    for (int i = 1; i < 12; i++) {
+        inv_items[i]->setPosition(Point(inv_items[i - 1]->getPositionX(),
+                                        inv_items[i - 1]->getPositionY() - 1.25 * inv_items[i]->getContentSize().height));
+    }
+    
+    
+    for (int i = 0; i < 12; i++) {
+        this->addChild(inv_items[i]);
+    }
     
     
     // touch listener
@@ -138,12 +171,12 @@ void GameScreen::initPhysicsSprites(){
     CC_CALLBACK_2(GameScreen::onTouchBegan, this);
     touchListener -> onTouchEnded =
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
-    // Add listener for ball and box
+   
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, bg);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), wood_square);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), wood_block_short);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), wood_block_long);
-
+    for (int i = 0; i < 12; i++) {
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), inv_items[i]);
+    }
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), inv_bg);
     
     
     // cannonBall
@@ -178,72 +211,31 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    // Create bounding boxes for inventory items
-    cocos2d::Rect wood_square_box = wood_square -> boundingBox();
-    cocos2d::Rect wood_block_long_box = wood_block_long -> boundingBox();
-    cocos2d::Rect wood_block_short_box = wood_block_short -> boundingBox();
+    originalTouchPositionY = touch->getLocation().y;
     
+    t = clock();
+    
+    for (int i = 0; i < 12; i++) {
+        originalPositionY[i] = inv_items[i]->getPositionY();
+    }
+    
+    num = 0;
+    scroll = true;
     
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     
+    if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
+         target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
+         target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11] ||
+         target == inv_bg) && scroll == true) {
+        
+        if (rect.containsPoint(locationInNode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
-    if (target == wood_square) {
-        if (rect.containsPoint(locationInNode)) {
-            // creates then adds new block to array of sprites to hold all building objects used
-            if (numBlocks < 50){
-                buildingList[numBlocks] = Sprite::create("wood_block_square.png");
-                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buildingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buildingList[numBlocks]);
-                numBlocks++;
-            }
-            //newSquare = Sprite::create("wood_block_square.png");
-            //newSquare -> setPosition(Point(touch->getLocation()));
-            //this -> addChild(newSquare);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    else if (target == wood_block_short) {
-        if (rect.containsPoint(locationInNode)) {
-            // creates then adds new block to array of sprites to hold all building objects used
-            if (numBlocks < 50){
-                buildingList[numBlocks] = Sprite::create("wood_block_short.png");
-                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buildingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buildingList[numBlocks]);
-                numBlocks++;
-            }
-            //newSquare = Sprite::create("wood_block_square.png");
-            //newSquare -> setPosition(Point(touch->getLocation()));
-            //this -> addChild(newSquare);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    else if (target == wood_block_long) {
-        if (rect.containsPoint(locationInNode)) {
-            // creates then adds new block to array of sprites to hold all building objects used
-            if (numBlocks < 50){
-                buildingList[numBlocks] = Sprite::create("wood_block_long.png");
-                buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
-                buildingList[numBlocks]-> setTag(numBlocks);
-                this-> addChild(buildingList[numBlocks]);
-                numBlocks++;
-            }
-            //newSquare = Sprite::create("wood_block_square.png");
-            //newSquare -> setPosition(Point(touch->getLocation()));
-            //this -> addChild(newSquare);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     else if ( target == bg )
     {
         if (rect.containsPoint(locationInNode))
@@ -276,6 +268,7 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     }
 }
 
+
 void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     // This gets the highest priority sprite that was registered. (even though it might not be the one touched
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
@@ -290,21 +283,194 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     cocos2d::Point delta = touch->getDelta();
     
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
-    if (target == wood_square) {
+    
+    clock_t time = 0;
+    time = clock() - t;
+    
+    if ((float)time/CLOCKS_PER_SEC > 1) {
+        scroll = false;
+    }
+    
+    if (scroll == true && (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
+                           target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
+                           target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11] ||
+                           target == inv_bg)) {
+        for (int i = 0; i < 12; i++) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            inv_items[i]->setPositionY(originalPositionY[i] + (touch->getLocation().y - originalTouchPositionY));
+        }
+        
+    }
+    else if (target == inv_items[0]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("wood_block_square.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
         buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
-    else if (target == wood_block_short) {
+    else if (target == inv_items[1]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("wood_block_triangle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
         buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
-    else if (target == wood_block_long) {
+    else if (target == inv_items[2]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("wood_block_circle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
         buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
+    else if (target == inv_items[3]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("wood_block_long.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[4]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("stone_block_square.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[5]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("stone_block_triangle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[6]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("stone_block_circle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[7]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("stone_block_long.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[8]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("glass_block_square.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[9]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("glass_block_triangle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[10]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("glass_block_circle.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+    else if (target == inv_items[11]) {
+        num++;
+        if (numBlocks < 50 && num < 2){
+            buildingList[numBlocks] = Sprite::create("glass_block_long.png");
+            buildingList[numBlocks]-> setPosition(Point(touch->getLocation()));
+            buildingList[numBlocks]-> setTag(numBlocks);
+            this-> addChild(buildingList[numBlocks]);
+            reorderChild(buildingList[numBlocks], 1);
+            numBlocks++;
+        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
+
     else if ( target == bg){
             Point currentLocation;
             Point oldLocation;
@@ -413,7 +579,13 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     bool isTouching = false;
     
-    if (target == wood_square || target == wood_block_short || target == wood_block_long){
+    if (scroll == true) {
+        // do nothing
+    }
+    else if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
+             target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
+             target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) {
+        
         for (int i = 0; i < numBlocks - 1 ; i++){
             if (buildingList[numBlocks-1]-> getBoundingBox().intersectsRect(buildingList[i]->getBoundingBox())){
                 // blocks are touching ileagle move
@@ -431,9 +603,18 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         else {
             auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]-> getContentSize().width,buildingList[numBlocks-1]-> getContentSize().height));
             buildingList[numBlocks-1] -> setPhysicsBody(newBlockPhysicisBody);
+            
+            // Make sure inventory is always infront
+            reorderChild(inv_bg, 1);
+            for (int i = 0; i < 12; i++) {
+                reorderChild(inv_items[i], 1);
+            }
         }
+        
+        
     }
 }
+
 
 
 

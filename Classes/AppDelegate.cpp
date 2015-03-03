@@ -88,6 +88,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     fileUtils->setSearchPaths(resDirOrders);
     
+
     
     // create a scene. it's an autorelease object
     //auto scene = MainMenu::createScene();
