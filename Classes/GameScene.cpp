@@ -11,6 +11,9 @@
 
 USING_NS_CC;
 
+bool JuanIsGod = true;
+
+
 Vec2 initalLocation;
 Point origin;
 Size visibleSize;
@@ -86,7 +89,7 @@ Scene* GameScreen::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = GameScreen::create();
     // turn gravity on and apply it to the scene
@@ -1081,7 +1084,20 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
 
 // Call function if Juan is hit
 void GameScreen::showPlayerLostScreen() {
+    // zoom in
+    _camera -> removeFromParent();
     
+    // unhide interface options
+    zoom -> setVisible(true);
+    playButton-> setVisible(true);
+    glassTextField->setVisible(true);
+    woodTextField->setVisible(true);
+    stoneTextField->setVisible(true);
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(true);
+    }
+    inv_bg -> setVisible(true);
+    zoomed = false;
     // Black screen
     blackScreen = Sprite::create("black_screen.png");
     blackScreen->setPosition(origin + Point(visibleSize.width/2,
@@ -1119,6 +1135,20 @@ void GameScreen::showPlayerLostScreen() {
 }
 
 void GameScreen::showPlayerWonScreen() {
+    // zoom in
+    _camera -> removeFromParent();
+    
+    // unhide interface options
+    zoom -> setVisible(true);
+    playButton-> setVisible(true);
+    glassTextField->setVisible(true);
+    woodTextField->setVisible(true);
+    stoneTextField->setVisible(true);
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(true);
+    }
+    inv_bg -> setVisible(true);
+    zoomed = false;
     // Background
     winScreen = Sprite::create("win_screen_bg.png");
     winScreen->setPosition(origin + Point(visibleSize.width/2,
@@ -1186,10 +1216,27 @@ void GameScreen::startBattle(){
     //this->schedule(schedule_selector(GameScreen::fireCannon2), 15.0f, 1, 6.0f);
     //this->schedule(schedule_selector(GameScreen::fireCannon3), 5.0f, 1, 11.0f);
     
-    
+    this->schedule(schedule_selector(GameScreen::checkOnJuan), 0.2f);
     
     }
-
+void GameScreen::checkOnJuan(float dt){
+    if (theJuanAndOnly->buildingObjectSprite->isVisible() == false){
+        showPlayerLostScreen();
+        this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
+    }
+}
+void GameScreen::checkOnJuan2(float dt){
+    if (theJuanAndOnly->buildingObjectSprite->isVisible() == false){
+        showPlayerLostScreen();
+        this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
+    }else if (theJuanAndOnly->buildingObjectSprite->isVisible() == true){
+        showPlayerWonScreen();
+        this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
+    }
+}
 void GameScreen::fireCannon1(float dt){
     ////////////////////////////////////////////////
     // fire cannon
@@ -1305,6 +1352,7 @@ void GameScreen::fireCannon1(float dt){
         }
         if (numTimeFired == 6){
             this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+            this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
         }
     //}
 }
