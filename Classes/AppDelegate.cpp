@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "MainMenuScene.h"
+#include "LevelsScene.h"
 
 #include "PEShapeCache_X3_0.h"
 

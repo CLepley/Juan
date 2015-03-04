@@ -484,6 +484,8 @@
 				0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */,
 				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
 				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
+				761DFEE01AA6FA2400A1C4AC /* LevelsScene.h */,
+				761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -643,11 +645,14 @@
 				076425361AA7032F007E537E /* playsprite.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				075A17951A75F22F008195CB /* ducky.png in Resources */,
+				761DFEF61AA7261500A1C4AC /* win_screen_bg.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
+				761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */,
+				761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				076425331AA6EF56007E537E /* tank_fire.mp3 in Resources */,
 				07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */,
@@ -657,6 +662,7 @@
 				07E190DE1AA5DBC500EAD6A1 /* inv_stone_triangle.png in Resources */,
 				07E190BE1AA5DB7B00EAD6A1 /* triangle_body.plist in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				761DFEF01AA7193B00A1C4AC /* lost_screen1.png in Resources */,
 				07E190D61AA5DBC500EAD6A1 /* inv_bg.png in Resources */,
 				07E190D91AA5DBC500EAD6A1 /* inv_glass_square.png in Resources */,
 				071AC7F01A9D079A00084BE9 /* testbg.jpg in Resources */,
@@ -682,6 +688,7 @@
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */,
+				761DFEEB1AA7058100A1C4AC /* level1_title.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */,
@@ -694,6 +701,7 @@
 				07DACC751AA5BFFF009A6418 /* SpriteSheetJuan.png in Resources */,
 				07E190DF1AA5DBC500EAD6A1 /* inv_wood_circle.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				761DFEED1AA705B900A1C4AC /* level2_title.png in Resources */,
 				07E190D71AA5DBC500EAD6A1 /* inv_glass_circle.png in Resources */,
 				07DACC631AA58BB7009A6418 /* juan.png in Resources */,
 				07DACC741AA5BFFF009A6418 /* SpriteSheetJuan.plist in Resources */,
@@ -724,6 +732,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				07B930661A67784D009C3642 /* GameScene.cpp in Sources */,
+				761DFEE11AA6FA2400A1C4AC /* LevelsScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

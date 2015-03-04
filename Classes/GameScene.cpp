@@ -22,6 +22,10 @@ Sprite *zoom;
 Sprite *inv_bg;
 Sprite *inv_items[12];
 Sprite *option;
+Sprite *playerLost;
+Sprite *blackScreen; // shows when player loses
+Sprite *playerWon;
+Sprite *winScreen; // shows when player wins
 int inv_page;
 
 bool myOwnFuckingBool =  false;
@@ -39,7 +43,6 @@ float originalPositionY[12];
 float originalTouchPositionY;
 clock_t t;
 int num = 0;
-
 
 bool zoomed = false;
 bool scroll = true;
@@ -306,6 +309,7 @@ void GameScreen::initPhysicsSprites(){
 //                                                            PhysicsMaterial(5,1,1));
 //    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
 //    this-> addChild(cannonBall);
+    
     
     // cannon
     cannon1 = Sprite::createWithSpriteFrameName("cannonElevated.png");
@@ -582,7 +586,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     clock_t time = 0;
     time = clock() - t;
     
-    if ((float)time/CLOCKS_PER_SEC > 0.5) {
+    if ((float)time/CLOCKS_PER_SEC > 0.1) {
         scroll = false;
     }
     
@@ -1028,10 +1032,20 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 inv_items[i] -> setVisible(false);
             }
             inv_bg -> setVisible(false);
-            
+
             return;
         }
         
+    }
+    else if (target == playerLost || target == blackScreen) {
+        auto director = Director::getInstance();
+        auto scene = MainMenu::createScene();
+        director->pushScene(scene);
+    }
+    else if (target == playerWon || target == winScreen) {
+        auto director = Director::getInstance();
+        auto scene = Levels::createScene();
+        director->pushScene(scene);
     }
     
     for (int i = 0; i < numBlocks; i++) {
@@ -1045,8 +1059,81 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     // if zoomed, on any touch, zoom in
     
+}
+
+// Call function if Juan is hit
+void GameScreen::showPlayerLostScreen() {
+    
+    // Black screen
+    blackScreen = Sprite::create("black_screen.png");
+    blackScreen->setPosition(origin + Point(visibleSize.width/2,
+                                            visibleSize.height/2));
+    this->addChild(blackScreen);
+    
+    // Player lost
+    playerLost = Sprite::create("lost_screen1.png");
+    playerLost->setPosition(origin + Point(visibleSize.width/2,
+                                           visibleSize.height/2));
+    this->addChild(playerLost);
+   
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener -> setSwallowTouches(true);
+    // setup the callback
+    touchListener -> onTouchMoved =
+    CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+    touchListener -> onTouchBegan =
+    CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+    touchListener -> onTouchEnded =
+    CC_CALLBACK_2(GameScreen::onTouchEnded, this);
+    
+    //Hide interface options
+    zoom -> setVisible(false);
+    
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(false);
+    }
+    inv_bg -> setVisible(false);
+    
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerLost);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), blackScreen);
+    
+}
+
+void GameScreen::showPlayerWonScreen() {
+    // Background
+    winScreen = Sprite::create("win_screen_bg.png");
+    winScreen->setPosition(origin + Point(visibleSize.width/2,
+                                            visibleSize.height/2));
+    this->addChild(winScreen);
+    
+    // Player won
+    playerWon = Sprite::create("won_screen1.png");
+    playerWon->setPosition(origin + Point(visibleSize.width/2,
+                                           visibleSize.height/2));
+    this->addChild(playerWon);
     
     
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener -> setSwallowTouches(true);
+    // setup the callback
+    touchListener -> onTouchMoved =
+    CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+    touchListener -> onTouchBegan =
+    CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+    touchListener -> onTouchEnded =
+    CC_CALLBACK_2(GameScreen::onTouchEnded, this);
+    
+    //Hide interface options
+    zoom -> setVisible(false);
+    
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(false);
+    }
+    inv_bg -> setVisible(false);
+    
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerWon);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), winScreen);
 }
 
 
