@@ -158,7 +158,6 @@ void MainMenu::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             auto scene = Levels::createScene();
             director->pushScene(scene);
             
-            backgroundMusic->pauseBackgroundMusic();
         }
     }
 }

@@ -1,6 +1,7 @@
 #include "LevelsScene.h"
 #include "iostream"
 #include "MainMenuScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -10,6 +11,7 @@ Sprite *level2_title;
 Sprite *menu_juan;
 Sprite *play;
 Sprite *main_menu;
+auto backgroundMusic1 = CocosDenshion::SimpleAudioEngine::getInstance();
 
 
 Scene* Levels::createScene()
@@ -176,7 +178,8 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
         if (rect.containsPoint(locationInNode)) {
             auto fadeTitleBack = FadeTo::create(0, 0xFF);
             level1_title->runAction(fadeTitleBack);
-            
+            backgroundMusic1->pauseBackgroundMusic();
+
             auto director = Director::getInstance();
             auto scene = GameScreen::createScene();
             director->pushScene(scene);
