@@ -63,14 +63,12 @@ Scene* GameScreen::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
-    //scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = GameScreen::create();
     // turn gravity on and apply it to the scene
     scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
-    
-    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
     // add layer as a child to scene
     scene->addChild(layer);
@@ -160,7 +158,7 @@ void GameScreen::initPhysicsSprites(){
     // Juan
     theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 45), -1);
     
-    auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width/2, theJuanAndOnly->buildingObjectSprite->getContentSize().height/2));
+    auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width, theJuanAndOnly->buildingObjectSprite->getContentSize().height));
     theJuanAndOnly-> buildingObjectSprite-> setPhysicsBody(juanPhysicsBody);
     theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCollisionBitmask(0x01);
     theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
@@ -355,6 +353,7 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     scroll = true;
     
     
+    
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
          target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
@@ -362,11 +361,13 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
          target == inv_bg) && scroll == true) {
         if (rect.containsPoint(locationInNode)) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     
-    } else if (target == zoom) {
+    }
+    else if (target == zoom) {
         if (rect.containsPoint(locationInNode)) {
             return true;
         } else {
@@ -429,7 +430,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
-    
     else
     {
         // check if any of the items in buildingList are selected
@@ -442,8 +442,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         }
         return false;
     }
-    
-    
 }
 
 void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
@@ -458,6 +456,15 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     
     cocos2d::Point touchLoc = touch -> getLocation();
     cocos2d::Point delta = touch->getDelta();
+    Point currentLocation;
+    Point oldLocation;
+    Point newLocation;
+    
+    Point tempCurrentPoint;
+    Point tempNewPoint;
+    
+    currentLocation = touch -> getLocation();
+    oldLocation = touch -> getPreviousLocation();
     
     // check if any of the items in buildingList are selected
     for (int i = 0; i < numBlocks; i++) {
@@ -466,9 +473,24 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             touchLoc.y += delta.y;
             buildingList[i]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
             break;
+//            tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
+//            tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//            tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//            buildingList[i]->buildingObjectSprite->setPosition(tempNewPoint.x,tempNewPoint.y);
+//            //break;
         }
     }
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener -> setSwallowTouches(true);
+    // setup the callback
+    touchListener -> onTouchMoved =
+    CC_CALLBACK_2(GameScreen::onTouchMoved, this);
+    touchListener -> onTouchBegan =
+    CC_CALLBACK_2(GameScreen::onTouchBegan, this);
+    touchListener -> onTouchEnded =
+    CC_CALLBACK_2(GameScreen::onTouchEnded, this);
     
+   
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     
     clock_t time = 0;
@@ -495,6 +517,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(1, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this->addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[0];
@@ -503,11 +526,13 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         touchLoc.x += delta.x;
         touchLoc.y += delta.y;
         buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+
     } else if (target == inv_items[1]) {
         num++;
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(2, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[1];
@@ -522,6 +547,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[2];
@@ -536,6 +562,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(4, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[3];
@@ -550,6 +577,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(5, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[4];
@@ -564,6 +592,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(6, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[5];
@@ -578,6 +607,8 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(7, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            CCLOG("class %d", buildingList[numBlocks]->objectClass);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[6];
@@ -592,6 +623,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(8, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[7];
@@ -606,6 +638,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(9, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[8];
@@ -620,6 +653,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(10, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[9];
@@ -634,6 +668,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(11, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[10];
@@ -648,6 +683,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         if (numBlocks < 50 && num < 2){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(12, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[11];
@@ -817,10 +853,11 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 i = numBlocks;
             }
         }
-        if (isTouching){
+        //if (isTouching){
             //this-> removeChild(buildingList[numBlocks-1]->buildingObjectSprite);
             //numBlocks--;
-        } else {
+        //}
+        //else {
             
             if ((target != inv_items[0] || target != inv_items[1] || target != inv_items[2] || target != inv_items[3] ||
                 target != inv_items[4] || target != inv_items[5] || target != inv_items[6] || target != inv_items[7] ||
@@ -835,10 +872,12 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(triangle_body);
                 
-            } else if (option == inv_items[2] || option == inv_items[6] || option == inv_items[10]) {
-                auto circle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("wood_block_circle");
+            }
+            else if (option == inv_items[2] || option == inv_items[6] || option == inv_items[10]) {
+                auto circle_body = PhysicsBody::createCircle(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width/2);
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(circle_body);
-            } else {
+            }
+            else {
                 auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width,
                                                                         buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().height));
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(newBlockPhysicisBody);
@@ -848,8 +887,8 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             for (int i = 0; i < 12; i++) {
                 reorderChild(inv_items[i], 1);
             }
-            auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width,buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().height)                                             ,PhysicsMaterial(bDen,0.5,1));
-            buildingList[numBlocks-1]->buildingObjectSprite -> setPhysicsBody(newBlockPhysicisBody);
+            //auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width,buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().height)                                             ,PhysicsMaterial(bDen,0.5,1));
+            //buildingList[numBlocks-1]->buildingObjectSprite -> setPhysicsBody(newBlockPhysicisBody);
             buildingList[numBlocks-1]->buildingObjectSprite -> getPhysicsBody()->setTag(numBlocks-1);
             buildingList[numBlocks-1]->buildingObjectSprite->getPhysicsBody()->setCollisionBitmask(0x01);
             buildingList[numBlocks-1]->buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
@@ -859,9 +898,10 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                                                                  this);
             this -> getEventDispatcher() ->
             addEventListenerWithSceneGraphPriority(boxContactListener, this);
-        }
+        //}
         
-    } else if (target == zoom) {
+    }
+    else if (target == zoom) {
         if (!zoomed) {
             Vec2 bgDifference = bg ->getPosition() - originalBackgroundPosition;
             
