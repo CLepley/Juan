@@ -13,6 +13,7 @@
 		0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0735DBC51A9BB92C004A4B64 /* juanTitle.png */; };
 		075A17951A75F22F008195CB /* ducky.png in Resources */ = {isa = PBXBuildFile; fileRef = 075A17941A75F22F008195CB /* ducky.png */; };
 		0760CDD11A9BC6F2007B779A /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0760CDD01A9BC6F2007B779A /* play.png */; };
+		076425331AA6EF56007E537E /* tank_fire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 076425321AA6EF56007E537E /* tank_fire.mp3 */; };
 		0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB211A6974B400ED19BD /* Marker Felt.ttf */; };
 		0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB281A6974B400ED19BD /* .gitkeep */; };
 		0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB321A6979E800ED19BD /* pink_balloon.jpg */; };
@@ -140,6 +141,7 @@
 		0735DBC51A9BB92C004A4B64 /* juanTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = juanTitle.png; sourceTree = "<group>"; };
 		075A17941A75F22F008195CB /* ducky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ducky.png; sourceTree = "<group>"; };
 		0760CDD01A9BC6F2007B779A /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		076425321AA6EF56007E537E /* tank_fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tank_fire.mp3; sourceTree = "<group>"; };
 		0773EB211A6974B400ED19BD /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		0773EB281A6974B400ED19BD /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		0773EB321A6979E800ED19BD /* pink_balloon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pink_balloon.jpg; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				076425321AA6EF56007E537E /* tank_fire.mp3 */,
 				F2B1CE011AA69CD700FABF03 /* cannonSprites.plist */,
 				F2B1CE021AA69CD700FABF03 /* cannonSpriteSheet.png */,
 				761DFED71AA6748B00A1C4AC /* menu_bg.png */,
@@ -633,6 +636,7 @@
 				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				076425331AA6EF56007E537E /* tank_fire.mp3 in Resources */,
 				07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */,
 				07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */,
 				07E190B81AA5D63900EAD6A1 /* glass_block_circle.png in Resources */,

@@ -3,6 +3,8 @@
 #include "PEShapeCache_X3_0.h"
 #include <thread>
 #include <time.h>
+#include "SimpleAudioEngine.h"
+
 
 USING_NS_CC;
 
@@ -379,7 +381,8 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
-            
+            auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+            audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
             cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
             
             // cannonBall position is set for cannonBallElevated
