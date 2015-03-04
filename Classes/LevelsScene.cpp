@@ -1,5 +1,6 @@
 #include "LevelsScene.h"
 #include "iostream"
+#include "MainMenuScene.h"
 
 USING_NS_CC;
 
@@ -8,6 +9,7 @@ Sprite *level2_title;
 
 Sprite *menu_juan;
 Sprite *play;
+Sprite *main_menu;
 
 
 Scene* Levels::createScene()
@@ -53,6 +55,12 @@ bool Levels::init()
                                             visibleSize.height/1.25));
     this->addChild(level_title);
     
+    // Main menu button
+    main_menu = Sprite::create("main_menu.png");
+    main_menu->setPosition(origin + Point(main_menu->getContentSize().width/2,
+                                          visibleSize.height - main_menu->getContentSize().height/2));
+    this->addChild(main_menu);
+    
     // Levels
     // Level 1
     level1_title = Sprite::create("level1_title.png");
@@ -63,7 +71,7 @@ bool Levels::init()
     // Level 2
     level2_title = Sprite::create("level2_title.png");
     level2_title->setPosition(Point(origin.x + visibleSize.width/2,
-                                    level1_title->getPositionY() - 1.25 * level2_title->getContentSize().height));
+                                    level1_title->getPositionY() - 1.5 * level2_title->getContentSize().height));
     this->addChild(level2_title);
     
     // Juan
@@ -116,6 +124,7 @@ bool Levels::init()
     
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, level1_title);
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), level2_title);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), main_menu);
     
     return true;
 }
@@ -139,6 +148,14 @@ bool Levels::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
         if (rect.containsPoint(locationInNode)) {
             auto fadeTitle = FadeTo::create(0, 0xAF);
             level2_title->runAction(fadeTitle);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (target == main_menu) {
+        if (rect.containsPoint(locationInNode)) {
+            auto fadeTitle = FadeTo::create(0, 0xAF);
+            main_menu->runAction(fadeTitle);
             return true;
         } else {
             return false;
@@ -170,6 +187,15 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             level2_title->runAction(fadeTitleBack);
             
             // Push level 2 scene
+        }
+    } else if (target == main_menu) {
+        if (rect.containsPoint(locationInNode)) {
+            auto fadeTitleBack = FadeTo::create(0, 0xFF);
+            main_menu->runAction(fadeTitleBack);
+            
+            auto director = Director::getInstance();
+            auto scene = MainMenu::createScene();
+            director->pushScene(scene);
         }
     }
     
