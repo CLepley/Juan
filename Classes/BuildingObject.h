@@ -18,7 +18,9 @@ class BuildingObject {
         int objectState;
         int objectHealth;
         Sprite *buildingObjectSprite;
-        
+        SpriteBatchNode* spritebatch;
+        SpriteFrame *animFrames[3];
+    
         BuildingObject();
         BuildingObject(int ID, Point point, int tag);
         

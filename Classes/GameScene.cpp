@@ -67,8 +67,6 @@ Scene* GameScreen::createScene()
     scene->getPhysicsWorld() -> setGravity(Vect(0, -98.0f));
     layer -> setPhysicsWorld(scene->getPhysicsWorld());
     
-    scene->getPhysicsWorld() -> setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    
     // add layer as a child to scene
     scene->addChild(layer);
     
@@ -151,7 +149,7 @@ void GameScreen::initPhysicsSprites(){
     // Juan
     theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 45), -1);
     
-    auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width/2, theJuanAndOnly->buildingObjectSprite->getContentSize().height/2));
+    auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width, theJuanAndOnly->buildingObjectSprite->getContentSize().height));
     theJuanAndOnly-> buildingObjectSprite-> setPhysicsBody(juanPhysicsBody);
     theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCollisionBitmask(0x01);
     theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
@@ -324,11 +322,13 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
          target == inv_bg) && scroll == true) {
         if (rect.containsPoint(locationInNode)) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     
-    } else if (target == zoom) {
+    }
+    else if (target == zoom) {
         if (rect.containsPoint(locationInNode)) {
             CCLOG("Zoomed");
             return true;
@@ -380,7 +380,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
-    
     else
     {
         // check if any of the items in buildingList are selected
@@ -393,8 +392,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         }
         return false;
     }
-    
-    
 }
 
 void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
@@ -451,6 +448,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             option = inv_items[0];
             numBlocks++;
         }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+
     } else if (target == inv_items[1]) {
         num++;
         if (numBlocks < 50 && num < 2){
@@ -642,12 +643,6 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
-
                 // connon
                 tempCurrentPoint = cannon-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
