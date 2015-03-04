@@ -892,6 +892,11 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             //Hide interface options
             zoom -> setVisible(false);
             
+            for (int i = 0; i < 12; i++) {
+                inv_items[i] -> setVisible(false);
+            }
+            inv_bg -> setVisible(false);
+            
             return;
         }
         
