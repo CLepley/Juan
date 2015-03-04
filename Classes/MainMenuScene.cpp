@@ -3,8 +3,8 @@
 
 USING_NS_CC;
 
-Sprite *menu_juan;
-Sprite *play;
+Sprite *menu_juan1;
+Sprite *play1;
 
 Scene* MainMenu::createScene()
 {
@@ -44,10 +44,10 @@ bool MainMenu::init()
     this->addChild(menu_bg);
 
     // Juan
-    menu_juan = Sprite::createWithSpriteFrameName("Juan_Side_2.png");
-    menu_juan->setPosition(origin + Point(menu_juan->getContentSize().width/2,
-                                          menu_juan->getContentSize().height/1.5));
-    this->addChild(menu_juan);
+    menu_juan1 = Sprite::createWithSpriteFrameName("Juan_Side_2.png");
+    menu_juan1->setPosition(origin + Point(menu_juan1->getContentSize().width/2,
+                                          menu_juan1->getContentSize().height/1.5));
+    this->addChild(menu_juan1);
     
     // Title
     Sprite *menu_title = Sprite::create("title.png");
@@ -63,10 +63,10 @@ bool MainMenu::init()
     this->addChild(sombrero);
     
     // Play
-    play = Sprite::create("play.png");
-    play->setPosition(Point(origin.x + visibleSize.width/2,
-                            menu_title->getPositionY() - 1.5 * play->getContentSize().height));
-    this->addChild(play);
+    play1 = Sprite::create("play.png");
+    play1->setPosition(Point(origin.x + visibleSize.width/2,
+                            menu_title->getPositionY() - 1.5 * play1->getContentSize().height));
+    this->addChild(play1);
    
     
     // Juan actions
@@ -85,19 +85,19 @@ bool MainMenu::init()
     
     auto juan_animate_seq = Sequence::create(animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback3, animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback2, NULL);
     
-    auto juan_move_right = MoveTo::create(22, origin + Point(visibleSize.width - menu_juan->getContentSize().width/2,
-                                                           menu_juan->getContentSize().height/1.5));
+    auto juan_move_right = MoveTo::create(22, origin + Point(visibleSize.width - menu_juan1->getContentSize().width/2,
+                                                           menu_juan1->getContentSize().height/1.5));
     
-    auto juan_move_left = MoveTo::create(22, origin + Point(menu_juan->getContentSize().width/2,
-                                                            menu_juan->getContentSize().height/1.5));
+    auto juan_move_left = MoveTo::create(22, origin + Point(menu_juan1->getContentSize().width/2,
+                                                            menu_juan1->getContentSize().height/1.5));
     
     auto juan_move_seq = Sequence::create(flipJuan1, juan_move_right, flipJuan2, juan_move_left, NULL);
     
     RepeatForever *repeat_animation = RepeatForever::create(juan_animate_seq);
     RepeatForever *repeat_movement = RepeatForever::create(juan_move_seq);
     
-    menu_juan->runAction(repeat_animation);
-    menu_juan->runAction(repeat_movement);
+    menu_juan1->runAction(repeat_animation);
+    menu_juan1->runAction(repeat_movement);
     
     // touch listener
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -110,7 +110,7 @@ bool MainMenu::init()
     touchListener -> onTouchEnded =
     CC_CALLBACK_2(MainMenu::onTouchEnded, this);
     
-   _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, play);
+   _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, play1);
     
     
     return true;
@@ -123,10 +123,10 @@ bool MainMenu::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    if (target == play) {
+    if (target == play1) {
         if (rect.containsPoint(locationInNode)) {
             auto fadePlay = FadeTo::create(0, 0xAF);
-            play->runAction(fadePlay);
+            play1->runAction(fadePlay);
             return true;
         } else {
             return false;
@@ -143,26 +143,26 @@ void MainMenu::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    if (target == play) {
+    if (target == play1) {
         if (rect.containsPoint(locationInNode)) {
             auto fadePlay = FadeTo::create(0, 0xFF);
-            play->runAction(fadePlay);
+            play1->runAction(fadePlay);
         
             auto director = Director::getInstance();
-            auto scene = GameScreen::createScene();
+            auto scene = Levels::createScene();
             director->pushScene(scene);
         }
     }
 }
 
 void MainMenu::changeJuan1() {
-    menu_juan->setSpriteFrame("Juan_Side_1.png");
+    menu_juan1->setSpriteFrame("Juan_Side_1.png");
 }
 void MainMenu::changeJuan2() {
-    menu_juan->setSpriteFrame("Juan_Side_2.png");
+    menu_juan1->setSpriteFrame("Juan_Side_2.png");
 }
 void MainMenu::changeJuan3() {
-    menu_juan->setSpriteFrame("Juan_Side_3.png");
+    menu_juan1->setSpriteFrame("Juan_Side_3.png");
 }
 
 

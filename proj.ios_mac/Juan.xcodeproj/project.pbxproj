@@ -91,6 +91,11 @@
 		761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFED71AA6748B00A1C4AC /* menu_bg.png */; };
 		761DFEDB1AA6B4B200A1C4AC /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEDA1AA6B4B200A1C4AC /* title.png */; };
 		761DFEDD1AA6D3F300A1C4AC /* Sombrero.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEDC1AA6D3F300A1C4AC /* Sombrero.png */; };
+		761DFEE11AA6FA2400A1C4AC /* LevelsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */; };
+		761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEE21AA6FD9200A1C4AC /* level_bg.png */; };
+		761DFEE91AA704E300A1C4AC /* level_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEE81AA704E300A1C4AC /* level_title.png */; };
+		761DFEEB1AA7058100A1C4AC /* level1_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEEA1AA7058100A1C4AC /* level1_title.png */; };
+		761DFEED1AA705B900A1C4AC /* level2_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEEC1AA705B900A1C4AC /* level2_title.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -226,6 +231,12 @@
 		761DFED71AA6748B00A1C4AC /* menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_bg.png; sourceTree = "<group>"; };
 		761DFEDA1AA6B4B200A1C4AC /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		761DFEDC1AA6D3F300A1C4AC /* Sombrero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sombrero.png; sourceTree = "<group>"; };
+		761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelsScene.cpp; sourceTree = "<group>"; };
+		761DFEE01AA6FA2400A1C4AC /* LevelsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelsScene.h; sourceTree = "<group>"; };
+		761DFEE21AA6FD9200A1C4AC /* level_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = level_bg.png; path = Resources/level_bg.png; sourceTree = "<group>"; };
+		761DFEE81AA704E300A1C4AC /* level_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = level_title.png; path = Resources/level_title.png; sourceTree = "<group>"; };
+		761DFEEA1AA7058100A1C4AC /* level1_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level1_title.png; sourceTree = "<group>"; };
+		761DFEEC1AA705B900A1C4AC /* level2_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level2_title.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -280,8 +291,14 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				761DFEEC1AA705B900A1C4AC /* level2_title.png */,
+				761DFEEA1AA7058100A1C4AC /* level1_title.png */,
+				761DFEE81AA704E300A1C4AC /* level_title.png */,
+				761DFEE21AA6FD9200A1C4AC /* level_bg.png */,
 				761DFEDC1AA6D3F300A1C4AC /* Sombrero.png */,
 				761DFEDA1AA6B4B200A1C4AC /* title.png */,
+				F2B1CE011AA69CD700FABF03 /* cannonSprites.plist */,
+				F2B1CE021AA69CD700FABF03 /* cannonSpriteSheet.png */,
 				761DFED71AA6748B00A1C4AC /* menu_bg.png */,
 				07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */,
 				07E190BF1AA5DBC500EAD6A1 /* down_arrow.png */,
@@ -473,6 +490,8 @@
 				0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */,
 				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
 				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
+				761DFEE01AA6FA2400A1C4AC /* LevelsScene.h */,
+				761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -636,6 +655,7 @@
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
+				761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */,
 				07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */,
@@ -655,6 +675,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				07E190DC1AA5DBC500EAD6A1 /* inv_stone_long.png in Resources */,
+				761DFEE91AA704E300A1C4AC /* level_title.png in Resources */,
 				761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */,
 				07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */,
 				761DFEDB1AA6B4B200A1C4AC /* title.png in Resources */,
@@ -669,6 +690,7 @@
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */,
+				761DFEEB1AA7058100A1C4AC /* level1_title.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */,
@@ -680,6 +702,7 @@
 				07DACC751AA5BFFF009A6418 /* SpriteSheetJuan.png in Resources */,
 				07E190DF1AA5DBC500EAD6A1 /* inv_wood_circle.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				761DFEED1AA705B900A1C4AC /* level2_title.png in Resources */,
 				07E190D71AA5DBC500EAD6A1 /* inv_glass_circle.png in Resources */,
 				07DACC631AA58BB7009A6418 /* juan.png in Resources */,
 				07DACC741AA5BFFF009A6418 /* SpriteSheetJuan.plist in Resources */,
@@ -710,6 +733,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				07B930661A67784D009C3642 /* GameScene.cpp in Sources */,
+				761DFEE11AA6FA2400A1C4AC /* LevelsScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

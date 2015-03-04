@@ -32,7 +32,7 @@ float originalTouchPositionY;
 clock_t t;
 int num = 0;
 
-
+bool playerWin; 
 bool zoomed = false;
 bool scroll = true;
 bool removeCannonBall = false;
@@ -492,7 +492,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     clock_t time = 0;
     time = clock() - t;
     
-    if ((float)time/CLOCKS_PER_SEC > 0.5) {
+    if ((float)time/CLOCKS_PER_SEC > 0.1) {
         scroll = false;
     }
     
@@ -892,6 +892,11 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             //Hide interface options
             zoom -> setVisible(false);
             
+            for (int i = 0; i < 12; i++) {
+                inv_items[i] -> setVisible(false);
+            }
+            inv_bg -> setVisible(false);
+
             return;
         }
         
