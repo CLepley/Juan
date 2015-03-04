@@ -900,7 +900,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 inv_items[i] -> setVisible(false);
             }
             inv_bg -> setVisible(false);
-
+            
             return;
         }
         
