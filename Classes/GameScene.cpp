@@ -180,6 +180,7 @@ bool GameScreen::init()
     //stoneTextField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
     this->addChild(stoneTextField);
     
+    numTimeFired = 0;
     gameMode = 0;
      wood = 4;
      stone = 2;
@@ -1174,7 +1175,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         director->pushScene(scene);
     }
     
-    for (int i = 0; i < numBlocks; i++) {
+    for (int i = 0; i < numBlocks-1; i++) {
         if (target == buildingList[i]->buildingObjectSprite) {
             buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(true);
             break;
