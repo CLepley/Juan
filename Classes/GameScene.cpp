@@ -265,6 +265,7 @@ void GameScreen::ballTimer (float dt) {
         this -> removeChild(cannonBall);
         removeBallCounter = 0;
         this ->unschedule(schedule_selector(GameScreen::ballTimer));
+        removeCannonBall = false;
     } else {
         removeBallCounter++;
     }

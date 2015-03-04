@@ -278,6 +278,7 @@
 			children = (
 				F2B1CE011AA69CD700FABF03 /* cannonSprites.plist */,
 				F2B1CE021AA69CD700FABF03 /* cannonSpriteSheet.png */,
+				761DFED71AA6748B00A1C4AC /* menu_bg.png */,
 				07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */,
 				07E190BF1AA5DBC500EAD6A1 /* down_arrow.png */,
 				07E190C01AA5DBC500EAD6A1 /* glass_block_long.png */,
