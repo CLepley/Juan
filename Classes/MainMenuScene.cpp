@@ -6,6 +6,7 @@ USING_NS_CC;
 
 Sprite *menu_juan;
 Sprite *play;
+auto backgroundMusic = CocosDenshion::SimpleAudioEngine::getInstance();
 
 Scene* MainMenu::createScene()
 {
@@ -37,7 +38,6 @@ bool MainMenu::init()
     }
     
     //Background sound
-    auto backgroundMusic = CocosDenshion::SimpleAudioEngine::getInstance();
     backgroundMusic->playBackgroundMusic("background.mp3", true);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -157,6 +157,8 @@ void MainMenu::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             auto director = Director::getInstance();
             auto scene = GameScreen::createScene();
             director->pushScene(scene);
+            
+            backgroundMusic->pauseBackgroundMusic();
         }
     }
 }

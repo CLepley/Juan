@@ -771,7 +771,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempCurrentPoint = theJuanAndOnly->buildingObjectSprite-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.y);
+                theJuanAndOnly->buildingObjectSprite-> setPositionY(tempNewPoint.y);
                 // connon
                 tempCurrentPoint = cannon-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
