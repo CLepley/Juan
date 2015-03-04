@@ -66,6 +66,9 @@ SpriteBatchNode *cannonSpriteBatch2;
 SpriteBatchNode *cannonSpriteBatch3;
 
 Vector<SpriteFrame*> cannonFrames(5);
+Vector<SpriteFrame*> cannonFramesElevated(5);
+Vector<SpriteFrame*> cannonFramesHigh(5);
+
 
 // game mode   0 = building; 1 = attack;
 int gameMode = 0;
@@ -315,19 +318,19 @@ void GameScreen::initPhysicsSprites(){
     
     
     // cannon
-    cannon1 = Sprite::createWithSpriteFrameName("cannonElevated.png");
-    cannon1-> setPosition(origin - Vec2(200,60));
+    cannon1 = Sprite::createWithSpriteFrameName("cannonNormal.png");
+    cannon1-> setPosition(origin - Vec2(35,60)); //35 60
     cannon1-> setFlippedX(true);
     cannonSpriteBatch1 -> addChild(cannon1);
     this -> addChild(cannonSpriteBatch1);
     
     cannon2 = Sprite::createWithSpriteFrameName("cannonElevated.png");
-    cannon2-> setPosition(origin - Vec2(35,60));
+    cannon2-> setPosition(origin - Vec2(270,60));
     cannon2-> setFlippedX(true);
     cannonSpriteBatch2 -> addChild(cannon2);
     this -> addChild(cannonSpriteBatch2);
     
-    cannon3 = Sprite::createWithSpriteFrameName("cannonElevated.png");
+    cannon3 = Sprite::createWithSpriteFrameName("cannonHigh.png");
     cannon3-> setPosition(origin - Vec2(515,60));
     cannon3-> setFlippedX(true);
     cannonSpriteBatch3 -> addChild(cannon3);
@@ -337,12 +340,28 @@ void GameScreen::initPhysicsSprites(){
     //Setup cannon animation
     char str[100] = {0};
     for (int i = 1; i < 6; ++i) {
-        sprintf(str, "cannonElevatedFire%d.png", i);
+        sprintf(str, "cannonNormalFire%d.png", i);
         SpriteFrame *frame = cache->getSpriteFrameByName( str );
         cannonFrames.pushBack(frame);
     }
-    SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
+    SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonNormal.png");
     cannonFrames.pushBack(startingCannon);
+    
+    for (int i = 1; i < 6; ++i) {
+        sprintf(str, "cannonElevatedFire%d.png", i);
+        SpriteFrame *frame = cache->getSpriteFrameByName( str );
+        cannonFramesElevated.pushBack(frame);
+    }
+    startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
+    cannonFramesElevated.pushBack(startingCannon);
+    
+    for (int i = 1; i < 6; ++i) {
+        sprintf(str, "cannonHighFire%d.png", i);
+        SpriteFrame *frame = cache->getSpriteFrameByName( str );
+        cannonFramesHigh.pushBack(frame);
+    }
+    startingCannon = cache->getSpriteFrameByName("cannonHigh.png");
+    cannonFramesHigh.pushBack(startingCannon);
     
     
     cannonPosition1 = cannon1->convertToWorldSpace(cannon1->getPosition());
@@ -1237,7 +1256,7 @@ void GameScreen::fireCannon1(float dt){
             }
             myOwnFuckingBool = true;
             //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
+            Animation *animation = Animation::createWithSpriteFrames(cannonFramesElevated, 0.2f);
             cannon2 -> runAction (Animate::create(animation));
             
             
@@ -1274,7 +1293,7 @@ void GameScreen::fireCannon1(float dt){
             }
             myOwnFuckingBool = true;
             //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
+            Animation *animation = Animation::createWithSpriteFrames(cannonFramesHigh, 0.2f);
             cannon3 -> runAction (Animate::create(animation));
             
             
@@ -1290,7 +1309,7 @@ void GameScreen::fireCannon1(float dt){
             cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
             
             this -> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(200,210));
+            cannonBall->getPhysicsBody()->setVelocity(Vec2(200,225));
             cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
             cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
             cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
