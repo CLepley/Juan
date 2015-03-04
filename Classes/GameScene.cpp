@@ -808,6 +808,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             
             zoomed = true;
             zoom -> setVisible(false);
+            
             return;
         }
         

@@ -4,6 +4,7 @@
 USING_NS_CC;
 
 Sprite *menu_juan;
+Sprite *play;
 
 Scene* MainMenu::createScene()
 {
@@ -36,19 +37,40 @@ bool MainMenu::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    // Background
     Sprite *menu_bg = Sprite::create("menu_bg.png");
     menu_bg->setPosition(origin + Point(visibleSize.width/2,
                                         menu_bg->getContentSize().height/2));
     this->addChild(menu_bg);
-    
+
+    // Juan
     menu_juan = Sprite::createWithSpriteFrameName("Juan_Side_2.png");
     menu_juan->setPosition(origin + Point(menu_juan->getContentSize().width/2,
                                           menu_juan->getContentSize().height/1.5));
     this->addChild(menu_juan);
     
+    // Title
+    Sprite *menu_title = Sprite::create("title.png");
+    menu_title->setPosition(origin + Point(visibleSize.width/2,
+                                           visibleSize.height/1.5));
+    this->addChild(menu_title);
+    
+    // Title sombrero
+    
+    Sprite *sombrero = Sprite::create("Sombrero.png");
+    sombrero->setPosition(Point(menu_title->getPositionX() - menu_title->getContentSize().width/4,
+                                menu_title->getPositionY()+ menu_title->getContentSize().height/2.6));
+    this->addChild(sombrero);
+    
+    // Play
+    play = Sprite::create("play.png");
+    play->setPosition(Point(origin.x + visibleSize.width/2,
+                            menu_title->getPositionY() - 1.5 * play->getContentSize().height));
+    this->addChild(play);
    
+    
     // Juan actions
-    auto delay = DelayTime::create(0.3f);
+    auto animationDelay = DelayTime::create(0.3f);
     
     auto doneMovingCallback1 = CallFunc::create( [=]() {
         this->changeJuan1(); });
@@ -56,20 +78,20 @@ bool MainMenu::init()
         this->changeJuan2(); });
     auto doneMovingCallback3 = CallFunc::create( [=]() {
         this->changeJuan3(); });
-    auto doneMovingCallback4 = CallFunc::create( [=]() {
-        this->changeJuan4(); });
     
-    auto flipJuan = FlipX::create(true);
+    auto flipJuan1 = FlipX::create(true);
+    auto flipJuan2 = FlipX::create(false);
     
-    auto juan_animate_seq = Sequence::create(delay, doneMovingCallback1, delay, doneMovingCallback3, delay, doneMovingCallback1, delay, doneMovingCallback2, NULL);
+    
+    auto juan_animate_seq = Sequence::create(animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback3, animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback2, NULL);
     
     auto juan_move_right = MoveTo::create(22, origin + Point(visibleSize.width - menu_juan->getContentSize().width/2,
                                                            menu_juan->getContentSize().height/1.5));
     
+    auto juan_move_left = MoveTo::create(22, origin + Point(menu_juan->getContentSize().width/2,
+                                                            menu_juan->getContentSize().height/1.5));
     
-    
-    auto juan_move_seq = Sequence::create(flipJuan, juan_move_right, doneMovingCallback4, NULL);
-    
+    auto juan_move_seq = Sequence::create(flipJuan1, juan_move_right, flipJuan2, juan_move_left, NULL);
     
     RepeatForever *repeat_animation = RepeatForever::create(juan_animate_seq);
     RepeatForever *repeat_movement = RepeatForever::create(juan_move_seq);
@@ -77,8 +99,60 @@ bool MainMenu::init()
     menu_juan->runAction(repeat_animation);
     menu_juan->runAction(repeat_movement);
     
+    // touch listener
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener -> setSwallowTouches(true);
+    // setup the callback
+    touchListener -> onTouchMoved =
+    CC_CALLBACK_2(MainMenu::onTouchMoved, this);
+    touchListener -> onTouchBegan =
+    CC_CALLBACK_2(MainMenu::onTouchBegan, this);
+    touchListener -> onTouchEnded =
+    CC_CALLBACK_2(MainMenu::onTouchEnded, this);
+    
+   _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, play);
+    
     
     return true;
+}
+
+bool MainMenu::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
+   
+    auto target = static_cast<Sprite*>(event->getCurrentTarget());
+    Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+    Size s = target->getContentSize();
+    Rect rect = Rect(0, 0, s.width, s.height);
+    
+    if (target == play) {
+        if (rect.containsPoint(locationInNode)) {
+            auto fadePlay = FadeTo::create(0, 0xAF);
+            play->runAction(fadePlay);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    
+}
+void MainMenu::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
+    
+    auto target = static_cast<Sprite*>(event->getCurrentTarget());
+    Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+    Size s = target->getContentSize();
+    Rect rect = Rect(0, 0, s.width, s.height);
+    
+    if (target == play) {
+        if (rect.containsPoint(locationInNode)) {
+            auto fadePlay = FadeTo::create(0, 0xFF);
+            play->runAction(fadePlay);
+        
+            auto director = Director::getInstance();
+            auto scene = GameScreen::createScene();
+            director->pushScene(scene);
+        }
+    }
 }
 
 void MainMenu::changeJuan1() {
@@ -90,17 +164,10 @@ void MainMenu::changeJuan2() {
 void MainMenu::changeJuan3() {
     menu_juan->setSpriteFrame("Juan_Side_3.png");
 }
-void MainMenu::changeJuan4() {
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
-    auto flipJuan2 = FlipX::create(false);
-    
-    auto juan_move_left = MoveTo::create(22, origin + Point(menu_juan->getContentSize().width/2,
-                                                             menu_juan->getContentSize().height/1.5));
-    menu_juan->runAction(flipJuan2);
-    menu_juan->runAction(juan_move_left);
-    
-}
+
+
+
+
 
 
 

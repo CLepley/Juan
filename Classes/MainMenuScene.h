@@ -21,6 +21,10 @@ public:
     void changeJuan2();
     void changeJuan3();
     void changeJuan4();
+    void changeJuan5();
+    void flipJuan();
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 };
 
 #endif // __MAINMENU_SCENE_H__
