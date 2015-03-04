@@ -175,7 +175,7 @@ void BuildingObject::calcDamage(int dmg){
         this->buildingObjectSprite->setVisible(false);
         this->buildingObjectSprite->getPhysicsBody()->setEnable(false);
     }
-    if (this->objectClass == 1){
+    if (this->objectClass != 0){
         //SpriteFrameCache::getInstance()->
         //addSpriteFramesWithFile("wood_block_sheet.plist", "wood_block_sheet.png");
         if (this->objectHealth <= 75 && this->objectHealth >50){
@@ -201,6 +201,7 @@ void BuildingObject::calcDamage(int dmg){
 
         }
     }
+    
 }
 
 
