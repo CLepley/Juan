@@ -3,6 +3,7 @@
 #include "PEShapeCache_X3_0.h"
 #include <thread>
 #include <time.h>
+#include <vector>
 
 USING_NS_CC;
 
@@ -44,6 +45,9 @@ cocos2d::Camera*      _camera;
 int typeTouched;
 // sprite sheet
 SpriteFrameCache* cache;
+SpriteBatchNode *cannonSpriteBatch;
+Vector<SpriteFrame*> cannonFrames(5);
+
 // game mode   0 = building; 1 = attack;
 int gameMode = 0;
 
@@ -90,11 +94,14 @@ bool GameScreen::init()
     
     // set background to white
     glClearColor(1,1,1,1.0);
+    
+    //Setup sprite Batch
+    cannonSpriteBatch = SpriteBatchNode::create("cannonSpriteSheet.png");
+    
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile("spritesheet.plist");
-   // cache->addSpriteFramesWithFile("cannonSpriteSheet.plist", "cannonSprites.png");
-
+    cache->addSpriteFramesWithFile("cannonSprites.plist");
     
     
     setUpPhysicsScreenBody();
@@ -245,10 +252,19 @@ void GameScreen::initPhysicsSprites(){
     cannon = Sprite::createWithSpriteFrameName("cannonElevated.png");
     cannon-> setPosition(origin + Vec2(20,-60));
     cannon-> setFlippedX(true);
-    this -> addChild(cannon);
+    cannonSpriteBatch -> addChild(cannon);
+    this -> addChild(cannonSpriteBatch);
     
     
-    //CCLOG("Position of cannon %f %f", cannon->getPosition().x, cannon->getPosition().y);
+    //Setup cannon animation
+    char str[100] = {0};
+    for (int i = 1; i < 6; ++i) {
+        sprintf(str, "cannonElevatedFire%d.png", i);
+        SpriteFrame *frame = cache->getSpriteFrameByName( str );
+        cannonFrames.pushBack(frame);
+    }
+    SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
+    cannonFrames.pushBack(startingCannon);
     
     
     cannonPosition = cannon->convertToWorldSpace(cannon->getPosition());
@@ -378,6 +394,11 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
+            
+            //Animate the cannon
+            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
+            cannon -> runAction (Animate::create(animation));
+            
             
             cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
             
