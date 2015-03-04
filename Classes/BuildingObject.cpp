@@ -36,7 +36,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Wood_Block_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 150;
+            this->objectHealth = 50;
             break;
         case 2:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Right_Triangle_1.png");
@@ -47,7 +47,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Wood_Right_Triangle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 150;
+            this->objectHealth = 50;
             break;
         case 3:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Circle_1.png");
@@ -58,7 +58,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Wood_Circle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 150;
+            this->objectHealth = 50;
             break;
         case 4:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Wood_Block_Long_1.png");
@@ -69,7 +69,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Wood_Block_Long_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 150;
+            this->objectHealth = 50;
             break;
         case 5:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_1.png");
@@ -80,7 +80,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Stone_Block_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 200;
+            this->objectHealth = 75;
             break;
         case 6:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Right_Triangle_1.png");
@@ -91,7 +91,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Stone_Right_Triangle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 200;
+            this->objectHealth = 75;
             break;
         case 7:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Circle_1.png");
@@ -102,7 +102,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Stone_Circle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 200;
+            this->objectHealth = 75;
             break;
         case 8:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_Long_1.png");
@@ -113,7 +113,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Stone_Block_Long_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 200;
+            this->objectHealth = 75;
             break;
         case 9:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Glass_Block_1.png");
@@ -124,7 +124,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Glass_Block_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 100;
+            this->objectHealth = 25;
             break;
         case 10:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Glass_Right_Triangle_1.png");
@@ -135,7 +135,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Glass_Right_Triangle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 100;
+            this->objectHealth = 25;
             break;
         case 11:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Glass_Circle_1.png");
@@ -146,7 +146,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Glass_Circle_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 100;
+            this->objectHealth = 25;
             break;
         case 12:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Glass_Block_Long_1.png");
@@ -157,7 +157,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[1] = (frame);
             frame = cache->getSpriteFrameByName("Glass_Block_Long_4.png");
             this->animFrames[2] = (frame);
-            this->objectHealth = 100;
+            this->objectHealth = 25;
             break;
         default:
             break;

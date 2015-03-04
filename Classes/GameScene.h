@@ -32,6 +32,12 @@ public:
     void doSomething();
     
     void ballTimer(float dt);
+    
+    void startBattle();
+    
+    void fireCannon1(float dt);
+    void fireCannon2(float dt);
+    void fireCannon3(float dt);
 };
 
 #endif // __Game_SCENE_H__
