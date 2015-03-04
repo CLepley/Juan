@@ -30,6 +30,8 @@ public:
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
     bool physicsOnContactBegin(const cocos2d::PhysicsContact &contact);
     void doSomething();
+    void showPlayerLostScreen();
+    void showPlayerWonScreen();
     
     void ballTimer(float dt);
 };
