@@ -35,6 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     PEShapeCache::getInstance()->addBodysWithFile("triangle_body.plist");
     PEShapeCache::getInstance()->addBodysWithFile("circle_body.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("SpriteSheetJuan.plist", "SpriteSheetJuan.png");
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("cannonSprites.plist", "cannonSpriteSheet.png");
     

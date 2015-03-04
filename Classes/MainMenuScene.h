@@ -17,6 +17,10 @@ public:
     CREATE_FUNC(MainMenu);
     
     void GoToGameScene(cocos2d::Ref *pSender);
+    void changeJuan1();
+    void changeJuan2();
+    void changeJuan3();
+    void changeJuan4();
 };
 
 #endif // __MAINMENU_SCENE_H__

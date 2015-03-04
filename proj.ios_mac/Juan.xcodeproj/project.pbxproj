@@ -88,6 +88,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE621A9EB42200A1C4AC /* Inventory.png */; };
 		761DFECA1AA57CAD00A1C4AC /* PEShapeCache_X3_0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */; };
+		761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFED71AA6748B00A1C4AC /* menu_bg.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -220,6 +221,7 @@
 		761DFE621A9EB42200A1C4AC /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
 		761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PEShapeCache_X3_0.cpp; sourceTree = "<group>"; };
 		761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEShapeCache_X3_0.h; sourceTree = "<group>"; };
+		761DFED71AA6748B00A1C4AC /* menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_bg.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -648,6 +650,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				07E190DC1AA5DBC500EAD6A1 /* inv_stone_long.png in Resources */,
+				761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */,
 				07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */,
 				07E190D41AA5DBC500EAD6A1 /* glass_block_square.png in Resources */,
 				07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */,
