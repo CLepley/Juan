@@ -1,5 +1,6 @@
 #include "MainMenuScene.h"
 #include "iostream"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -34,6 +35,11 @@ bool MainMenu::init()
     {
         return false;
     }
+    
+    //Background sound
+    auto backgroundMusic = CocosDenshion::SimpleAudioEngine::getInstance();
+    backgroundMusic->playBackgroundMusic("background.mp3", true);
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
