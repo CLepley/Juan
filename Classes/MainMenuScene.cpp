@@ -4,8 +4,8 @@
 
 USING_NS_CC;
 
-Sprite *menu_juan;
-Sprite *play;
+Sprite *menu_juan1;
+Sprite *play1;
 auto backgroundMusic = CocosDenshion::SimpleAudioEngine::getInstance();
 
 Scene* MainMenu::createScene()

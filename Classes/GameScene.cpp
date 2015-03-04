@@ -6,6 +6,9 @@
 #include <vector>
 #include "SimpleAudioEngine.h"
 #include <UITextField.h>
+#include "MainMenuScene.h"
+#include "LevelsScene.h"
+
 USING_NS_CC;
 
 Vec2 initalLocation;
@@ -524,6 +527,21 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }*/
+    
+    else if (target == playerLost || target == blackScreen) {
+        if (rect.containsPoint(locationInNode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    else if (target == playerWon || target == winScreen) {
+        if (rect.containsPoint(locationInNode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     else
     {
         // check if any of the items in buildingList are selected
@@ -1135,7 +1153,6 @@ void GameScreen::showPlayerWonScreen() {
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerWon);
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), winScreen);
 }
-
 
 void GameScreen::startBattle(){
     gameMode = 1;
