@@ -180,17 +180,36 @@ bool GameScreen::init()
     //stoneTextField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
     this->addChild(stoneTextField);
     
+    gameMode = 0;
+     wood = 4;
+     stone = 2;
+     glass = 6;
     return true;
 }
 
 void GameScreen::update(float delta)
 {
     char str[100];
-    sprintf(str, "Wood: %d", wood - 1);
+    if (wood == 0){
+        sprintf(str, "Wood: %d", wood);
+    }
+    else{
+        sprintf(str, "Wood: %d", wood - 1);
+    }
     woodTextField->setString(str);
-    sprintf(str, "Stone: %d", stone - 1);
+    if (stone == 0){
+        sprintf(str, "Stone: %d", stone);
+    }
+    else{
+        sprintf(str, "Stone: %d", stone - 1);
+    }
     stoneTextField->setString(str);
-    sprintf(str, "Glass: %d", glass - 1);
+    if (glass == 0){
+        sprintf(str, "Glass: %d", glass);
+    }
+    else{
+        sprintf(str, "Glass: %d", glass - 1);
+    }
     glassTextField->setString(str);
     
 }
