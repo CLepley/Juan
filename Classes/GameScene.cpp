@@ -3,6 +3,7 @@
 #include "PEShapeCache_X3_0.h"
 #include <thread>
 #include <time.h>
+#include <vector>
 #include "SimpleAudioEngine.h"
 
 
@@ -396,6 +397,12 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
+            
+            //Animate the cannon
+            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
+            cannon -> runAction (Animate::create(animation));
+            
+            
             auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
             audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
             cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
