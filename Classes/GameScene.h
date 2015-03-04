@@ -31,8 +31,7 @@ public:
     bool physicsOnContactBegin(const cocos2d::PhysicsContact &contact);
     void doSomething();
     
-    void createSprite(cocos2d::String str);
-
+    void ballTimer(float dt);
 };
 
 #endif // __Game_SCENE_H__

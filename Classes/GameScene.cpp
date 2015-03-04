@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include <vector>
 #include "PEShapeCache_X3_0.h"
+#include <thread>
+#include <time.h>
 
 USING_NS_CC;
 
@@ -37,6 +39,8 @@ int num = 0;
 
 bool zoomed = false;
 bool scroll = true;
+bool removeCannonBall = false;
+int removeBallCounter = 0; //Default to 3. Counter for ball lifecycle after collision
 
 Vec2 cannonPosition;
 Vec2 zoomPosition;
@@ -94,6 +98,9 @@ bool GameScreen::init()
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile("spritesheet.plist");
+   // cache->addSpriteFramesWithFile("cannonSpriteSheet.plist", "cannonSprites.png");
+
+    
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -229,21 +236,20 @@ void GameScreen::initPhysicsSprites(){
     
     
     
-    // cannonBall
-    cannonBall = Sprite::create("cannonball.png");
-    cannonBall-> setPosition(origin + Point(30,-50));
-    cannonBall-> setScale(0.01);
-    cannonBall-> setFlippedX(true);
-    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250,
-                                                            // density, restitution, friction,
-                                                            PhysicsMaterial(5,1,1));
-    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-    this-> addChild(cannonBall);
+//    // cannonBall
+//    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
+//    cannonBall-> setPosition(origin + Point(30,-50));
+//   // cannonBall-> setScale(0.01);
+//    cannonBall-> setFlippedX(true);
+//    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250,
+//                                                            // density, restitution, friction,
+//                                                            PhysicsMaterial(5,1,1));
+//    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
+//    this-> addChild(cannonBall);
     
     // cannon
-    cannon = Sprite::create("cannon.png");
-    cannon-> setPosition(origin + Vec2(20,-50));
-    cannon-> setScale(0.2);
+    cannon = Sprite::createWithSpriteFrameName("cannonElevated.png");
+    cannon-> setPosition(origin + Vec2(20,-60));
     cannon-> setFlippedX(true);
     this -> addChild(cannon);
     
@@ -258,6 +264,20 @@ void GameScreen::initPhysicsSprites(){
     
     
 }
+
+void GameScreen::ballTimer (float dt) {
+    //Check if ball needs to be removed from the scene
+    if (removeBallCounter == 2) {
+        this -> removeChild(cannonBall);
+        removeBallCounter = 0;
+        this ->unschedule(schedule_selector(GameScreen::ballTimer));
+    } else {
+        removeBallCounter++;
+    }
+    
+}
+
+
 bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
 {
     //CCLOG("nodeA velocity %f,%f", contact.getShapeA()->getBody()->getVelocity().x, contact.getShapeA()->getBody()->getVelocity().y);
@@ -291,6 +311,13 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
         else if (contact.getShapeB()->getBody()->getTag() == -1){
             theJuanAndOnly->calcDamage(finalForce);
         }
+    }
+    
+    if ((contact.getShapeA() -> getBody() -> getTag() == -2 || contact.getShapeB() -> getBody() -> getTag() == -2) && !removeCannonBall) {
+        // register cannonball for removal, take 3 seconds right now.
+        // edit ballTimer to change the itme value
+        removeCannonBall = true;
+        this -> schedule(schedule_selector(GameScreen::ballTimer), 1.0f);
     }
     return true;
 }
@@ -330,8 +357,9 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     
     } else if (target == zoom) {
         if (rect.containsPoint(locationInNode)) {
-            CCLOG("Zoomed");
             return true;
+        } else {
+            return false;
         }
     }
     else if ( target == bg )
@@ -352,15 +380,20 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         {
             gameMode = 1;
             // cannonBall
-            auto cannonBall = Sprite::create("cannonball.png");
-            cannonBall-> setPosition(Point(cannon-> getPositionX() + 5,cannon-> getPositionY() - 20));
-            cannonBall-> setScale(0.01);
-            cannonBall-> setFlippedX(true);
-            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250,
+            if (cannonBall != NULL) {
+                removeChild(cannonBall);
+            }
+            
+            cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
+            
+            // cannonBall position is set for cannonBallElevated
+            cannonBall-> setPosition(Point(cannon-> getPositionX() + 5,cannon-> getPositionY() + 8));
+            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
                                                                     // density, restitution, friction,
                                                                     PhysicsMaterial(cDen,0.2,1));
             cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-            this-> addChild(cannonBall);
+            
+            this -> addChild(cannonBall);
             cannonBall->getPhysicsBody()->setVelocity(Vec2(170,100));
             cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
             cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
@@ -646,18 +679,12 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempCurrentPoint = cannon-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
-
-                // connon
-                tempCurrentPoint = cannon-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 cannon-> setPosition(tempNewPoint.x,tempNewPoint.y);
-                // cannon ball
-                tempCurrentPoint = cannonBall-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
+//                // cannon ball
+//                tempCurrentPoint = cannonBall-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannonBall-> setPosition(tempNewPoint.x,tempNewPoint.y);
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -680,11 +707,13 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 cannon-> setPositionX(tempNewPoint.x);
+                
                 // cannon ball
-                tempCurrentPoint = cannonBall-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannonBall-> setPositionX(tempNewPoint.x);
+//                tempCurrentPoint = cannonBall-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannonBall-> setPositionX(tempNewPoint.x);
+                
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -708,10 +737,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 cannon-> setPositionY(tempNewPoint.y);
                 // cannon ball
-                tempCurrentPoint = cannonBall-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannonBall-> setPositionY(tempNewPoint.y);
+//                tempCurrentPoint = cannonBall-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannonBall-> setPositionY(tempNewPoint.y);
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -732,8 +761,15 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     // while zoomed, any touch will zoom out (for now)
     if ( _camera && zoomed )
     {
+        // zoom in
         _camera -> removeFromParent();
+        
+        // unhide interface options
         zoom -> setVisible(true);
+        for (int i = 0; i < 12; i++) {
+            inv_items[i] -> setVisible(true);
+        }
+        inv_bg -> setVisible(true);
         zoomed = false;
     }
     
@@ -808,7 +844,15 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             addChild(_camera);
             
             zoomed = true;
+            
+            //Hide interface options
             zoom -> setVisible(false);
+            
+            for (int i = 0; i < 12; i++) {
+                inv_items[i] -> setVisible(false);
+            }
+            inv_bg -> setVisible(false);
+
             return;
         }
         

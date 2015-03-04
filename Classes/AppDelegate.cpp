@@ -33,9 +33,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
     
-     PEShapeCache::getInstance()->addBodysWithFile("triangle_body.plist");
+    PEShapeCache::getInstance()->addBodysWithFile("triangle_body.plist");
     PEShapeCache::getInstance()->addBodysWithFile("circle_body.plist");
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("cannonSprites.plist", "cannonSpriteSheet.png");
+    
     // turn on display FPS
     //director->setDisplayStats(true);
 
