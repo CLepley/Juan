@@ -37,6 +37,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     PEShapeCache::getInstance()->addBodysWithFile("circle_body.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("SpriteSheetJuan.plist", "SpriteSheetJuan.png");
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("cannonSprites.plist", "cannonSpriteSheet.png");
+    
     // turn on display FPS
     //director->setDisplayStats(true);
 
