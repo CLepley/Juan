@@ -85,6 +85,11 @@ cocos2d::ui::TextField* glassTextField;
 cocos2d::ui::TextField* woodTextField;
 cocos2d::ui::TextField* stoneTextField;
 
+//Level 1 vars
+int wood = 4;
+int stone = 2;
+int glass = 6;
+auto fadeInv = FadeTo::create(1.0, 0x7F);
 
 
 
@@ -180,20 +185,13 @@ bool GameScreen::init()
 
 void GameScreen::update(float delta)
 {
-    // do something?
-    /*
-     static float scale = 1.0;
-     //    this -> setScale( scale);
-     Vec2 p = bg -> getPhysicsBody() -> getPosition();
-     CCLOG("scale %f location %f %f ", scale, p.x, p.y);
-     scale = scale * 0.999;
-     */
-    
-    //    bg -> getPhysicsBody()  -> setPositionOffset(Vec2(0,-297));
-    
-    
-    
-    
+    char str[100];
+    sprintf(str, "Wood: %d", wood - 1);
+    woodTextField->setString(str);
+    sprintf(str, "Stone: %d", stone - 1);
+    stoneTextField->setString(str);
+    sprintf(str, "Glass: %d", glass - 1);
+    glassTextField->setString(str);
     
 }
 
@@ -649,183 +647,247 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[0]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(1, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this->addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[0];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && wood != 0){
+            wood--;
+            if (wood > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(1, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this->addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[0];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-
+        if ( wood > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     } else if (target == inv_items[1]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(2, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[1];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && wood != 0){
+            wood--;
+            if ( wood > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(2, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[1];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( wood > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[2]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[2];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && wood!= 0){
+            wood--;
+            if (wood > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[2];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( wood > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[3]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(4, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[3];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && wood != 0){
+            wood--;
+            if (wood > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(4, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[3];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( wood > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[4]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(5, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[4];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && stone != 0){
+            stone--;
+            if (stone > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(5, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[4];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-    }
+        if ( stone > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }    }
     else if (target == inv_items[5]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(6, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[5];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 & stone != 0){
+            stone--;
+            if (stone > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(6, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[5];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( stone > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[6]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(7, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[6];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && stone != 0){
+            stone--;
+            if (stone > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(7, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[6];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( stone > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[7]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(8, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[7];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && stone != 0){
+            stone--;
+                if (stone > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(8, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[7];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( stone > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[8]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(9, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[8];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && glass != 0){
+            glass--;
+            if (glass > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(9, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[8];
+                numBlocks++;
+            }
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( glass > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[9]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(10, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[9];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && glass != 0){
+            glass--;
+            if (glass > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(10, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[9];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( glass > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[10]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(11, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[10];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && glass != 0){
+            glass--;
+            if (glass > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(11, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[10];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( glass > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[11]) {
         num++;
-        if (numBlocks < 50 && num < 2){
-            Point position = touch->getLocation();
-            buildingList[numBlocks] = new BuildingObject(12, position, numBlocks);
-             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-            option = inv_items[11];
-            numBlocks++;
+        if (numBlocks < 50 && num < 2 && glass != 0){
+            glass--;
+            if (glass > 0) {
+                Point position = touch->getLocation();
+                buildingList[numBlocks] = new BuildingObject(12, position, numBlocks);
+                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+                option = inv_items[11];
+                numBlocks++;
+            }
+            
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if ( glass > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     
     } else if ( target == bg){
         if (!zoomed) {
