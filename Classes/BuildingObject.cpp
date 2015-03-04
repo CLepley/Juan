@@ -90,7 +90,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             break;
         case 7:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Circle_1.png");
-            this->spritebatch->addChild(this->buildingObjectSprite);
+            //this->spritebatch->addChild(this->buildingObjectSprite);
             frame = cache->getSpriteFrameByName("Stone_Circle_2.png");
             this->animFrames[0] = (frame);
             frame = cache->getSpriteFrameByName("Stone_Circle_3.png");
