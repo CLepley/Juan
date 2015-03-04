@@ -7,6 +7,7 @@
 //
 
 #include "BuildingObject.h"
+#include "SimpleAudioEngine.h"
 
 
 
@@ -184,6 +185,8 @@ void BuildingObject::calcDamage(int dmg){
         //CCLOG("inside the fucking statment");
         //CCLOG("tag: %d", this->buildingObjectSprite->getTag());
         //buildingObjectSprite->removeFromParentAndCleanup(true);
+        auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+        audio->playEffect("woosh.mp3", false, 1.0f, 1.0f, 1.0f);
         this->buildingObjectSprite->setVisible(false);
         this->buildingObjectSprite->getPhysicsBody()->setEnable(false);
     }

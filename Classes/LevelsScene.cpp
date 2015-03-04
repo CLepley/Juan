@@ -72,7 +72,7 @@ bool Levels::init()
     level2_title = Sprite::create("level2_title.png");
     level2_title->setPosition(Point(origin.x + visibleSize.width/2,
                                     level1_title->getPositionY() - 1.5 * level2_title->getContentSize().height));
-    this->addChild(level2_title);
+    //this->addChild(level2_title);
     
     // Juan
     menu_juan = Sprite::createWithSpriteFrameName("Juan_Side_2.png");

@@ -141,6 +141,7 @@ bool GameScreen::init()
     // Create the glass textfield
     glassTextField = cocos2d::ui::TextField::create("Glass: 1","fonts/Marker Felt.ttf",30);
     glassTextField->setTextColor(Color4B::BLACK);
+    glassTextField->setString("Glass: 5");
     glassTextField->ignoreContentAdaptWithSize(false);
     glassTextField->setEnabled(false);
     glassTextField->setContentSize(Size(240, 160));
@@ -152,6 +153,7 @@ bool GameScreen::init()
     // Create the wood textfield
     woodTextField = cocos2d::ui::TextField::create("Wood: 1","fonts/Marker Felt.ttf",30);
     woodTextField->setTextColor(Color4B::BLACK);
+    woodTextField->setString("Wood: 3");
     woodTextField->ignoreContentAdaptWithSize(false);
     woodTextField->setEnabled(false);
     woodTextField->setContentSize(Size(240, 160));
@@ -163,6 +165,7 @@ bool GameScreen::init()
     // Create the stone textfield
     stoneTextField = cocos2d::ui::TextField::create("Stone: 1","fonts/Marker Felt.ttf",30);
     stoneTextField->setTextColor(Color4B::BLACK);
+    stoneTextField->setString("Stone: 1");
     stoneTextField->ignoreContentAdaptWithSize(false);
     stoneTextField->setEnabled(false);
     stoneTextField->setContentSize(Size(240, 160));
@@ -416,19 +419,21 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
         if (finalForce < 0){
             finalForce = finalForce * -1;
         }
-        //CCLOG("get tag: %d", contact.getShapeA()->getBody()->getTag());
+        //CCLOG("get tag A: %d", contact.getShapeA()->getBody()->getTag());
+        //CCLOG("get tag B: %d", contact.getShapeB()->getBody()->getTag());
+        //CCLOG("finalForce: %d", finalForce);
 
         if (contact.getShapeA()->getBody()->getTag() >= 0){
             buildingList[contact.getShapeA()->getBody()->getTag()] -> calcDamage(finalForce);
         }
         else if ( contact.getShapeA()->getBody()->getTag() == -1){
-            theJuanAndOnly->calcDamage(finalForce);
+            theJuanAndOnly->calcDamage(1);
         }
         if (contact.getShapeB()->getBody()->getTag() >= 0) {
             buildingList[contact.getShapeB()->getBody()->getTag()] -> calcDamage(finalForce);
         }
         else if (contact.getShapeB()->getBody()->getTag() == -1){
-            theJuanAndOnly->calcDamage(finalForce);
+            theJuanAndOnly->calcDamage(1);
         }
     }
     
