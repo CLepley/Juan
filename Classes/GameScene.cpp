@@ -87,7 +87,7 @@ cocos2d::ui::TextField* stoneTextField;
 
 //Level 1 vars
 int wood = 4;
-int stone = 2;
+int stone = 4;
 int glass = 6;
 auto fadeInv = FadeTo::create(1.0, 0x7F);
 
@@ -170,7 +170,7 @@ bool GameScreen::init()
     // Create the stone textfield
     stoneTextField = cocos2d::ui::TextField::create("Stone: 1","fonts/Marker Felt.ttf",30);
     stoneTextField->setTextColor(Color4B::BLACK);
-    stoneTextField->setString("Stone: 1");
+    stoneTextField->setString("Stone: 2");
     stoneTextField->ignoreContentAdaptWithSize(false);
     stoneTextField->setEnabled(false);
     stoneTextField->setContentSize(Size(240, 160));
@@ -183,8 +183,31 @@ bool GameScreen::init()
     numTimeFired = 0;
     gameMode = 0;
      wood = 4;
-     stone = 2;
+     stone = 4;
      glass = 6;
+    
+    char str[100];
+    if (wood == 0){
+        sprintf(str, "Wood: %d", wood);
+    }
+    else{
+        sprintf(str, "Wood: %d", wood - 1);
+    }
+    woodTextField->setString(str);
+    if (stone == 0){
+        sprintf(str, "Stone: %d", stone);
+    }
+    else{
+        sprintf(str, "Stone: %d", stone - 1);
+    }
+    stoneTextField->setString(str);
+    if (glass == 0){
+        sprintf(str, "Glass: %d", glass);
+    }
+    else{
+        sprintf(str, "Glass: %d", glass - 1);
+    }
+    glassTextField->setString(str);
     return true;
 }
 
@@ -626,11 +649,13 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     // check if any of the items in buildingList are selected
     for (int i = 0; i < numBlocks; i++) {
         if (target == buildingList[i]->buildingObjectSprite) {
-            buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(false);
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[i]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-            break;
+            if (gameMode == 0){
+                buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(false);
+                touchLoc.x += delta.x;
+                touchLoc.y += delta.y;
+                buildingList[i]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+                break;
+            }
         }
     }
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -1044,6 +1069,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     
     // while zoomed, any touch will zoom out (for now)
+    if (gameMode == 0){
     if ( _camera && zoomed )
     {
         // zoom in
@@ -1061,7 +1087,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         inv_bg -> setVisible(true);
         zoomed = false;
     }
-    
+    }
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
     
     //target will be the sprite with the highest priority that registered a listener
@@ -1104,7 +1130,6 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 CCLOG("here");
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(triangle_body);
-                
             }
             else if (option == inv_items[2] || option == inv_items[6] || option == inv_items[10]) {
                 auto circle_body = PhysicsBody::createCircle(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width/2,PhysicsMaterial(bDen,0.5,1));
@@ -1175,7 +1200,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         director->pushScene(scene);
     }
     
-    for (int i = 0; i < numBlocks-1; i++) {
+    for (int i = 0; i < numBlocks; i++) {
         if (target == buildingList[i]->buildingObjectSprite) {
             buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(true);
             break;
@@ -1456,7 +1481,7 @@ void GameScreen::fireCannon1(float dt){
             addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
             ////////////////////////////////////////////////
         }
-        if (numTimeFired == 6){
+        if (numTimeFired == 4){
             this ->unschedule(schedule_selector(GameScreen::fireCannon1));
             this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
         }
