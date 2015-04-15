@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/GameScene.cpp"
-            timestampString = "448246795.061545"
+            timestampString = "450768998.066328"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1219"
-            endingLineNumber = "1219"
+            startingLineNumber = "1220"
+            endingLineNumber = "1220"
             landmarkName = "GameScreen::showPlayerLostScreen()"
             landmarkType = "5">
          </BreakpointContent>

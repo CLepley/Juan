@@ -243,8 +243,8 @@
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		761DFE621A9EB42200A1C4AC /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
-		761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PEShapeCache_X3_0.cpp; sourceTree = "<group>"; };
-		761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEShapeCache_X3_0.h; sourceTree = "<group>"; };
+		761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PEShapeCache_X3_0.cpp; path = ../Classes/PEShapeCache_X3_0.cpp; sourceTree = "<group>"; };
+		761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PEShapeCache_X3_0.h; path = ../Classes/PEShapeCache_X3_0.h; sourceTree = "<group>"; };
 		761DFED71AA6748B00A1C4AC /* menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_bg.png; sourceTree = "<group>"; };
 		761DFEDA1AA6B4B200A1C4AC /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		761DFEDC1AA6D3F300A1C4AC /* Sombrero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sombrero.png; sourceTree = "<group>"; };
@@ -311,6 +311,8 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
+				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
 				0756B5D61AA74CE10079BEF0 /* woosh.mp3 */,
 				0764253F1AA70459007E537E /* Sombrero.png */,
 				076425401AA70459007E537E /* title.png */,
@@ -428,6 +430,42 @@
 			path = res;
 			sourceTree = "<group>";
 		};
+		079757DD1ADE310F00273B98 /* MainMenuScene */ = {
+			isa = PBXGroup;
+			children = (
+				46880B8719C43A87006E1F66 /* MainMenuScene.h */,
+				46880B8619C43A87006E1F66 /* MainMenuScene.cpp */,
+			);
+			name = MainMenuScene;
+			sourceTree = "<group>";
+		};
+		079757DE1ADE311800273B98 /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				07B930651A67784D009C3642 /* GameScene.h */,
+				07B930641A67784D009C3642 /* GameScene.cpp */,
+			);
+			name = GameScene;
+			sourceTree = "<group>";
+		};
+		079757DF1ADE312000273B98 /* BuildingObject */ = {
+			isa = PBXGroup;
+			children = (
+				0711F30C1AA00EF6001A97E0 /* BuildingObject.h */,
+				0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */,
+			);
+			name = BuildingObject;
+			sourceTree = "<group>";
+		};
+		079757E01ADE312C00273B98 /* LevelScene */ = {
+			isa = PBXGroup;
+			children = (
+				761DFEE01AA6FA2400A1C4AC /* LevelsScene.h */,
+				761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */,
+			);
+			name = LevelScene;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -513,16 +551,10 @@
 			children = (
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
-				46880B8719C43A87006E1F66 /* MainMenuScene.h */,
-				46880B8619C43A87006E1F66 /* MainMenuScene.cpp */,
-				07B930651A67784D009C3642 /* GameScene.h */,
-				07B930641A67784D009C3642 /* GameScene.cpp */,
-				0711F30C1AA00EF6001A97E0 /* BuildingObject.h */,
-				0711F30B1AA00EF6001A97E0 /* BuildingObject.cpp */,
-				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
-				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
-				761DFEE01AA6FA2400A1C4AC /* LevelsScene.h */,
-				761DFEDF1AA6FA2400A1C4AC /* LevelsScene.cpp */,
+				079757DD1ADE310F00273B98 /* MainMenuScene */,
+				079757DE1ADE311800273B98 /* GameScene */,
+				079757DF1ADE312000273B98 /* BuildingObject */,
+				079757E01ADE312C00273B98 /* LevelScene */,
 			);
 			name = Classes;
 			path = ../Classes;

@@ -280,6 +280,7 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly-> buildingObjectSprite->getPhysicsBody()->setCategoryBitmask(0x21);
     theJuanAndOnly->buildingObjectSprite -> getPhysicsBody()->setContactTestBitmask(0x1);
     theJuanAndOnly->buildingObjectSprite -> getPhysicsBody()-> setTag(-1);
+    theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
     // Inventory background
@@ -1340,6 +1341,8 @@ void GameScreen::startBattle(){
     }
     inv_bg -> setVisible(false);
     ////////////////////////////////////////////////
+    // make juan dynamic
+    theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(true);
     ////////////////////////////////////////////////
     // fire cannon 1
     //this -> schedule(schedule_selector(GameScreen::fireCannon1), 1.0f);
