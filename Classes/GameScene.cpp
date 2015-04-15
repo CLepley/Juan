@@ -38,6 +38,7 @@ bool myOwnFuckingBool =  false;
 
 int numTimeFired = 0;
 
+Point initialBlockLocation;
 
 // holds all spirtes used
 BuildingObject *buildingList[50];
@@ -617,6 +618,7 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
         for (int i = 0; i < numBlocks; i++) {
             if (target == buildingList[i]->buildingObjectSprite) {
                 if (rect.containsPoint(locationInNode)) {
+                    initialBlockLocation = touch->getLocation();
                     return true;
                 }
             }
@@ -638,23 +640,29 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     cocos2d::Point touchLoc = touch -> getLocation();
     cocos2d::Point delta = touch->getDelta();
     Point currentLocation;
+    Point initlLocation;
     Point oldLocation;
     Point newLocation;
     
+    Vec2 stopMovingVel;
+    stopMovingVel.x = 0;
+    stopMovingVel.y = 0;
+    
     Point tempCurrentPoint;
     Point tempNewPoint;
-    
-    currentLocation = touch -> getLocation();
-    oldLocation = touch -> getPreviousLocation();
     
     // check if any of the items in buildingList are selected
     for (int i = 0; i < numBlocks; i++) {
         if (target == buildingList[i]->buildingObjectSprite) {
             if (gameMode == 0){
                 buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(false);
-                touchLoc.x += delta.x;
-                touchLoc.y += delta.y;
-                buildingList[i]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+                buildingList[i]->buildingObjectSprite->getPhysicsBody()->setVelocity(stopMovingVel);
+                initlLocation = buildingList[i]->buildingObjectSprite->getPosition();
+                currentLocation = touch->getLocation();
+                oldLocation = touch->getPreviousLocation();
+                newLocation.x = initlLocation.x + currentLocation.x - oldLocation.x;
+                newLocation.y = initlLocation.y + currentLocation.y - oldLocation.y;
+                buildingList[i]->buildingObjectSprite->setPosition(Point(newLocation.x, newLocation.y));
                 break;
             }
         }
