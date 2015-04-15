@@ -34,8 +34,6 @@ Sprite *playerWon;
 Sprite *winScreen; // shows when player wins
 int inv_page;
 
-bool myOwnFuckingBool =  false;
-
 int numTimeFired = 0;
 
 Point initialBlockLocation;
@@ -154,7 +152,6 @@ bool GameScreen::init()
     glassTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
     glassTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
     glassTextField->setPosition(origin + Point(visibleSize.width/4,visibleSize.height-20));
-    //glassTextField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
     this->addChild(glassTextField);
     // Create the wood textfield
     woodTextField = cocos2d::ui::TextField::create("Wood: 1","fonts/Marker Felt.ttf",30);
@@ -166,7 +163,6 @@ bool GameScreen::init()
     woodTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
     woodTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
     woodTextField->setPosition(origin + Point(visibleSize.width/2,visibleSize.height-20));
-    //woodTextField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
     this->addChild(woodTextField);
     // Create the stone textfield
     stoneTextField = cocos2d::ui::TextField::create("Stone: 1","fonts/Marker Felt.ttf",30);
@@ -178,7 +174,6 @@ bool GameScreen::init()
     stoneTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
     stoneTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
     stoneTextField->setPosition(origin + Point(visibleSize.width - visibleSize.width/4,visibleSize.height-20));
-    //stoneTextField->addEventListener(CC_CALLBACK_0(GameScreen::doSomething, this));
     this->addChild(stoneTextField);
     
     numTimeFired = 0;
@@ -187,33 +182,16 @@ bool GameScreen::init()
      stone = 4;
      glass = 6;
     
-    char str[100];
-    if (wood == 0){
-        sprintf(str, "Wood: %d", wood);
-    }
-    else{
-        sprintf(str, "Wood: %d", wood - 1);
-    }
-    woodTextField->setString(str);
-    if (stone == 0){
-        sprintf(str, "Stone: %d", stone);
-    }
-    else{
-        sprintf(str, "Stone: %d", stone - 1);
-    }
-    stoneTextField->setString(str);
-    if (glass == 0){
-        sprintf(str, "Glass: %d", glass);
-    }
-    else{
-        sprintf(str, "Glass: %d", glass - 1);
-    }
-    glassTextField->setString(str);
+    setBuildingMaterialsTextFeild();
     return true;
 }
 
 void GameScreen::update(float delta)
 {
+    setBuildingMaterialsTextFeild();
+}
+
+void GameScreen::setBuildingMaterialsTextFeild(){
     char str[100];
     if (wood == 0){
         sprintf(str, "Wood: %d", wood);
@@ -236,7 +214,6 @@ void GameScreen::update(float delta)
         sprintf(str, "Glass: %d", glass - 1);
     }
     glassTextField->setString(str);
-    
 }
 
 void GameScreen::setUpPhysicsScreenBody()
@@ -349,22 +326,6 @@ void GameScreen::initPhysicsSprites(){
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), inv_bg);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), zoom);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), playButton);
-
-    
-    
-    
-    
-//    // cannonBall
-//    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-//    cannonBall-> setPosition(origin + Point(30,-50));
-//   // cannonBall-> setScale(0.01);
-//    cannonBall-> setFlippedX(true);
-//    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/250,
-//                                                            // density, restitution, friction,
-//                                                            PhysicsMaterial(5,1,1));
-//    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-//    this-> addChild(cannonBall);
-    
     
     // cannon
     cannon1 = Sprite::createWithSpriteFrameName("cannonNormal.png");
@@ -432,21 +393,16 @@ void GameScreen::ballTimer (float dt) {
     //Check if ball needs to be removed from the scene
     if (removeBallCounter == 2) {
         this -> removeChild(cannonBall);
-        myOwnFuckingBool = false;
         removeBallCounter = 0;
         this ->unschedule(schedule_selector(GameScreen::ballTimer));
         removeCannonBall = false;
     } else {
         removeBallCounter++;
     }
-    
 }
-
 
 bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
 {
-    //CCLOG("nodeA velocity %f,%f", contact.getShapeA()->getBody()->getVelocity().x, contact.getShapeA()->getBody()->getVelocity().y);
-    //CCLOG("nodeB velocity %f,%f", contact.getShapeB()->getBody()->getVelocity().x, contact.getShapeB()->getBody()->getVelocity().y);
     if ( gameMode ==  1){
         int nodeAForce = contact.getShapeA()->getBody()->getVelocity().x + contact.getShapeA()->getBody()->getVelocity().y;
         int nodeBForce = contact.getShapeB()->getBody()->getVelocity().x + contact.getShapeB()->getBody()->getVelocity().y;
@@ -462,9 +418,6 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
         if (finalForce < 0){
             finalForce = finalForce * -1;
         }
-        //CCLOG("get tag A: %d", contact.getShapeA()->getBody()->getTag());
-        //CCLOG("get tag B: %d", contact.getShapeB()->getBody()->getTag());
-        //CCLOG("finalForce: %d", finalForce);
 
         if (contact.getShapeA()->getBody()->getTag() >= 0){
             buildingList[contact.getShapeA()->getBody()->getTag()] -> calcDamage(finalForce);
@@ -510,8 +463,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     num = 0;
     scroll = true;
     
-    
-    
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
          target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
@@ -551,53 +502,6 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
-    /*else if ( target == cannon )
-    {
-        if (rect.containsPoint(locationInNode))
-        {
-            //gameMode = 1;
-            // cannonBall
-            if (cannonBall != NULL) {
-                removeChild(cannonBall);
-            }
-            
-            //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
-            cannon -> runAction (Animate::create(animation));
-            
-            
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-            audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-            cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-            
-            // cannonBall position is set for cannonBallElevated
-            cannonBall-> setPosition(Point(cannon-> getPositionX() + 5,cannon-> getPositionY() + 8));
-            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                                    // density, restitution, friction,
-                                                                    PhysicsMaterial(cDen,0.2,2));
-            cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-            
-            this -> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(170,100));
-            cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-            cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-            cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-            cannonBall-> setTag(-1);
-            cannonBall->getPhysicsBody()->setTag(-2);
-            auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-            cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                         this);
-            this -> getEventDispatcher() ->
-            addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
-            return true; // found it, so swallow it
-            // to allow the ball AND box to be simulataneously touched, do not swallow and return false
-        }
-        else
-        {
-            return false; // let the next thing on the list check it. do not swallow
-        }
-    }*/
-    
     else if (target == playerLost || target == blackScreen) {
         if (rect.containsPoint(locationInNode)) {
             return true;
@@ -1068,34 +972,35 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 }
             }
         }
-        
     }
+}
+
+void GameScreen::zoomIn(){
+    // zoom in
+    _camera -> removeFromParent();
     
+    // unhide interface options
+    zoom -> setVisible(true);
+    playButton-> setVisible(true);
+    glassTextField->setVisible(true);
+    woodTextField->setVisible(true);
+    stoneTextField->setVisible(true);
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(true);
+    }
+    inv_bg -> setVisible(true);
+    zoomed = false;
 }
 
 void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     // This gets the highest priority sprite that was registered. (even though it might not be the one touched
     
-    
     // while zoomed, any touch will zoom out (for now)
     if (gameMode == 0){
-    if ( _camera && zoomed )
-    {
-        // zoom in
-        _camera -> removeFromParent();
-        
-        // unhide interface options
-        zoom -> setVisible(true);
-        playButton-> setVisible(true);
-        glassTextField->setVisible(true);
-        woodTextField->setVisible(true);
-        stoneTextField->setVisible(true);
-        for (int i = 0; i < 12; i++) {
-            inv_items[i] -> setVisible(true);
+        if ( _camera && zoomed )
+        {
+            zoomIn();
         }
-        inv_bg -> setVisible(true);
-        zoomed = false;
-    }
     }
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
     
@@ -1121,12 +1026,6 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                 i = numBlocks;
             }
         }
-        //if (isTouching){
-            //this-> removeChild(buildingList[numBlocks-1]->buildingObjectSprite);
-            //numBlocks--;
-        //}
-        //else {
-            
             if ((target != inv_items[0] || target != inv_items[1] || target != inv_items[2] || target != inv_items[3] ||
                 target != inv_items[4] || target != inv_items[5] || target != inv_items[6] || target != inv_items[7] ||
                 target != inv_items[8] || target != inv_items[9] || target != inv_items[10] || target != inv_items[11] ||
@@ -1184,16 +1083,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             zoomed = true;
             
             //Hide interface options
-            zoom -> setVisible(false);
-            playButton-> setVisible(false);
-            glassTextField->setVisible(false);
-            woodTextField->setVisible(false);
-            stoneTextField->setVisible(false);
-            for (int i = 0; i < 12; i++) {
-                inv_items[i] -> setVisible(false);
-            }
-            inv_bg -> setVisible(false);
-
+            hideInterfaceOptions();
             return;
         }
         
@@ -1215,29 +1105,26 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             break;
         }
     }
+}
 
-    
-    
-    // if zoomed, on any touch, zoom in
-    
+void GameScreen::hideInterfaceOptions(){
+    zoom -> setVisible(false);
+    playButton-> setVisible(false);
+    glassTextField->setVisible(false);
+    woodTextField->setVisible(false);
+    stoneTextField->setVisible(false);
+    for (int i = 0; i < 12; i++) {
+        inv_items[i] -> setVisible(false);
+    }
+    inv_bg -> setVisible(false);
+
 }
 
 // Call function if Juan is hit
 void GameScreen::showPlayerLostScreen() {
     // zoom in
-    _camera -> removeFromParent();
+    zoomIn();
     
-    // unhide interface options
-    zoom -> setVisible(true);
-    playButton-> setVisible(true);
-    glassTextField->setVisible(true);
-    woodTextField->setVisible(true);
-    stoneTextField->setVisible(true);
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(true);
-    }
-    inv_bg -> setVisible(true);
-    zoomed = false;
     // Black screen
     blackScreen = Sprite::create("black_screen.png");
     blackScreen->setPosition(origin + Point(visibleSize.width/2,
@@ -1250,7 +1137,6 @@ void GameScreen::showPlayerLostScreen() {
                                            visibleSize.height/2));
     this->addChild(playerLost);
    
-    
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener -> setSwallowTouches(true);
     // setup the callback
@@ -1262,33 +1148,16 @@ void GameScreen::showPlayerLostScreen() {
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
     
     //Hide interface options
-    zoom -> setVisible(false);
-    
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(false);
-    }
-    inv_bg -> setVisible(false);
+    hideInterfaceOptions();
     
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerLost);
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), blackScreen);
-    
 }
 
 void GameScreen::showPlayerWonScreen() {
     // zoom in
-    _camera -> removeFromParent();
+    zoomIn();
     
-    // unhide interface options
-    zoom -> setVisible(true);
-    playButton-> setVisible(true);
-    glassTextField->setVisible(true);
-    woodTextField->setVisible(true);
-    stoneTextField->setVisible(true);
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(true);
-    }
-    inv_bg -> setVisible(true);
-    zoomed = false;
     // Background
     winScreen = Sprite::create("win_screen_bg.png");
     winScreen->setPosition(origin + Point(visibleSize.width/2,
@@ -1313,12 +1182,7 @@ void GameScreen::showPlayerWonScreen() {
     CC_CALLBACK_2(GameScreen::onTouchEnded, this);
     
     //Hide interface options
-    zoom -> setVisible(false);
-    
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(false);
-    }
-    inv_bg -> setVisible(false);
+    hideInterfaceOptions();
     
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerWon);
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), winScreen);
@@ -1339,28 +1203,17 @@ void GameScreen::startBattle(){
     zoomed = true;
     
     //Hide interface options
-    zoom -> setVisible(false);
-    playButton-> setVisible(false);
-    glassTextField->setVisible(false);
-    woodTextField->setVisible(false);
-    stoneTextField->setVisible(false);
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(false);
-    }
-    inv_bg -> setVisible(false);
+    hideInterfaceOptions();
     ////////////////////////////////////////////////
     // make juan dynamic
     theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(true);
     ////////////////////////////////////////////////
-    // fire cannon 1
-    //this -> schedule(schedule_selector(GameScreen::fireCannon1), 1.0f);
+    // fire cannons
     this->schedule(schedule_selector(GameScreen::fireCannon1), 8.0f,1000000000000, 1.0f);
-    //this->schedule(schedule_selector(GameScreen::fireCannon2), 15.0f, 1, 6.0f);
-    //this->schedule(schedule_selector(GameScreen::fireCannon3), 5.0f, 1, 11.0f);
     
     this->schedule(schedule_selector(GameScreen::checkOnJuan), 0.2f);
-    
-    }
+}
+
 void GameScreen::checkOnJuan(float dt){
     if (theJuanAndOnly->buildingObjectSprite->isVisible() == false){
         showPlayerLostScreen();
@@ -1368,6 +1221,7 @@ void GameScreen::checkOnJuan(float dt){
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
     }
 }
+
 void GameScreen::checkOnJuan2(float dt){
     if (theJuanAndOnly->buildingObjectSprite->isVisible() == false){
         showPlayerLostScreen();
@@ -1379,21 +1233,18 @@ void GameScreen::checkOnJuan2(float dt){
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
     }
 }
+
 void GameScreen::fireCannon1(float dt){
     ////////////////////////////////////////////////
     // fire cannon
-    //if (myOwnFuckingBool == false){
-    
         numTimeFired++;
         if (numTimeFired == 1 || numTimeFired == 4){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
-            myOwnFuckingBool = true;
             //Animate the cannon
             Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
             cannon1 -> runAction (Animate::create(animation));
-            
             
             auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
             audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
@@ -1424,7 +1275,6 @@ void GameScreen::fireCannon1(float dt){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
-            myOwnFuckingBool = true;
             //Animate the cannon
             Animation *animation = Animation::createWithSpriteFrames(cannonFramesElevated, 0.2f);
             cannon2 -> runAction (Animate::create(animation));
@@ -1461,7 +1311,6 @@ void GameScreen::fireCannon1(float dt){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
-            myOwnFuckingBool = true;
             //Animate the cannon
             Animation *animation = Animation::createWithSpriteFrames(cannonFramesHigh, 0.2f);
             cannon3 -> runAction (Animate::create(animation));
@@ -1496,83 +1345,4 @@ void GameScreen::fireCannon1(float dt){
             this ->unschedule(schedule_selector(GameScreen::fireCannon1));
             this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
         }
-    //}
 }
-
-
-void GameScreen::fireCannon2(float dt){
-    // fire cannon
-    
-    if (cannonBall != NULL) {
-        removeChild(cannonBall);
-    }
-    
-    //Animate the cannon
-    Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
-    cannon2 -> runAction (Animate::create(animation));
-    
-    
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-    
-    // cannonBall position is set for cannonBallElevated
-    cannonBall-> setPosition(Point(cannon2-> getPositionX() + 5,cannon2-> getPositionY() + 8));
-    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                            // density, restitution, friction,
-                                                            PhysicsMaterial(cDen,0.2,2));
-    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-    
-    this -> addChild(cannonBall);
-    cannonBall->getPhysicsBody()->setVelocity(Vec2(170,100));
-    cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-    cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-    cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-    cannonBall-> setTag(-1);
-    cannonBall->getPhysicsBody()->setTag(-2);
-    auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-    cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                 this);
-    this -> getEventDispatcher() ->
-    addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
-    ////////////////////////////////////////////////
-}
-
-void GameScreen::fireCannon3(float dt){
-    // fire cannon
-    
-    if (cannonBall != NULL) {
-        removeChild(cannonBall);
-    }
-    
-    //Animate the cannon
-    Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
-    cannon3 -> runAction (Animate::create(animation));
-    
-    
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-    
-    // cannonBall position is set for cannonBallElevated
-    cannonBall-> setPosition(Point(cannon3-> getPositionX() + 5,cannon3-> getPositionY() + 8));
-    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                            // density, restitution, friction,
-                                                            PhysicsMaterial(cDen,0.2,2));
-    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-    
-    this -> addChild(cannonBall);
-    cannonBall->getPhysicsBody()->setVelocity(Vec2(170,100));
-    cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-    cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-    cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-    cannonBall-> setTag(-1);
-    cannonBall->getPhysicsBody()->setTag(-2);
-    auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-    cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                 this);
-    this -> getEventDispatcher() ->
-    addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
-    ////////////////////////////////////////////////
-}
-

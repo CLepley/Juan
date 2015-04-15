@@ -24,7 +24,7 @@ public:
     void initPhysicsSprites();
     void update(float delta);
     void setUpPhysicsScreenBody();
-    
+    void setBuildingMaterialsTextFeild();
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
@@ -34,6 +34,9 @@ public:
     void showPlayerWonScreen();
     
     void ballTimer(float dt);
+    void hideInterfaceOptions();
+    
+    void zoomIn();
     
     void startBattle();
     void checkOnJuan(float dt);
