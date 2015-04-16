@@ -8,6 +8,7 @@
 #include <UITextField.h>
 #include "MainMenuScene.h"
 #include "LevelsScene.h"
+#include "EnemiesObject.h"
 
 USING_NS_CC;
 
@@ -20,9 +21,7 @@ Size visibleSize;
 // background sprite
 Sprite *bg;
 Sprite *playButton;
-Sprite *cannon1;
-Sprite *cannon2;
-Sprite *cannon3;
+EnemiesObject *cannon;
 Sprite *cannonBall;
 Sprite *zoom;
 Sprite *inv_bg;
@@ -54,22 +53,12 @@ bool scroll = true;
 bool removeCannonBall = false;
 int removeBallCounter = 0; //Default to 3. Counter for ball lifecycle after collision
 
-Vec2 cannonPosition1;
-Vec2 cannonPosition2;
-Vec2 cannonPosition3;
 Vec2 zoomPosition;
 Vec2 originalBackgroundPosition;
-cocos2d::Camera*      _camera;
+cocos2d::Camera* _camera;
 int typeTouched;
 // sprite sheet
 SpriteFrameCache* cache;
-SpriteBatchNode *cannonSpriteBatch1;
-SpriteBatchNode *cannonSpriteBatch2;
-SpriteBatchNode *cannonSpriteBatch3;
-
-Vector<SpriteFrame*> cannonFrames(5);
-Vector<SpriteFrame*> cannonFramesElevated(5);
-Vector<SpriteFrame*> cannonFramesHigh(5);
 
 
 // game mode   0 = building; 1 = attack;
@@ -126,17 +115,13 @@ bool GameScreen::init()
     // set background to white
     glClearColor(1,1,1,1.0);
     
-    //Setup sprite Batch
-    cannonSpriteBatch1 = SpriteBatchNode::create("cannonSpriteSheet.png");
-    cannonSpriteBatch2 = SpriteBatchNode::create("cannonSpriteSheet.png");
-    cannonSpriteBatch3 = SpriteBatchNode::create("cannonSpriteSheet.png");
 
     
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
-    cache->addSpriteFramesWithFile("spritesheet.plist");
-    cache->addSpriteFramesWithFile("cannonSprites.plist");
-    
+    // setup cannon
+    cannon = new EnemiesObject(1, 1, Point(origin.x + 35, origin.y + 60));
+    this->addChild(cannon->enemieSpriteBatch);
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -261,6 +246,10 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
+    // setup cannon
+    cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    this->addChild(cannon->enemieSpriteBatch);
+    
     // Inventory background
     inv_bg = Sprite::create("inv_bg.png");
     inv_bg -> setPosition(origin + Point(visibleSize.width - inv_bg->getContentSize().width/2,
@@ -328,65 +317,7 @@ void GameScreen::initPhysicsSprites(){
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener->clone(), playButton);
     
     // cannon
-    cannon1 = Sprite::createWithSpriteFrameName("cannonNormal.png");
-    cannon1-> setPosition(origin - Vec2(35,60)); //35 60
-    cannon1-> setFlippedX(true);
-    cannonSpriteBatch1 -> addChild(cannon1);
-    this -> addChild(cannonSpriteBatch1);
-    
-    cannon2 = Sprite::createWithSpriteFrameName("cannonElevated.png");
-    cannon2-> setPosition(origin - Vec2(270,60));
-    cannon2-> setFlippedX(true);
-    cannonSpriteBatch2 -> addChild(cannon2);
-    this -> addChild(cannonSpriteBatch2);
-    
-    cannon3 = Sprite::createWithSpriteFrameName("cannonHigh.png");
-    cannon3-> setPosition(origin - Vec2(515,60));
-    cannon3-> setFlippedX(true);
-    cannonSpriteBatch3 -> addChild(cannon3);
-    this -> addChild(cannonSpriteBatch3);
-    
-    
-    //Setup cannon animation
-    char str[100] = {0};
-    for (int i = 1; i < 6; ++i) {
-        sprintf(str, "cannonNormalFire%d.png", i);
-        SpriteFrame *frame = cache->getSpriteFrameByName( str );
-        cannonFrames.pushBack(frame);
-    }
-    SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonNormal.png");
-    cannonFrames.pushBack(startingCannon);
-    
-    for (int i = 1; i < 6; ++i) {
-        sprintf(str, "cannonElevatedFire%d.png", i);
-        SpriteFrame *frame = cache->getSpriteFrameByName( str );
-        cannonFramesElevated.pushBack(frame);
-    }
-    startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
-    cannonFramesElevated.pushBack(startingCannon);
-    
-    for (int i = 1; i < 6; ++i) {
-        sprintf(str, "cannonHighFire%d.png", i);
-        SpriteFrame *frame = cache->getSpriteFrameByName( str );
-        cannonFramesHigh.pushBack(frame);
-    }
-    startingCannon = cache->getSpriteFrameByName("cannonHigh.png");
-    cannonFramesHigh.pushBack(startingCannon);
-    
-    
-    cannonPosition1 = cannon1->convertToWorldSpace(cannon1->getPosition());
-    
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener ->clone(), cannon1);
-    
-    cannonPosition2 = cannon2->convertToWorldSpace(cannon2->getPosition());
-    
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener ->clone(), cannon2);
-    
-    cannonPosition3 = cannon3->convertToWorldSpace(cannon3->getPosition());
-    
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener ->clone(), cannon3);
-    
-    
+   
 }
 
 void GameScreen::ballTimer (float dt) {
@@ -884,20 +815,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
                 // connon
-                tempCurrentPoint = cannon1-> getPosition();
+                tempCurrentPoint = cannon->enemieSprite-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon1-> setPosition(tempNewPoint.x,tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon2-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon2-> setPosition(tempNewPoint.x,tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon3-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon3-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                cannon->enemieSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
 
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -916,20 +837,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.x);
                 // connon
-                tempCurrentPoint = cannon1-> getPosition();
+                tempCurrentPoint = cannon->enemieSprite-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon1-> setPositionX(tempNewPoint.x);
-                // connon
-                tempCurrentPoint = cannon2-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon2-> setPositionX(tempNewPoint.x);
-                // connon
-                tempCurrentPoint = cannon3-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon3-> setPositionX(tempNewPoint.x);
+                cannon->enemieSprite-> setPositionX(tempNewPoint.x);
                 
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
@@ -949,20 +860,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPositionY(tempNewPoint.y);
                 // connon
-                tempCurrentPoint = cannon1-> getPosition();
+                tempCurrentPoint = cannon-> getPosition();
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon1-> setPositionY(tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon2-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon2-> setPositionY(tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon3-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon3-> setPositionY(tempNewPoint.y);
+                cannon->enemieSprite-> setPositionY(tempNewPoint.y);
 
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -1234,113 +1135,46 @@ void GameScreen::checkOnJuan2(float dt){
     }
 }
 
+void GameScreen::fireCannonBall(Vec2 ballVelocity, Point location){
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
+    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
+    
+    // cannonBall position is set for cannonBallElevated
+    cannonBall-> setPosition(Point(location.x + 5,location.y + 8));
+    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
+                                                            // density, restitution, friction,
+                                                            PhysicsMaterial(cDen,0.2,2));
+    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
+    
+    this -> addChild(cannonBall);
+    cannonBall->getPhysicsBody()->setVelocity(ballVelocity);
+    cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
+    cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
+    cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
+    cannonBall-> setTag(-1);
+    cannonBall->getPhysicsBody()->setTag(-2);
+    auto cannonoBallContactListener = EventListenerPhysicsContact::create();
+    cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
+                                                                 this);
+    this -> getEventDispatcher() ->
+    addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
+}
+
 void GameScreen::fireCannon1(float dt){
     ////////////////////////////////////////////////
     // fire cannon
         numTimeFired++;
-        if (numTimeFired == 1 || numTimeFired == 4){
+        //if (numTimeFired == 1 || numTimeFired == 4){
             if (cannonBall != NULL) {
                 removeChild(cannonBall);
             }
             //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFrames, 0.2f);
-            cannon1 -> runAction (Animate::create(animation));
-            
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-            audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-            cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-            
-            // cannonBall position is set for cannonBallElevated
-            cannonBall-> setPosition(Point(cannon1-> getPositionX() + 5,cannon1-> getPositionY() + 8));
-            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                                    // density, restitution, friction,
-                                                                    PhysicsMaterial(cDen,0.2,2));
-            cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-            
-            this -> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(240,100));
-            cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-            cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-            cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-            cannonBall-> setTag(-1);
-            cannonBall->getPhysicsBody()->setTag(-2);
-            auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-            cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                         this);
-            this -> getEventDispatcher() ->
-            addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
+            Animation *animation = Animation::createWithSpriteFrames(cannon->enemieFrames, 0.2f);
+            cannon->enemieSprite -> runAction (Animate::create(animation));
+            fireCannonBall(Vec2(240,100), cannon->enemieSprite->getPosition());
             ////////////////////////////////////////////////
-        }
-        else if (numTimeFired == 2 || numTimeFired == 6){
-            if (cannonBall != NULL) {
-                removeChild(cannonBall);
-            }
-            //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFramesElevated, 0.2f);
-            cannon2 -> runAction (Animate::create(animation));
-            
-            
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-            audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-            cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-            
-            // cannonBall position is set for cannonBallElevated
-            cannonBall-> setPosition(Point(cannon2-> getPositionX() + 5,cannon2-> getPositionY() + 8));
-            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                                    // density, restitution, friction,
-                                                                    PhysicsMaterial(cDen,0.2,2));
-            cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-            
-            this -> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(160,180));
-            cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-            cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-            cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-            cannonBall-> setTag(-1);
-            cannonBall->getPhysicsBody()->setTag(-2);
-            auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-            cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                         this);
-            this -> getEventDispatcher() ->
-            addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
-            ////////////////////////////////////////////////
-
-        }
-        else if (numTimeFired == 3 || numTimeFired == 5){
-            
-            if (cannonBall != NULL) {
-                removeChild(cannonBall);
-            }
-            //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannonFramesHigh, 0.2f);
-            cannon3 -> runAction (Animate::create(animation));
-            
-            
-            auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-            audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-            cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
-            
-            // cannonBall position is set for cannonBallElevated
-            cannonBall-> setPosition(Point(cannon3-> getPositionX() + 5,cannon3-> getPositionY() + 8));
-            auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                                    // density, restitution, friction,
-                                                                    PhysicsMaterial(cDen,0.2,2));
-            cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
-            
-            this -> addChild(cannonBall);
-            cannonBall->getPhysicsBody()->setVelocity(Vec2(200,225));
-            cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-            cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-            cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-            cannonBall-> setTag(-1);
-            cannonBall->getPhysicsBody()->setTag(-2);
-            auto cannonoBallContactListener = EventListenerPhysicsContact::create();
-            cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
-                                                                         this);
-            this -> getEventDispatcher() ->
-            addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
-            ////////////////////////////////////////////////
-        }
+        //}
         if (numTimeFired == 4){
             this ->unschedule(schedule_selector(GameScreen::fireCannon1));
             this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);

@@ -24,6 +24,7 @@
 		0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB211A6974B400ED19BD /* Marker Felt.ttf */; };
 		0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB281A6974B400ED19BD /* .gitkeep */; };
 		0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB321A6979E800ED19BD /* pink_balloon.jpg */; };
+		079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079757E51ADE8F3000273B98 /* EnemiesObject.cpp */; };
 		07B930661A67784D009C3642 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07B930641A67784D009C3642 /* GameScene.cpp */; };
 		07DACC631AA58BB7009A6418 /* juan.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC621AA58BB7009A6418 /* juan.png */; };
 		07DACC741AA5BFFF009A6418 /* SpriteSheetJuan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC721AA5BFFF009A6418 /* SpriteSheetJuan.plist */; };
@@ -167,6 +168,8 @@
 		0773EB211A6974B400ED19BD /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		0773EB281A6974B400ED19BD /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		0773EB321A6979E800ED19BD /* pink_balloon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pink_balloon.jpg; sourceTree = "<group>"; };
+		079757E51ADE8F3000273B98 /* EnemiesObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnemiesObject.cpp; sourceTree = "<group>"; };
+		079757E61ADE8F3000273B98 /* EnemiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemiesObject.h; sourceTree = "<group>"; };
 		07B930641A67784D009C3642 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		07B930651A67784D009C3642 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		07DACC621AA58BB7009A6418 /* juan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = juan.png; sourceTree = "<group>"; };
@@ -466,6 +469,15 @@
 			name = LevelScene;
 			sourceTree = "<group>";
 		};
+		079757E41ADE8EF100273B98 /* EnemiesObject */ = {
+			isa = PBXGroup;
+			children = (
+				079757E61ADE8F3000273B98 /* EnemiesObject.h */,
+				079757E51ADE8F3000273B98 /* EnemiesObject.cpp */,
+			);
+			name = EnemiesObject;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +565,7 @@
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				079757DD1ADE310F00273B98 /* MainMenuScene */,
 				079757DE1ADE311800273B98 /* GameScene */,
+				079757E41ADE8EF100273B98 /* EnemiesObject */,
 				079757DF1ADE312000273B98 /* BuildingObject */,
 				079757E01ADE312C00273B98 /* LevelScene */,
 			);
@@ -801,6 +814,7 @@
 				0711F30D1AA00EF6001A97E0 /* BuildingObject.cpp in Sources */,
 				761DFECA1AA57CAD00A1C4AC /* PEShapeCache_X3_0.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* MainMenuScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
