@@ -52,6 +52,8 @@ int num = 0;
 
 bool zoomed = false;
 bool scroll = true;
+float scrollDelta = 700;
+
 bool removeCannonBall = false;
 int removeBallCounter = 0; //Default to 3. Counter for ball lifecycle after collision
 
@@ -418,6 +420,9 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
     num = 0;
     scroll = true;
     
+    //CCLOG("%f", inv_items[0]->getPositionY());
+    //scrollDelta = inv_items[0]->getPositionY();
+    
     // test each sprite to see if touched, the highest priority one will be checked on the first callback
     if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
          target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
@@ -510,6 +515,8 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     Point tempCurrentPoint;
     Point tempNewPoint;
     
+    
+    
     // check if any of the items in buildingList are selected
     for (int i = 0; i < numBlocks; i++) {
         if (target == buildingList[i]->buildingObjectSprite) {
@@ -542,6 +549,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     clock_t time = 0;
     time = clock() - t;
     
+    
     if ((float)time/CLOCKS_PER_SEC > 0.1) {
         scroll = false;
     }
@@ -551,11 +559,18 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                            target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11] ||
                            target == inv_bg)) {
         t = clock();
-        for (int i = 0; i < 12; i++) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            inv_items[i]->setPositionY(originalPositionY[i] + (touch->getLocation().y - originalTouchPositionY));
+    
+        // stop scrolling down
+        scrollDelta = inv_items[0]->getPositionY();
+        if (scrollDelta > 698 && inv_items[11]->getPositionY() <= 430) { //Check scrolling up and down bounds
+            for (int i = 0; i < 12; i++) {
+                touchLoc.x += delta.x;
+                touchLoc.y += delta.y;
+                inv_items[i]->setPositionY(originalPositionY[i] + (touch->getLocation().y - originalTouchPositionY));
+                scrollDelta = inv_items[0]->getPositionY();
+            }
         }
+
         
     }
     else if (target == inv_items[0]) {
@@ -997,6 +1012,28 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     
     //bool isTouching = false;
     
+    // adjust scrolling
+    
+    if (scrollDelta < 698) {
+        inv_items[0] ->setPosition(inv_bg->getPositionX(),
+                                   origin.y + visibleSize.height - 0.75 * inv_items[0]->getContentSize().height);
+
+        for (int i = 1; i < 12; i++) {
+            inv_items[i]->setPosition(Point(inv_items[i - 1]->getPositionX(),
+                                            inv_items[i - 1]->getPositionY() - 1.25 * inv_items[i]->getContentSize().height));
+        }
+        
+    }
+    
+    // adjust upward scrolling.
+    // this is still very buggy
+    if (inv_items[11]->getPositionY() > 430) { // stop scrolling up
+        for (int i = 0; i < 12; i++) {
+            inv_items[i]->setPositionY(inv_items[i]->getPositionY() - 8);
+        }
+    }
+
+    
     
     if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
              target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
@@ -1061,23 +1098,6 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             return;
         }
         
-        
-        
-        
-        
-//        for (int i = 0; i < numBlocks - 1 ; i++){
-//            if (buildingList[numBlocks-1]->buildingObjectSprite-> getBoundingBox().intersectsRect(buildingList[i]->buildingObjectSprite->getBoundingBox()) && buildingList[i]->buildingObjectSprite->getPhysicsBody()->isEnabled()){
-//                // blocks are touching ileagle move
-//                // remove the block from scene and list
-//                // TODO make it slide back into place
-//                isTouching = true;
-//                i = numBlocks;
-//            }
-//        }
-        
-        
-        
-            
             // Attach triangle physics body to triangle blocks
             else if (option == inv_items[1] || option == inv_items[5] || option == inv_items[9]) {
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
