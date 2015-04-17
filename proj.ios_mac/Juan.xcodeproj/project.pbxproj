@@ -24,6 +24,8 @@
 		0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB211A6974B400ED19BD /* Marker Felt.ttf */; };
 		0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB281A6974B400ED19BD /* .gitkeep */; };
 		0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0773EB321A6979E800ED19BD /* pink_balloon.jpg */; };
+		077667831AE086560029B9A8 /* CatapultSpriteSheet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 077667811AE086560029B9A8 /* CatapultSpriteSheet.plist */; };
+		077667841AE086560029B9A8 /* CatapultSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 077667821AE086560029B9A8 /* CatapultSpriteSheet.png */; };
 		079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079757E51ADE8F3000273B98 /* EnemiesObject.cpp */; };
 		07B930661A67784D009C3642 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07B930641A67784D009C3642 /* GameScene.cpp */; };
 		07DACC631AA58BB7009A6418 /* juan.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC621AA58BB7009A6418 /* juan.png */; };
@@ -168,6 +170,8 @@
 		0773EB211A6974B400ED19BD /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		0773EB281A6974B400ED19BD /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		0773EB321A6979E800ED19BD /* pink_balloon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pink_balloon.jpg; sourceTree = "<group>"; };
+		077667811AE086560029B9A8 /* CatapultSpriteSheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CatapultSpriteSheet.plist; sourceTree = "<group>"; };
+		077667821AE086560029B9A8 /* CatapultSpriteSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CatapultSpriteSheet.png; sourceTree = "<group>"; };
 		079757E51ADE8F3000273B98 /* EnemiesObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnemiesObject.cpp; sourceTree = "<group>"; };
 		079757E61ADE8F3000273B98 /* EnemiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemiesObject.h; sourceTree = "<group>"; };
 		07B930641A67784D009C3642 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
@@ -314,6 +318,8 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				077667811AE086560029B9A8 /* CatapultSpriteSheet.plist */,
+				077667821AE086560029B9A8 /* CatapultSpriteSheet.png */,
 				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
 				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
 				0756B5D61AA74CE10079BEF0 /* woosh.mp3 */,
@@ -723,6 +729,7 @@
 				F26B6EF31AA5FC700048A9AC /* inv_wood_triangle.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
+				077667841AE086560029B9A8 /* CatapultSpriteSheet.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				076425361AA7032F007E537E /* playsprite.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
@@ -769,6 +776,7 @@
 				0764253E1AA7043D007E537E /* background.mp3 in Resources */,
 				0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */,
 				076425411AA70459007E537E /* Sombrero.png in Resources */,
+				077667831AE086560029B9A8 /* CatapultSpriteSheet.plist in Resources */,
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */,

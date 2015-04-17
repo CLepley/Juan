@@ -12,9 +12,31 @@ EnemiesObject::EnemiesObject(){
     
 }
 
-EnemiesObject::EnemiesObject(int type,Point position){
-    type = type;
-    // TODO....not currently used
+EnemiesObject::EnemiesObject(int t,Point position){
+    SpriteFrameCache* cache;
+    this->type = t;
+    if (t == 2){
+        enemieSpriteBatch = SpriteBatchNode::create("CatapultSpriteSheet.png");
+        cache = SpriteFrameCache::getInstance();
+        cache->addSpriteFramesWithFile("CatapultSpriteSheet.plist");
+        
+        this->enemieSprite = Sprite::createWithSpriteFrameName("catapult/Catapult_4.png");
+        SpriteFrame *frame = cache->getSpriteFrameByName("catapult/Catapult_4.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_5.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_3.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_2.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_4.png");
+        enemieFrames.pushBack(frame);
+    }
+    else{
+        
+    }
+    this->enemieSprite->setPosition(position);
+    enemieSpriteBatch->addChild(this->enemieSprite);
 }
 
 EnemiesObject::EnemiesObject(int t, int s, Point position){

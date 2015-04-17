@@ -22,6 +22,7 @@ Size visibleSize;
 Sprite *bg;
 Sprite *playButton;
 EnemiesObject *cannon;
+//EnemiesObject *catapult;
 Sprite *cannonBall;
 Sprite *zoom;
 Sprite *inv_bg;
@@ -247,7 +248,9 @@ void GameScreen::initPhysicsSprites(){
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
     // setup cannon
-    cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    //cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    //this->addChild(cannon->enemieSpriteBatch);
+    cannon = new EnemiesObject(2,Point(origin.x - 270, origin.y - 60));
     this->addChild(cannon->enemieSpriteBatch);
     
     // Inventory background
@@ -1135,7 +1138,10 @@ void GameScreen::checkOnJuan2(float dt){
     }
 }
 
-void GameScreen::fireCannonBall(Vec2 ballVelocity, Point location){
+void GameScreen::fireCannonBall(float dt){
+    Vec2 ballVelocity = Vec2(240, 100);
+    Point location = cannon->getPosition();
+    
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
     audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
     cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
@@ -1159,6 +1165,7 @@ void GameScreen::fireCannonBall(Vec2 ballVelocity, Point location){
                                                                  this);
     this -> getEventDispatcher() ->
     addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
+    this ->unschedule(schedule_selector(GameScreen::fireCannonBall));
 }
 
 void GameScreen::fireCannon1(float dt){
@@ -1170,12 +1177,15 @@ void GameScreen::fireCannon1(float dt){
                 removeChild(cannonBall);
             }
             //Animate the cannon
-            Animation *animation = Animation::createWithSpriteFrames(cannon->enemieFrames, 0.2f);
-            cannon->enemieSprite -> runAction (Animate::create(animation));
-            fireCannonBall(Vec2(240,100), cannon->enemieSprite->getPosition());
+            cannon->startAnimation();
+    if (cannon->type == 2){
+        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
+    }else{
+        fireCannonBall(0.0);
+    }
             ////////////////////////////////////////////////
         //}
-        if (numTimeFired == 4){
+        if (numTimeFired == 2){
             this ->unschedule(schedule_selector(GameScreen::fireCannon1));
             this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
         }

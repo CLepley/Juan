@@ -41,7 +41,7 @@ public:
     void startBattle();
     void checkOnJuan(float dt);
     void checkOnJuan2(float dt);
-    void fireCannonBall(Vec2 ballVelocity, Point location);
+    void fireCannonBall(float dt);
     void fireCannon1(float dt);
     void fireCannon2(float dt);
     void fireCannon3(float dt);
