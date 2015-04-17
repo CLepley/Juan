@@ -21,11 +21,6 @@ Size visibleSize;
 Sprite *bg;
 Sprite *playButton;
 
-//EnemiesObject *cannon;
-//EnemiesObject *cannon2;
-//EnemiesObject *cannon3;
-
-//cocos2d::Vector<EnemiesObject *> _currentEnemies;
 EnemiesObject *currentEnemies[12];
 
 
@@ -250,15 +245,6 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
-//    // setup cannon
-//    cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
-//    this->addChild(cannon->enemieSpriteBatch);
-//    
-//    // setup cannon
-//    cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
-//    this->addChild(cannon2->enemieSpriteBatch);
-
-
     //Setup the enemy array
     addEnemiesToEnemiesArrayForLevel();
     
@@ -266,6 +252,12 @@ void GameScreen::initPhysicsSprites(){
     inv_bg = Sprite::create("inv_bg.png");
     inv_bg -> setPosition(origin + Point(visibleSize.width - inv_bg->getContentSize().width/2,
                                                   visibleSize.height/2));
+    
+    
+    auto inv_bg_phys = PhysicsBody::createBox(Size(inv_bg->getContentSize().width, inv_bg->getContentSize().height));
+    inv_bg -> setPhysicsBody(inv_bg_phys);
+    inv_bg -> getPhysicsBody() -> setDynamic(false);
+    
     inv_bg->setOpacity(50);
     this->addChild(inv_bg);
     
@@ -1003,32 +995,91 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    bool isTouching = false;
+    //bool isTouching = false;
     
     
     if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
              target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
              target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) {
         
-        for (int i = 0; i < numBlocks - 1 ; i++){
-            if (buildingList[numBlocks-1]->buildingObjectSprite-> getBoundingBox().intersectsRect(buildingList[i]->buildingObjectSprite->getBoundingBox()) && buildingList[i]->buildingObjectSprite->getPhysicsBody()->isEnabled()){
-                // blocks are touching ileagle move
-                // remove the block from scene and list
-                // TODO make it slide back into place
-                isTouching = true;
-                i = numBlocks;
-            }
+        
+        if ((target != inv_items[0] || target != inv_items[1] || target != inv_items[2] || target != inv_items[3] ||
+             target != inv_items[4] || target != inv_items[5] || target != inv_items[6] || target != inv_items[7] ||
+             target != inv_items[8] || target != inv_items[9] || target != inv_items[10] || target != inv_items[11] ||
+             target != inv_bg) && scroll == true) {
+            return;
         }
-            if ((target != inv_items[0] || target != inv_items[1] || target != inv_items[2] || target != inv_items[3] ||
-                target != inv_items[4] || target != inv_items[5] || target != inv_items[6] || target != inv_items[7] ||
-                target != inv_items[8] || target != inv_items[9] || target != inv_items[10] || target != inv_items[11] ||
-                target != inv_bg) && scroll == true) {
-                return;
+        
+        
+        if (buildingList[numBlocks -1]->buildingObjectSprite->getBoundingBox().intersectsRect(inv_bg->getBoundingBox())) {
+            int buildingListSize = numBlocks - 1;
+            numBlocks--;
+            
+            switch (buildingList[buildingListSize]->objectClass) {
+                case 1:
+                    wood++;
+                    break;
+                case 2:
+                    wood++;
+                    break;
+                case 3:
+                    wood++;
+                    break;
+                case 4:
+                    wood++;
+                    break;
+                case 5:
+                    stone++;
+                    break;
+                case 6:
+                    stone++;
+                    break;
+                case 7:
+                    stone++;
+                    break;
+                case 8:
+                    stone++;
+                    break;
+                case 9:
+                    glass++;
+                    break;
+                case 10:
+                    glass++;
+                    break;
+                case 11:
+                    glass++;
+                    break;
+                case 12:
+                    glass++;
+                    break;
+                    
+                default:
+                    break;
             }
+            this->removeChild(buildingList[buildingListSize]->buildingObjectSprite);
+            buildingList[buildingListSize] = NULL;
+            return;
+        }
+        
+        
+        
+        
+        
+//        for (int i = 0; i < numBlocks - 1 ; i++){
+//            if (buildingList[numBlocks-1]->buildingObjectSprite-> getBoundingBox().intersectsRect(buildingList[i]->buildingObjectSprite->getBoundingBox()) && buildingList[i]->buildingObjectSprite->getPhysicsBody()->isEnabled()){
+//                // blocks are touching ileagle move
+//                // remove the block from scene and list
+//                // TODO make it slide back into place
+//                isTouching = true;
+//                i = numBlocks;
+//            }
+//        }
+        
+        
+        
             
             // Attach triangle physics body to triangle blocks
             else if (option == inv_items[1] || option == inv_items[5] || option == inv_items[9]) {
-                CCLOG("here");
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(triangle_body);
             }
