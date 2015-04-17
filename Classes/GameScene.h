@@ -22,6 +22,7 @@ public:
     CREATE_FUNC(GameScreen);
     
     void initPhysicsSprites();
+    void addEnemiesToEnemiesArrayForLevel();
     void update(float delta);
     void setUpPhysicsScreenBody();
     void setBuildingMaterialsTextFeild();

@@ -1,5 +1,4 @@
 #include "GameScene.h"
-#include <vector>
 #include "PEShapeCache_X3_0.h"
 #include <thread>
 #include <time.h>
@@ -120,9 +119,6 @@ bool GameScreen::init()
     
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
-    // setup cannon
-    cannon = new EnemiesObject(1, 1, Point(origin.x + 35, origin.y + 60));
-    this->addChild(cannon->enemieSpriteBatch);
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -321,6 +317,26 @@ void GameScreen::initPhysicsSprites(){
     
     // cannon
    
+}
+
+void GameScreen::addEnemiesToEnemiesArrayForLevel() {
+    
+    // setup the enemies array
+    // this will become the job of the level builder for each level
+    // probably will add this to the level object eventually
+    
+    EnemiesObject *cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    EnemiesObject *cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
+
+    
+    currentEnemies[0] = cannon;
+    currentEnemies[1] = cannon2;
+    
+    for (auto&& currentEnemy: currentEnemies) {
+        if (currentEnemy == NULL) break;
+        this->addChild(currentEnemy->enemieSpriteBatch);
+    }
+    
 }
 
 void GameScreen::ballTimer (float dt) {
@@ -817,11 +833,33 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon->enemieSprite-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon->enemieSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+                
+                
+//                // connon
+//                tempCurrentPoint = cannon->enemieSprite-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon->enemieSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+//                
+//                // cannon 2, temp
+//                tempCurrentPoint = cannon2->enemieSprite-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon2->enemieSprite-> setPosition(tempNewPoint.x,tempNewPoint.y);
+//
+                
+                // Enemies (cannons)
+                for (auto&& currentEnemy: currentEnemies) {
+                    if (currentEnemy == NULL) break;
+                    tempCurrentPoint = currentEnemy->enemieSprite->getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    currentEnemy->enemieSprite->setPosition(tempNewPoint.x,tempNewPoint.y);
+                    
+                }
+                
+                
+                
 
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
@@ -839,11 +877,31 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPositionX(tempNewPoint.x);
-                // connon
-                tempCurrentPoint = cannon->enemieSprite-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon->enemieSprite-> setPositionX(tempNewPoint.x);
+                
+                
+//                // cannon
+//                tempCurrentPoint = cannon->enemieSprite-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon->enemieSprite-> setPositionX(tempNewPoint.x);
+//                
+//                // cannon 2
+//                tempCurrentPoint = cannon2->enemieSprite-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon2->enemieSprite-> setPositionX(tempNewPoint.x);
+                
+                // enemies (cannon)
+                for (auto&& currentEnemy: currentEnemies) {
+                    if (currentEnemy == NULL) break;
+                    tempCurrentPoint = currentEnemy->enemieSprite->getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    currentEnemy->enemieSprite->setPositionX(tempNewPoint.x);
+                    
+                }
+                
+                
                 
                 // moves the sprites that were used for building
                 for (int i =0; i < numBlocks; i++){
@@ -862,11 +920,29 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
                 tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
                 tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
                 theJuanAndOnly->buildingObjectSprite-> setPositionY(tempNewPoint.y);
-                // connon
-                tempCurrentPoint = cannon-> getPosition();
-                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
-                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
-                cannon->enemieSprite-> setPositionY(tempNewPoint.y);
+                
+                
+//                // cannon
+//                tempCurrentPoint = cannon-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon->enemieSprite-> setPositionY(tempNewPoint.y);
+//                
+//                // cannon 2
+//                tempCurrentPoint = cannon2-> getPosition();
+//                tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+//                tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+//                cannon2->enemieSprite-> setPositionY(tempNewPoint.y);
+                
+                // enemies (cannon)
+                for (auto&& currentEnemy: currentEnemies) {
+                    if (currentEnemy == NULL) break;
+                    tempCurrentPoint = currentEnemy->enemieSprite->getPosition();
+                    tempNewPoint.x = tempCurrentPoint.x + currentLocation.x - oldLocation.x;
+                    tempNewPoint.y = tempCurrentPoint.y + currentLocation.y - oldLocation.y;
+                    currentEnemy->enemieSprite->setPositionY(tempNewPoint.y);
+                    
+                }
 
                 for (int i =0; i < numBlocks; i++){
                     tempCurrentPoint = buildingList[i]->buildingObjectSprite-> getPosition();
