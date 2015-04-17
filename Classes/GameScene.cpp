@@ -20,8 +20,16 @@ Size visibleSize;
 // background sprite
 Sprite *bg;
 Sprite *playButton;
-EnemiesObject *cannon;
-//EnemiesObject *catapult;
+
+//EnemiesObject *cannon;
+//EnemiesObject *cannon2;
+//EnemiesObject *cannon3;
+
+//cocos2d::Vector<EnemiesObject *> _currentEnemies;
+EnemiesObject *currentEnemies[12];
+int numEnemies = 0;
+int numShot = 0;
+
 Sprite *cannonBall;
 Sprite *zoom;
 Sprite *inv_bg;
@@ -119,6 +127,10 @@ bool GameScreen::init()
     
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
+    
+    numShot = 0;
+    numTimeFired = 0;
+    numEnemies = 0;
     
     setUpPhysicsScreenBody();
     initPhysicsSprites();
@@ -243,11 +255,17 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
-    // setup cannon
-    //cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
-    //this->addChild(cannon->enemieSpriteBatch);
-    cannon = new EnemiesObject(2,Point(origin.x - 270, origin.y - 60));
-    this->addChild(cannon->enemieSpriteBatch);
+//    // setup cannon
+//    cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+//    this->addChild(cannon->enemieSpriteBatch);
+//    
+//    // setup cannon
+//    cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
+//    this->addChild(cannon2->enemieSpriteBatch);
+
+
+    //Setup the enemy array
+    addEnemiesToEnemiesArrayForLevel();
     
     // Inventory background
     inv_bg = Sprite::create("inv_bg.png");
@@ -325,16 +343,19 @@ void GameScreen::addEnemiesToEnemiesArrayForLevel() {
     // this will become the job of the level builder for each level
     // probably will add this to the level object eventually
     
-    EnemiesObject *cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
-    EnemiesObject *cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
+    //EnemiesObject *cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    //EnemiesObject *cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
 
     
-    currentEnemies[0] = cannon;
-    currentEnemies[1] = cannon2;
+    currentEnemies[0] = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
+    currentEnemies[1] = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
+    currentEnemies[2] = new EnemiesObject(2, Point(origin.x - 450, origin.y - 60));
     
     for (auto&& currentEnemy: currentEnemies) {
         if (currentEnemy == NULL) break;
         this->addChild(currentEnemy->enemieSpriteBatch);
+        numEnemies++;
+        CCLOG("hi ryan");
     }
     
 }
@@ -1015,7 +1036,6 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             
             // Attach triangle physics body to triangle blocks
             else if (option == inv_items[1] || option == inv_items[5] || option == inv_items[9]) {
-                CCLOG("here");
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
                 buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(triangle_body);
             }
@@ -1216,7 +1236,7 @@ void GameScreen::checkOnJuan2(float dt){
 
 void GameScreen::fireCannonBall(float dt){
     Vec2 ballVelocity = Vec2(240, 100);
-    Point location = cannon->getPosition();
+    Point location = currentEnemies[numTimeFired]->getPosition();
     
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
     audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
@@ -1245,24 +1265,41 @@ void GameScreen::fireCannonBall(float dt){
 }
 
 void GameScreen::fireCannon1(float dt){
+    
+    int numTimesToFireTheWepoensFromTheEnemie = 2;
+    
+    currentEnemies[numTimeFired]->startAnimation();
+    fireCannonBall(0.0);
+    numTimeFired++;
+    
+    if (numTimeFired == numEnemies) {
+        numTimeFired = 0;
+        numShot++;
+    }
+    if (numShot == numTimesToFireTheWepoensFromTheEnemie) {
+        this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+        this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
+    }
+    
+    
     ////////////////////////////////////////////////
     // fire cannon
-        numTimeFired++;
+        //numTimeFired++;
         //if (numTimeFired == 1 || numTimeFired == 4){
-            if (cannonBall != NULL) {
-                removeChild(cannonBall);
-            }
+//            if (cannonBall != NULL) {
+//                removeChild(cannonBall);
+//            }
             //Animate the cannon
-            cannon->startAnimation();
-    if (cannon->type == 2){
-        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
-    }else{
-        fireCannonBall(0.0);
-    }
+//            cannon->startAnimation();
+//    if (cannon->type == 2){
+//        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
+//    }else{
+//        fireCannonBall(0.0);
+//    }
             ////////////////////////////////////////////////
         //}
-        if (numTimeFired == 2){
-            this ->unschedule(schedule_selector(GameScreen::fireCannon1));
-            this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
-        }
+//        if (numTimeFired == 2){
+//            this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+//            this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
+//        }
 }
