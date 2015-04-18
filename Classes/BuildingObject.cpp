@@ -182,8 +182,9 @@ void BuildingObject::calcDamage(int dmg){
     //CCLOG("Damage: %d",dmg);
     //CCLOG("Health: %d", this->objectHealth);
     if (this->objectHealth <= 0){
-        //CCLOG("inside the fucking statment");
+
         //CCLOG("tag: %d", this->buildingObjectSprite->getTag());
+        
         //buildingObjectSprite->removeFromParentAndCleanup(true);
         auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
         audio->playEffect("woosh.mp3", false, 1.0f, 1.0f, 1.0f);
@@ -191,27 +192,30 @@ void BuildingObject::calcDamage(int dmg){
         this->buildingObjectSprite->getPhysicsBody()->setEnable(false);
     }
     if (this->objectClass != 0){
+        
         //SpriteFrameCache::getInstance()->
         //addSpriteFramesWithFile("wood_block_sheet.plist", "wood_block_sheet.png");
         if (this->objectHealth <= 75 && this->objectHealth >50){
-            //CCLOG("----here 2");
+
             //this->buildingObjectSprite->setTexture("wood_block_2.png");
             this->buildingObjectSprite->setSpriteFrame(animFrames[0]);
             //Animation* animation = Animation::createWithSpriteFrames(this->animFrames, 0.3f);
             //this->buildingObjectSprite->runAction( Animate::create(animation)  );
         }
         else if (this->objectHealth <= 50 && this->objectHealth > 25){
-            //CCLOG("----here 3");
+
             //this->buildingObjectSprite->setTexture("wood_block_3.png");
             //Animation* animation = Animation::createWithSpriteFrames(this->animFrames, 0.3f);
             //this->buildingObjectSprite->runAction( Animate::create(animation)  );
+            
             this->buildingObjectSprite->setSpriteFrame(animFrames[1]);
         }
         else if (this->objectHealth <= 25){
-            //CCLOG("----here 4");
+
             //this->buildingObjectSprite->setTexture("wood_block_4.png");
             //Animation* animation = Animation::createWithSpriteFrames(this->animFrames, 0.3f);
             //this->buildingObjectSprite->runAction( Animate::create(animation)  );
+            
             this->buildingObjectSprite->setSpriteFrame(animFrames[2]);
 
         }

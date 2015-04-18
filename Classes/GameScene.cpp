@@ -74,14 +74,33 @@ GameScreen THIS;
 int cDen = 6;
 int bDen = 5;
 
-cocos2d::ui::TextField* glassTextField;
-cocos2d::ui::TextField* woodTextField;
-cocos2d::ui::TextField* stoneTextField;
+//cocos2d::ui::TextField* glassTextField;
+//cocos2d::ui::TextField* woodTextField;
+//cocos2d::ui::TextField* stoneTextField;
+cocos2d::ui::TextField *moneyCounterTextField;
 
 //Level 1 vars
-int wood = 4;
-int stone = 4;
-int glass = 6;
+//int wood = 4;
+//int stone = 4;
+//int glass = 6;
+
+int money = 10000;
+
+//Item costs
+int woodBoxPrice = 250;
+int woodLogPrice = 200;
+int woodTrianglePrice = 100;
+int woodBarrelPrice = 50;
+int stoneBoxPrice = 500;
+int stoneLogPrice = 350;
+int stoneTrianglePrice = 150;
+int stoneBarrelPrice = 100;
+int glassBoxPrice = 150;
+int glassLogPrice = 100;
+int glassTrianglePrice = 50;
+int glassBarrelPrice = 25;
+
+
 auto fadeInv = FadeTo::create(1.0, 0x7F);
 
 
@@ -134,44 +153,44 @@ bool GameScreen::init()
     scheduleUpdate();
     
     // Create the glass textfield
-    glassTextField = cocos2d::ui::TextField::create("Glass: 1","fonts/Marker Felt.ttf",30);
-    glassTextField->setTextColor(Color4B::BLACK);
-    glassTextField->setString("Glass: 5");
-    glassTextField->ignoreContentAdaptWithSize(false);
-    glassTextField->setEnabled(false);
-    glassTextField->setContentSize(Size(240, 160));
-    glassTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
-    glassTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
-    glassTextField->setPosition(origin + Point(visibleSize.width/4,visibleSize.height-20));
-    this->addChild(glassTextField);
+    moneyCounterTextField = cocos2d::ui::TextField::create("Money: 1","fonts/Marker Felt.ttf",30);
+    moneyCounterTextField->setTextColor(Color4B::BLACK);
+    moneyCounterTextField->setString("Money: ");
+    moneyCounterTextField->ignoreContentAdaptWithSize(false);
+    moneyCounterTextField->setEnabled(false);
+    moneyCounterTextField->setContentSize(Size(240, 160));
+    moneyCounterTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+    moneyCounterTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
+    moneyCounterTextField->setPosition(origin + Point(visibleSize.width/4,visibleSize.height-20));
+    this->addChild(moneyCounterTextField);
     // Create the wood textfield
-    woodTextField = cocos2d::ui::TextField::create("Wood: 1","fonts/Marker Felt.ttf",30);
-    woodTextField->setTextColor(Color4B::BLACK);
-    woodTextField->setString("Wood: 3");
-    woodTextField->ignoreContentAdaptWithSize(false);
-    woodTextField->setEnabled(false);
-    woodTextField->setContentSize(Size(240, 160));
-    woodTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
-    woodTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
-    woodTextField->setPosition(origin + Point(visibleSize.width/2,visibleSize.height-20));
-    this->addChild(woodTextField);
+//    woodTextField = cocos2d::ui::TextField::create("Wood: 1","fonts/Marker Felt.ttf",30);
+//    woodTextField->setTextColor(Color4B::BLACK);
+//    woodTextField->setString("Wood: 3");
+//    woodTextField->ignoreContentAdaptWithSize(false);
+//    woodTextField->setEnabled(false);
+//    woodTextField->setContentSize(Size(240, 160));
+//    woodTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+//    woodTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
+//    woodTextField->setPosition(origin + Point(visibleSize.width/2,visibleSize.height-20));
+//    this->addChild(woodTextField);
     // Create the stone textfield
-    stoneTextField = cocos2d::ui::TextField::create("Stone: 1","fonts/Marker Felt.ttf",30);
-    stoneTextField->setTextColor(Color4B::BLACK);
-    stoneTextField->setString("Stone: 2");
-    stoneTextField->ignoreContentAdaptWithSize(false);
-    stoneTextField->setEnabled(false);
-    stoneTextField->setContentSize(Size(240, 160));
-    stoneTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
-    stoneTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
-    stoneTextField->setPosition(origin + Point(visibleSize.width - visibleSize.width/4,visibleSize.height-20));
-    this->addChild(stoneTextField);
+//    stoneTextField = cocos2d::ui::TextField::create("Stone: 1","fonts/Marker Felt.ttf",30);
+//    stoneTextField->setTextColor(Color4B::BLACK);
+//    stoneTextField->setString("Stone: 2");
+//    stoneTextField->ignoreContentAdaptWithSize(false);
+//    stoneTextField->setEnabled(false);
+//    stoneTextField->setContentSize(Size(240, 160));
+//    stoneTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+//    stoneTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
+//    stoneTextField->setPosition(origin + Point(visibleSize.width - visibleSize.width/4,visibleSize.height-20));
+//    this->addChild(stoneTextField);
     
     numTimeFired = 0;
     gameMode = 0;
-     wood = 4;
-     stone = 4;
-     glass = 6;
+//     wood = 4;
+//     stone = 4;
+//     glass = 6;
     
     setBuildingMaterialsTextFeild();
     return true;
@@ -184,27 +203,24 @@ void GameScreen::update(float delta)
 
 void GameScreen::setBuildingMaterialsTextFeild(){
     char str[100];
-    if (wood == 0){
-        sprintf(str, "Wood: %d", wood);
-    }
-    else{
-        sprintf(str, "Wood: %d", wood - 1);
-    }
-    woodTextField->setString(str);
-    if (stone == 0){
-        sprintf(str, "Stone: %d", stone);
-    }
-    else{
-        sprintf(str, "Stone: %d", stone - 1);
-    }
-    stoneTextField->setString(str);
-    if (glass == 0){
-        sprintf(str, "Glass: %d", glass);
-    }
-    else{
-        sprintf(str, "Glass: %d", glass - 1);
-    }
-    glassTextField->setString(str);
+
+    sprintf(str, "Money: %d", money);
+    
+    moneyCounterTextField->setString(str);
+//    if (stone == 0){
+//        sprintf(str, "Stone: %d", stone);
+//    }
+//    else{
+//        sprintf(str, "Stone: %d", stone - 1);
+//    }
+//    stoneTextField->setString(str);
+//    if (glass == 0){
+//        sprintf(str, "Glass: %d", glass);
+//    }
+//    else{
+//        sprintf(str, "Glass: %d", glass - 1);
+//    }
+//    glassTextField->setString(str);
 }
 
 void GameScreen::setUpPhysicsScreenBody()
@@ -349,7 +365,6 @@ void GameScreen::addEnemiesToEnemiesArrayForLevel() {
         if (currentEnemy == NULL) break;
         this->addChild(currentEnemy->enemieSpriteBatch);
         numEnemies++;
-        CCLOG("hi ryan");
     }
     
 }
@@ -583,39 +598,38 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[0]) {
         num++;
-        if (numBlocks < 50 && num < 2 && wood != 0){
-            wood--;
-            if (wood > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(1, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this->addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[0];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= woodBoxPrice ){
+            money -= woodBoxPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(1, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this->addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[0];
+            numBlocks++;
+        
         }
-        if ( wood > 0) {
+        if (money >= woodBoxPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
         }
     } else if (target == inv_items[1]) {
         num++;
-        if (numBlocks < 50 && num < 2 && wood != 0){
-            wood--;
-            if ( wood > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(2, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[1];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= woodTrianglePrice){
+            money -= woodTrianglePrice;
+            
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(2, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[1];
+            numBlocks++;
+            
             
         }
-        if ( wood > 0) {
+        if (money >= woodTrianglePrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -623,20 +637,19 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[2]) {
         num++;
-        if (numBlocks < 50 && num < 2 && wood!= 0){
-            wood--;
-            if (wood > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[2];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= woodBarrelPrice){
+            money -= woodBarrelPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[2];
+            numBlocks++;
+            
             
         }
-        if ( wood > 0) {
+        if ( money > woodBarrelPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -644,19 +657,18 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[3]) {
         num++;
-        if (numBlocks < 50 && num < 2 && wood != 0){
-            wood--;
-            if (wood > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(4, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[3];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= woodLogPrice){
+            money -= woodLogPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(4, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[3];
+            numBlocks++;
+            
         }
-        if ( wood > 0) {
+        if ( money >= woodLogPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -664,39 +676,37 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[4]) {
         num++;
-        if (numBlocks < 50 && num < 2 && stone != 0){
-            stone--;
-            if (stone > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(5, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[4];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= stoneBoxPrice){
+            money -= stoneBoxPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(5, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[4];
+            numBlocks++;
+            
             
         }
-        if ( stone > 0) {
+        if ( money >= stoneBoxPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
         }    }
     else if (target == inv_items[5]) {
         num++;
-        if (numBlocks < 50 && num < 2 & stone != 0){
-            stone--;
-            if (stone > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(6, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[5];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= stoneTrianglePrice){
+            money -= stoneTrianglePrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(6, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[5];
+            numBlocks++;
+            
         }
-        if ( stone > 0) {
+        if ( money >= stoneTrianglePrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -704,19 +714,19 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[6]) {
         num++;
-        if (numBlocks < 50 && num < 2 && stone != 0){
-            stone--;
-            if (stone > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(7, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[6];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= stoneBarrelPrice){
+            money -= stoneBarrelPrice;
+            
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(7, position, numBlocks);
+            _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[6];
+            numBlocks++;
+            
         }
-        if ( stone > 0) {
+        if ( money >= stoneBarrelPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -724,19 +734,18 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[7]) {
         num++;
-        if (numBlocks < 50 && num < 2 && stone != 0){
-            stone--;
-                if (stone > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(8, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[7];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= stoneLogPrice){
+            money -= stoneLogPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(8, position, numBlocks);
+            _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[7];
+            numBlocks++;
+            
         }
-        if ( stone > 0) {
+        if (money >= stoneLogPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -744,19 +753,19 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[8]) {
         num++;
-        if (numBlocks < 50 && num < 2 && glass != 0){
-            glass--;
-            if (glass > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(9, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[8];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= glassBoxPrice){
+            money -= glassBoxPrice;
+            
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(9, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[8];
+            numBlocks++;
+            
         }
-        if ( glass > 0) {
+        if ( money >= glassBoxPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -764,20 +773,20 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[9]) {
         num++;
-        if (numBlocks < 50 && num < 2 && glass != 0){
-            glass--;
-            if (glass > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(10, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[9];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= glassTrianglePrice){
+            money -= glassTrianglePrice;
+            
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(10, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[9];
+            numBlocks++;
+            
             
         }
-        if ( glass > 0) {
+        if ( money >= glassTrianglePrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -785,20 +794,18 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[10]) {
         num++;
-        if (numBlocks < 50 && num < 2 && glass != 0){
-            glass--;
-            if (glass > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(11, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[10];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= glassBarrelPrice){
+            money -= glassBarrelPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(11, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[10];
+            numBlocks++;
             
         }
-        if ( glass > 0) {
+        if ( money >= glassBarrelPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -806,20 +813,19 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
     }
     else if (target == inv_items[11]) {
         num++;
-        if (numBlocks < 50 && num < 2 && glass != 0){
-            glass--;
-            if (glass > 0) {
-                Point position = touch->getLocation();
-                buildingList[numBlocks] = new BuildingObject(12, position, numBlocks);
-                 _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
-                this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
-                //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
-                option = inv_items[11];
-                numBlocks++;
-            }
+        if (numBlocks < 50 && num < 2 && money >= glassLogPrice){
+            money -= glassLogPrice;
+            Point position = touch->getLocation();
+            buildingList[numBlocks] = new BuildingObject(12, position, numBlocks);
+             _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
+            //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
+            option = inv_items[11];
+            numBlocks++;
+            
             
         }
-        if ( glass > 0) {
+        if ( money >= glassLogPrice) {
             touchLoc.x += delta.x;
             touchLoc.y += delta.y;
             buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
@@ -990,9 +996,10 @@ void GameScreen::zoomIn(){
     // unhide interface options
     zoom -> setVisible(true);
     playButton-> setVisible(true);
-    glassTextField->setVisible(true);
-    woodTextField->setVisible(true);
-    stoneTextField->setVisible(true);
+//    glassTextField->setVisible(true);
+//    woodTextField->setVisible(true);
+//    stoneTextField->setVisible(true);
+    moneyCounterTextField->setVisible(true);
     for (int i = 0; i < 12; i++) {
         inv_items[i] -> setVisible(true);
     }
@@ -1062,40 +1069,40 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             
             switch (buildingList[buildingListSize]->objectClass) {
                 case 1:
-                    wood++;
+                    money += woodBoxPrice;
                     break;
                 case 2:
-                    wood++;
+                    money += woodTrianglePrice;
                     break;
                 case 3:
-                    wood++;
+                    money += woodBarrelPrice;
                     break;
                 case 4:
-                    wood++;
+                    money += woodLogPrice;
                     break;
                 case 5:
-                    stone++;
+                    money += stoneBoxPrice;
                     break;
                 case 6:
-                    stone++;
+                    money += stoneTrianglePrice;
                     break;
                 case 7:
-                    stone++;
+                    money += stoneBarrelPrice;
                     break;
                 case 8:
-                    stone++;
+                    money += stoneLogPrice;
                     break;
                 case 9:
-                    glass++;
+                    money += glassBoxPrice;
                     break;
                 case 10:
-                    glass++;
+                    money += glassTrianglePrice;
                     break;
                 case 11:
-                    glass++;
+                    money += glassBarrelPrice;
                     break;
                 case 12:
-                    glass++;
+                    money += glassLogPrice;
                     break;
                     
                 default:
@@ -1182,9 +1189,11 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
 void GameScreen::hideInterfaceOptions(){
     zoom -> setVisible(false);
     playButton-> setVisible(false);
-    glassTextField->setVisible(false);
-    woodTextField->setVisible(false);
-    stoneTextField->setVisible(false);
+//    glassTextField->setVisible(false);
+//    woodTextField->setVisible(false);
+//    stoneTextField->setVisible(false);
+    moneyCounterTextField->setVisible(false);
+    
     for (int i = 0; i < 12; i++) {
         inv_items[i] -> setVisible(false);
     }
