@@ -95,6 +95,7 @@
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
+		761975451AE2F3F500F0508E /* trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 761975441AE2F3F500F0508E /* trashcan.png */; };
 		761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFE621A9EB42200A1C4AC /* Inventory.png */; };
 		761DFECA1AA57CAD00A1C4AC /* PEShapeCache_X3_0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */; };
 		761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFED71AA6748B00A1C4AC /* menu_bg.png */; };
@@ -245,6 +246,7 @@
 		521A8E6219F0C34300D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		761975441AE2F3F500F0508E /* trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trashcan.png; sourceTree = "<group>"; };
 		761DFE621A9EB42200A1C4AC /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
 		761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PEShapeCache_X3_0.cpp; path = ../Classes/PEShapeCache_X3_0.cpp; sourceTree = "<group>"; };
 		761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PEShapeCache_X3_0.h; path = ../Classes/PEShapeCache_X3_0.h; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				761975441AE2F3F500F0508E /* trashcan.png */,
 				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
 				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
 				0756B5D61AA74CE10079BEF0 /* woosh.mp3 */,
@@ -779,6 +782,7 @@
 				0764253B1AA70424007E537E /* cannonSprites.plist in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
+				761975451AE2F3F500F0508E /* trashcan.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				07E190E11AA5DBC500EAD6A1 /* inv_wood_square.png in Resources */,
 				07E190DA1AA5DBC500EAD6A1 /* inv_glass_triangle.png in Resources */,

@@ -26,6 +26,8 @@ EnemiesObject *currentEnemies[12];
 
 Sprite *cannonBall;
 Sprite *zoom;
+Sprite *trash;
+Rect trashBoundingBox;
 Sprite *inv_bg;
 Sprite *inv_items[12];
 Sprite *option;
@@ -270,6 +272,14 @@ void GameScreen::initPhysicsSprites(){
     zoom -> setPosition(origin.x + ((zoom->getContentSize().width * 0.125) / 2), origin.y + ((zoom ->getContentSize().height * 0.125) /2));
     this -> addChild(zoom);
     zoomPosition = zoom->convertToWorldSpace(zoom->getPosition());
+    
+    // Trash Can Sprite
+    trash = Sprite::create("trashcan.png");
+    trash -> setPosition(origin.x + trash->getContentSize().width/2.5, zoom->getPosition().y + trash->getContentSize().height);
+    this->addChild(trash);
+    cocos2d::Rect trashBoundingBox = trash -> getBoundingBox();
+    
+    
     
     // Inventory items
     // Create items
@@ -1047,8 +1057,10 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             return;
         }
         
-        
-        if (buildingList[numBlocks -1]->buildingObjectSprite->getBoundingBox().intersectsRect(inv_bg->getBoundingBox())) {
+        // Check to see if new object collides with the inventory or trash can
+        // If it does, it deletes the object
+        if (buildingList[numBlocks -1]->buildingObjectSprite->getBoundingBox().intersectsRect(inv_bg->getBoundingBox()) ||
+            buildingList[numBlocks -1]->buildingObjectSprite->getBoundingBox().intersectsRect(trash -> getBoundingBox())) {
             int buildingListSize = numBlocks - 1;
             numBlocks--;
             
@@ -1098,6 +1110,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             return;
         }
         
+        
             // Attach triangle physics body to triangle blocks
             else if (option == inv_items[1] || option == inv_items[5] || option == inv_items[9]) {
                 auto triangle_body = PEShapeCache::getInstance()->getPhysicsBodyByName("glass_block_triangle");
@@ -1128,7 +1141,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
                                                                  this);
             this -> getEventDispatcher() ->
             addEventListenerWithSceneGraphPriority(boxContactListener, this);
-        //}
+        
         
     }
     else if (target == playButton){
@@ -1167,6 +1180,24 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         if (target == buildingList[i]->buildingObjectSprite) {
             buildingList[i]->buildingObjectSprite->getPhysicsBody()->setGravityEnable(true);
             break;
+        }
+    }
+    
+    // Check to see if any buidling object intersects with the trash can
+    // If it does, remove it
+    for (int i = 0; i < numBlocks; i++) {
+        if (buildingList[i]->buildingObjectSprite->getBoundingBox().intersectsRect(trash -> getBoundingBox())) {
+            this->removeChild(buildingList[i]->buildingObjectSprite);
+            // If the building object is not the last element in the building list,
+            // move all the other objects' position in the building list up by 1
+            if (i != numBlocks - 1) {
+                for (int j = i; j < numBlocks-1; j++) {
+                    buildingList[j] = buildingList[j+1];
+                }
+            }
+            buildingList[numBlocks - 1] = NULL;
+            numBlocks--;
+            //////////////////////////// NEED TO ADD MONEY BACK FOR DELETED OBJECT ////////////////////////////////
         }
     }
 }
