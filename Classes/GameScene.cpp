@@ -267,7 +267,7 @@ void GameScreen::initPhysicsSprites(){
     this-> addChild(playButton);
     
     // Juan
-    theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 45), -1);
+    theJuanAndOnly = new BuildingObject(0,Point(origin.x + visibleSize.width/2, origin.y - 55), -1);
     
     auto juanPhysicsBody = PhysicsBody::createBox(Size(theJuanAndOnly->buildingObjectSprite->getContentSize().width, theJuanAndOnly->buildingObjectSprite->getContentSize().height));
     theJuanAndOnly-> buildingObjectSprite-> setPhysicsBody(juanPhysicsBody);
