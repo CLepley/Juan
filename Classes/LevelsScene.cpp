@@ -188,8 +188,11 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
         if (rect.containsPoint(locationInNode)) {
             auto fadeTitleBack = FadeTo::create(0, 0xFF);
             level2_title->runAction(fadeTitleBack);
-            
+            backgroundMusic1->pauseBackgroundMusic();
             // Push level 2 scene
+            auto director = Director::getInstance();
+            auto scene = GameScreen::createScene();
+            director->pushScene(scene);
         }
     } else if (target == main_menu) {
         if (rect.containsPoint(locationInNode)) {

@@ -34,6 +34,8 @@ public:
     void showPlayerLostScreen();
     void showPlayerWonScreen();
     
+    void setLevel(int lvl);
+    
     void ballTimer(float dt);
     void hideInterfaceOptions();
     

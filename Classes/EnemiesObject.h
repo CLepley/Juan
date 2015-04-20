@@ -16,16 +16,18 @@ class EnemiesObject{
 public:
     int type;
     int style;
+    Vec2 velocity;
     Point Position;
     SpriteBatchNode* enemieSpriteBatch;
     Vector<SpriteFrame*> enemieFrames;
     Sprite *enemieSprite;
     
     EnemiesObject();
-    EnemiesObject(int type, Point position);
-    EnemiesObject(int type, int style, Point position);
+    EnemiesObject(int type, Point position, Vec2 v);
+    EnemiesObject(int type, int style, Point position, Vec2 v);
     void startAnimation();
     Point getPosition();
+    Vec2 getVelocity();
 };
 
 #endif /* defined(__Juan__EnemiesObject__) */

@@ -39,7 +39,8 @@ int inv_page;
 int numTimeFired = 0;
 
 Point initialBlockLocation;
-
+int numTimesToFireTheWepoensFromTheEnemie;
+int levelNumber;
 // holds all spirtes used
 BuildingObject *buildingList[50];
 // juan sprite
@@ -356,10 +357,12 @@ void GameScreen::addEnemiesToEnemiesArrayForLevel() {
     //EnemiesObject *cannon = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
     //EnemiesObject *cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
 
+    // used for number of times all the weopons fire 
+    numTimesToFireTheWepoensFromTheEnemie = 2;
     
-    currentEnemies[0] = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60));
-    currentEnemies[1] = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
-    currentEnemies[2] = new EnemiesObject(2, Point(origin.x - 450, origin.y - 60));
+    currentEnemies[0] = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60),Vec2(240, 100));
+    currentEnemies[1] = new EnemiesObject(1, 2, Point(origin.x - 250, origin.y - 60),Vec2(240, 100));
+    currentEnemies[2] = new EnemiesObject(2, Point(origin.x - 470, origin.y - 60),Vec2(260, 100));
     
     for (auto&& currentEnemy: currentEnemies) {
         if (currentEnemy == NULL) break;
@@ -1316,7 +1319,7 @@ void GameScreen::checkOnJuan2(float dt){
 }
 
 void GameScreen::fireCannonBall(float dt){
-    Vec2 ballVelocity = Vec2(240, 100);
+    Vec2 ballVelocity = currentEnemies[numTimeFired]->getVelocity();
     Point location = currentEnemies[numTimeFired]->getPosition();
     
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -1343,16 +1346,7 @@ void GameScreen::fireCannonBall(float dt){
     this -> getEventDispatcher() ->
     addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
     this ->unschedule(schedule_selector(GameScreen::fireCannonBall));
-}
-
-void GameScreen::fireCannon1(float dt){
-    
-    int numTimesToFireTheWepoensFromTheEnemie = 2;
-    
-    currentEnemies[numTimeFired]->startAnimation();
-    fireCannonBall(0.0);
     numTimeFired++;
-    
     if (numTimeFired == numEnemies) {
         numTimeFired = 0;
         numShot++;
@@ -1361,26 +1355,14 @@ void GameScreen::fireCannon1(float dt){
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
         this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
     }
-    
-    
-    ////////////////////////////////////////////////
-    // fire cannon
-        //numTimeFired++;
-        //if (numTimeFired == 1 || numTimeFired == 4){
-//            if (cannonBall != NULL) {
-//                removeChild(cannonBall);
-//            }
-            //Animate the cannon
-//            cannon->startAnimation();
-//    if (cannon->type == 2){
-//        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
-//    }else{
-//        fireCannonBall(0.0);
-//    }
-            ////////////////////////////////////////////////
-        //}
-//        if (numTimeFired == 2){
-//            this ->unschedule(schedule_selector(GameScreen::fireCannon1));
-//            this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
-//        }
+}
+
+void GameScreen::fireCannon1(float dt){
+    if (currentEnemies[numTimeFired]->type == 2){
+        currentEnemies[numTimeFired]->startAnimation();
+        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
+    }else {
+        currentEnemies[numTimeFired]->startAnimation();
+        fireCannonBall(0.0);
+    }
 }

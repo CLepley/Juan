@@ -12,9 +12,10 @@ EnemiesObject::EnemiesObject(){
     
 }
 
-EnemiesObject::EnemiesObject(int t,Point position){
+EnemiesObject::EnemiesObject(int t,Point position, Vec2 v){
     SpriteFrameCache* cache;
     this->type = t;
+    this->velocity = v;
     if (t == 2){
         enemieSpriteBatch = SpriteBatchNode::create("CatapultSpriteSheet.png");
         cache = SpriteFrameCache::getInstance();
@@ -39,11 +40,12 @@ EnemiesObject::EnemiesObject(int t,Point position){
     enemieSpriteBatch->addChild(this->enemieSprite);
 }
 
-EnemiesObject::EnemiesObject(int t, int s, Point position){
+EnemiesObject::EnemiesObject(int t, int s, Point position, Vec2 v){
     SpriteFrameCache* cache;
     
     this->type = t;
     this->style = s;
+    this->velocity = v;
     CCLOG("style: %i",s);
     this->enemieSpriteBatch = SpriteBatchNode::create("cannonSpriteSheet.png");
     cache = SpriteFrameCache::getInstance();
@@ -97,6 +99,10 @@ EnemiesObject::EnemiesObject(int t, int s, Point position){
 
 Point EnemiesObject::getPosition(){
     return this->enemieSprite->getPosition();
+}
+
+Vec2 EnemiesObject::getVelocity(){
+    return this->velocity;
 }
 
 void EnemiesObject::startAnimation(){
