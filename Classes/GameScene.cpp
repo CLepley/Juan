@@ -17,6 +17,10 @@ bool JuanIsGod = true;
 Vec2 initalLocation;
 Point origin;
 Size visibleSize;
+// array of levels
+LevelObject *myLevels;
+// current level the user is on
+int currentLevel;
 // background sprite
 Sprite *bg;
 Sprite *playButton;
@@ -143,7 +147,9 @@ bool GameScreen::init()
     // set background to white
     glClearColor(1,1,1,1.0);
     
-
+    myLevels = new LevelObject(origin);
+    myLevels->setLevel(currentLevel);
+    
     
     // set up sprite sheet
     cache = SpriteFrameCache::getInstance();
@@ -373,11 +379,11 @@ void GameScreen::addEnemiesToEnemiesArrayForLevel() {
     //EnemiesObject *cannon2 = new EnemiesObject(1, 2, Point(origin.x - 400, origin.y - 60));
 
     // used for number of times all the weopons fire 
-    numTimesToFireTheWepoensFromTheEnemie = 2;
+    numTimesToFireTheWepoensFromTheEnemie = myLevels->getTotalTimeToFire();
     
-    currentEnemies[0] = new EnemiesObject(1, 1, Point(origin.x - 35, origin.y - 60),Vec2(240, 100));
-    currentEnemies[1] = new EnemiesObject(1, 2, Point(origin.x - 250, origin.y - 60),Vec2(240, 100));
-    currentEnemies[2] = new EnemiesObject(2, Point(origin.x - 470, origin.y - 60),Vec2(260, 100));
+    for (int i = 0; i < myLevels->getNumSpots(); i++) {
+        currentEnemies[i] = new EnemiesObject(myLevels->getType(i), myLevels->getStyle(i), myLevels->getPositionOfSpot(i), myLevels->getVelocityOfSpot(i), myLevels->getTimesToFireOfSpot(i));
+    }
     
     for (auto&& currentEnemy: currentEnemies) {
         if (currentEnemy == NULL) break;
@@ -1016,6 +1022,7 @@ void GameScreen::zoomIn(){
     // unhide interface options
     zoom -> setVisible(true);
     playButton-> setVisible(true);
+    trash-> setVisible(true);
 //    glassTextField->setVisible(true);
 //    woodTextField->setVisible(true);
 //    stoneTextField->setVisible(true);
@@ -1298,7 +1305,6 @@ void GameScreen::startBattle(){
     ////////////////////////////////////////////////
     // fire cannons
     this->schedule(schedule_selector(GameScreen::fireCannon1), 8.0f,1000000000000, 1.0f);
-    
     this->schedule(schedule_selector(GameScreen::checkOnJuan), 0.2f);
 }
 
@@ -1356,9 +1362,9 @@ void GameScreen::fireCannonBall(float dt){
     addEventListenerWithSceneGraphPriority(cannonoBallContactListener, this);
     this ->unschedule(schedule_selector(GameScreen::fireCannonBall));
     numTimeFired++;
+    numShot++;
     if (numTimeFired == numEnemies) {
         numTimeFired = 0;
-        numShot++;
     }
     if (numShot == numTimesToFireTheWepoensFromTheEnemie) {
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
@@ -1367,14 +1373,23 @@ void GameScreen::fireCannonBall(float dt){
 }
 
 void GameScreen::fireCannon1(float dt){
-    if (currentEnemies[numTimeFired]->type == 2){
-        currentEnemies[numTimeFired]->startAnimation();
-        this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
-    }else {
-        currentEnemies[numTimeFired]->startAnimation();
-        fireCannonBall(0.0);
+    this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+    if (currentEnemies[numTimeFired]->timesFired != 0){
+        this->schedule(schedule_selector(GameScreen::fireCannon1), 8.0f,1000000000000, 8.0f);
+        currentEnemies[numTimeFired]->timesFired--;
+        if (currentEnemies[numTimeFired]->type == 2){
+            currentEnemies[numTimeFired]->startAnimation();
+            this->schedule(schedule_selector(GameScreen::fireCannonBall),0.4f);
+        }else {
+            currentEnemies[numTimeFired]->startAnimation();
+            fireCannonBall(0.0);
+        }
+    }else{
+        this->schedule(schedule_selector(GameScreen::fireCannon1), 0.1f,1000000000000, 0.0f);
+        numTimeFired++;
     }
 }
+
 void GameScreen::addMoney(int objectClass) {
     switch (objectClass) {
         case 1:
