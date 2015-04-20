@@ -1079,47 +1079,8 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             int buildingListSize = numBlocks - 1;
             numBlocks--;
             
-            switch (buildingList[buildingListSize]->objectClass) {
-                case 1:
-                    money += woodBoxPrice;
-                    break;
-                case 2:
-                    money += woodTrianglePrice;
-                    break;
-                case 3:
-                    money += woodBarrelPrice;
-                    break;
-                case 4:
-                    money += woodLogPrice;
-                    break;
-                case 5:
-                    money += stoneBoxPrice;
-                    break;
-                case 6:
-                    money += stoneTrianglePrice;
-                    break;
-                case 7:
-                    money += stoneBarrelPrice;
-                    break;
-                case 8:
-                    money += stoneLogPrice;
-                    break;
-                case 9:
-                    money += glassBoxPrice;
-                    break;
-                case 10:
-                    money += glassTrianglePrice;
-                    break;
-                case 11:
-                    money += glassBarrelPrice;
-                    break;
-                case 12:
-                    money += glassLogPrice;
-                    break;
-                    
-                default:
-                    break;
-            }
+            addMoney(buildingList[buildingListSize]->objectClass);
+            
             this->removeChild(buildingList[buildingListSize]->buildingObjectSprite);
             buildingList[buildingListSize] = NULL;
             return;
@@ -1202,10 +1163,14 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     // If it does, remove it
     for (int i = 0; i < numBlocks; i++) {
         if (buildingList[i]->buildingObjectSprite->getBoundingBox().intersectsRect(trash -> getBoundingBox())) {
+            
+            addMoney(buildingList[i]->objectClass);
+            
             this->removeChild(buildingList[i]->buildingObjectSprite);
             // If the building object is not the last element in the building list,
             // move all the other objects' position in the building list up by 1
             if (i != numBlocks - 1) {
+                
                 for (int j = i; j < numBlocks-1; j++) {
                     buildingList[j] = buildingList[j+1];
                 }
@@ -1414,4 +1379,49 @@ void GameScreen::fireCannon1(float dt){
 //            this ->unschedule(schedule_selector(GameScreen::fireCannon1));
 //            this->schedule(schedule_selector(GameScreen::checkOnJuan2), 8.0f,1, 8.0f);
 //        }
+}
+
+void GameScreen::addMoney(int objectClass) {
+    switch (objectClass) {
+        case 1:
+            money += woodBoxPrice;
+            break;
+        case 2:
+            money += woodTrianglePrice;
+            break;
+        case 3:
+            money += woodBarrelPrice;
+            break;
+        case 4:
+            money += woodLogPrice;
+            break;
+        case 5:
+            money += stoneBoxPrice;
+            break;
+        case 6:
+            money += stoneTrianglePrice;
+            break;
+        case 7:
+            money += stoneBarrelPrice;
+            break;
+        case 8:
+            money += stoneLogPrice;
+            break;
+        case 9:
+            money += glassBoxPrice;
+            break;
+        case 10:
+            money += glassTrianglePrice;
+            break;
+        case 11:
+            money += glassBarrelPrice;
+            break;
+        case 12:
+            money += glassLogPrice;
+            break;
+            
+        default:
+            break;
+    }
+
 }

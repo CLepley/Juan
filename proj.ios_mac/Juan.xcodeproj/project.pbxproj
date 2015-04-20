@@ -111,6 +111,7 @@
 		761DFEF61AA7261500A1C4AC /* win_screen_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEF51AA7261500A1C4AC /* win_screen_bg.png */; };
 		761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEF71AA72B2300A1C4AC /* main_menu.png */; };
 		7691BF651AA746EC005002B0 /* won_screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7691BF641AA746EC005002B0 /* won_screen1.png */; };
+		76D546691AE494670005E7C5 /* trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546681AE494670005E7C5 /* trashcan.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -268,6 +269,7 @@
 		761DFEF51AA7261500A1C4AC /* win_screen_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = win_screen_bg.png; sourceTree = "<group>"; };
 		761DFEF71AA72B2300A1C4AC /* main_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_menu.png; sourceTree = "<group>"; };
 		7691BF641AA746EC005002B0 /* won_screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = won_screen1.png; path = Resources/Resources/won_screen1.png; sourceTree = "<group>"; };
+		76D546681AE494670005E7C5 /* trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trashcan.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -320,7 +322,9 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				761975441AE2F3F500F0508E /* trashcan.png */,
+				76D546681AE494670005E7C5 /* trashcan.png */,
+				077667811AE086560029B9A8 /* CatapultSpriteSheet.plist */,
+				077667821AE086560029B9A8 /* CatapultSpriteSheet.png */,
 				761DFEC81AA57CAC00A1C4AC /* PEShapeCache_X3_0.cpp */,
 				761DFEC91AA57CAC00A1C4AC /* PEShapeCache_X3_0.h */,
 				0756B5D61AA74CE10079BEF0 /* woosh.mp3 */,
@@ -783,6 +787,7 @@
 				0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */,
 				761DFEEB1AA7058100A1C4AC /* level1_title.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				76D546691AE494670005E7C5 /* trashcan.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				0773EB291A6974B400ED19BD /* Marker Felt.ttf in Resources */,
 				0764253B1AA70424007E537E /* cannonSprites.plist in Resources */,

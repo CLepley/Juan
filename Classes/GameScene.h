@@ -46,6 +46,9 @@ public:
     void fireCannon1(float dt);
     void fireCannon2(float dt);
     void fireCannon3(float dt);
+    
+    void addMoney(int objectClass);
+    
 };
 
 #endif // __Game_SCENE_H__
