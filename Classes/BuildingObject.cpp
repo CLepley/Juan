@@ -30,94 +30,6 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             //this->spritebatch->addChild(this->buildingObjectSprite);
             break;
         case 1:
-            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Wood_Block_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Wood_Block_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Block_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Block_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 70;
-            break;
-        case 2:
-            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Right_Triangle_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 70;
-            break;
-        case 3:
-            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Circle_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Wood_Circle_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Circle_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Circle_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 70;
-            break;
-        case 4:
-            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Wood_Block_Long_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Wood_Block_Long_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Block_Long_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Wood_Block_Long_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 70;
-            break;
-        case 5:
-            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Stone_Block_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Block_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Block_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 95;
-            break;
-        case 6:
-            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Right_Triangle_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 95;
-            break;
-        case 7:
-            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Circle_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Stone_Circle_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Circle_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Circle_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 95;
-            break;
-        case 8:
-            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_Long_1.png");
-            //this->spritebatch->addChild(this->buildingObjectSprite);
-            frame = cache->getSpriteFrameByName("Stone_Block_Long_2.png");
-            this->animFrames[0] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Block_Long_3.png");
-            this->animFrames[1] = (frame);
-            frame = cache->getSpriteFrameByName("Stone_Block_Long_4.png");
-            this->animFrames[2] = (frame);
-            this->objectHealth = 95;
-            break;
-        case 9:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Glass_Block_1.png");
             //this->spritebatch->addChild(this->buildingObjectSprite);
             frame = cache->getSpriteFrameByName("Glass_Block_2.png");
@@ -128,7 +40,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[2] = (frame);
             this->objectHealth = 45;
             break;
-        case 10:
+        case 2:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Glass_Right_Triangle_1.png");
             //this->spritebatch->addChild(this->buildingObjectSprite);
             frame = cache->getSpriteFrameByName("Glass_Right_Triangle_2.png");
@@ -139,7 +51,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[2] = (frame);
             this->objectHealth = 45;
             break;
-        case 11:
+        case 3:
             this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Glass_Circle_1.png");
             //this->spritebatch->addChild(this->buildingObjectSprite);
             frame = cache->getSpriteFrameByName("Glass_Circle_2.png");
@@ -150,7 +62,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             this->animFrames[2] = (frame);
             this->objectHealth = 45;
             break;
-        case 12:
+        case 4:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Glass_Block_Long_1.png");
             //this->spritebatch->addChild(this->buildingObjectSprite);
             frame = cache->getSpriteFrameByName("Glass_Block_Long_2.png");
@@ -160,6 +72,94 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
             frame = cache->getSpriteFrameByName("Glass_Block_Long_4.png");
             this->animFrames[2] = (frame);
             this->objectHealth = 45;
+            break;
+        case 5:
+            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Wood_Block_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Wood_Block_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Block_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Block_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 70;
+            break;
+        case 6:
+            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Right_Triangle_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Right_Triangle_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 70;
+            break;
+        case 7:
+            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Wood_Circle_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Wood_Circle_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Circle_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Circle_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 70;
+            break;
+        case 8:
+            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Wood_Block_Long_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Wood_Block_Long_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Block_Long_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Wood_Block_Long_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 70;
+            break;
+        case 9:
+            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Stone_Block_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Block_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Block_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 95;
+            break;
+        case 10:
+            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Right_Triangle_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Right_Triangle_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 95;
+            break;
+        case 11:
+            this->buildingObjectSprite = Sprite::createWithSpriteFrameName("Stone_Circle_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Stone_Circle_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Circle_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Circle_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 95;
+            break;
+        case 12:
+            this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Stone_Block_Long_1.png");
+            //this->spritebatch->addChild(this->buildingObjectSprite);
+            frame = cache->getSpriteFrameByName("Stone_Block_Long_2.png");
+            this->animFrames[0] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Block_Long_3.png");
+            this->animFrames[1] = (frame);
+            frame = cache->getSpriteFrameByName("Stone_Block_Long_4.png");
+            this->animFrames[2] = (frame);
+            this->objectHealth = 95;
             break;
         default:
             break;
