@@ -38,17 +38,6 @@
 		07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07E190BB1AA5DB7B00EAD6A1 /* circle_body.plist */; };
 		07E190D41AA5DBC500EAD6A1 /* glass_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C11AA5DBC500EAD6A1 /* glass_block_square.png */; };
 		07E190D61AA5DBC500EAD6A1 /* inv_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C31AA5DBC500EAD6A1 /* inv_bg.png */; };
-		07E190D71AA5DBC500EAD6A1 /* inv_glass_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C41AA5DBC500EAD6A1 /* inv_glass_circle.png */; };
-		07E190D81AA5DBC500EAD6A1 /* inv_glass_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C51AA5DBC500EAD6A1 /* inv_glass_long.png */; };
-		07E190D91AA5DBC500EAD6A1 /* inv_glass_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C61AA5DBC500EAD6A1 /* inv_glass_square.png */; };
-		07E190DA1AA5DBC500EAD6A1 /* inv_glass_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C71AA5DBC500EAD6A1 /* inv_glass_triangle.png */; };
-		07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C81AA5DBC500EAD6A1 /* inv_stone_circle.png */; };
-		07E190DC1AA5DBC500EAD6A1 /* inv_stone_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190C91AA5DBC500EAD6A1 /* inv_stone_long.png */; };
-		07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CA1AA5DBC500EAD6A1 /* inv_stone_square.png */; };
-		07E190DE1AA5DBC500EAD6A1 /* inv_stone_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CB1AA5DBC500EAD6A1 /* inv_stone_triangle.png */; };
-		07E190DF1AA5DBC500EAD6A1 /* inv_wood_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CC1AA5DBC500EAD6A1 /* inv_wood_circle.png */; };
-		07E190E01AA5DBC500EAD6A1 /* inv_wood_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CD1AA5DBC500EAD6A1 /* inv_wood_long.png */; };
-		07E190E11AA5DBC500EAD6A1 /* inv_wood_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CE1AA5DBC500EAD6A1 /* inv_wood_square.png */; };
 		07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */; };
 		07E190E41AA5DBC500EAD6A1 /* wood_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */; };
 		07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */; };
@@ -114,6 +103,20 @@
 		7691BF651AA746EC005002B0 /* won_screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7691BF641AA746EC005002B0 /* won_screen1.png */; };
 		76D546691AE494670005E7C5 /* trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546681AE494670005E7C5 /* trashcan.png */; };
 		76D546771AE4B4D70005E7C5 /* triangle_body.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76D546761AE4B4D70005E7C5 /* triangle_body.plist */; };
+		76D546791AE4E63E0005E7C5 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546781AE4E63E0005E7C5 /* coin.png */; };
+		76D546811AE5027E0005E7C5 /* inv_glass_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546801AE5027E0005E7C5 /* inv_glass_circle.png */; };
+		76D546831AE503C80005E7C5 /* inv_glass_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546821AE503C80005E7C5 /* inv_glass_square.png */; };
+		76D546851AE504DA0005E7C5 /* inv_glass_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546841AE504DA0005E7C5 /* inv_glass_triangle.png */; };
+		76D546871AE505CD0005E7C5 /* inv_glass_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546861AE505CD0005E7C5 /* inv_glass_long.png */; };
+		76D546891AE509280005E7C5 /* inv_wood_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546881AE509280005E7C5 /* inv_wood_square.png */; };
+		76D5468B1AE50AB10005E7C5 /* inv_wood_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D5468A1AE50AB10005E7C5 /* inv_wood_triangle.png */; };
+		76D5468D1AE50BBB0005E7C5 /* inv_wood_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D5468C1AE50BBB0005E7C5 /* inv_wood_circle.png */; };
+		76D5468F1AE50D8F0005E7C5 /* inv_wood_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D5468E1AE50D8F0005E7C5 /* inv_wood_long.png */; };
+		76D546911AE510630005E7C5 /* inv_stone_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546901AE510630005E7C5 /* inv_stone_square.png */; };
+		76D546931AE511C00005E7C5 /* inv_stone_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546921AE511C00005E7C5 /* inv_stone_triangle.png */; };
+		76D546951AE512760005E7C5 /* inv_stone_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546941AE512760005E7C5 /* inv_stone_circle.png */; };
+		76D546971AE513D40005E7C5 /* inv_stone_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546961AE513D40005E7C5 /* inv_stone_long.png */; };
+		76D546991AE514380005E7C5 /* stone_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546981AE514380005E7C5 /* stone_block_long.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -121,7 +124,6 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
-		F26B6EF31AA5FC700048A9AC /* inv_wood_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190CF1AA5DBC500EAD6A1 /* inv_wood_triangle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,18 +196,6 @@
 		07E190C11AA5DBC500EAD6A1 /* glass_block_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glass_block_square.png; sourceTree = "<group>"; };
 		07E190C21AA5DBC500EAD6A1 /* glass_block_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glass_block_triangle.png; sourceTree = "<group>"; };
 		07E190C31AA5DBC500EAD6A1 /* inv_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_bg.png; sourceTree = "<group>"; };
-		07E190C41AA5DBC500EAD6A1 /* inv_glass_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_circle.png; sourceTree = "<group>"; };
-		07E190C51AA5DBC500EAD6A1 /* inv_glass_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_long.png; sourceTree = "<group>"; };
-		07E190C61AA5DBC500EAD6A1 /* inv_glass_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_square.png; sourceTree = "<group>"; };
-		07E190C71AA5DBC500EAD6A1 /* inv_glass_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_triangle.png; sourceTree = "<group>"; };
-		07E190C81AA5DBC500EAD6A1 /* inv_stone_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_circle.png; sourceTree = "<group>"; };
-		07E190C91AA5DBC500EAD6A1 /* inv_stone_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_long.png; sourceTree = "<group>"; };
-		07E190CA1AA5DBC500EAD6A1 /* inv_stone_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_square.png; sourceTree = "<group>"; };
-		07E190CB1AA5DBC500EAD6A1 /* inv_stone_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_triangle.png; sourceTree = "<group>"; };
-		07E190CC1AA5DBC500EAD6A1 /* inv_wood_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_circle.png; sourceTree = "<group>"; };
-		07E190CD1AA5DBC500EAD6A1 /* inv_wood_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_long.png; sourceTree = "<group>"; };
-		07E190CE1AA5DBC500EAD6A1 /* inv_wood_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_square.png; sourceTree = "<group>"; };
-		07E190CF1AA5DBC500EAD6A1 /* inv_wood_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_triangle.png; sourceTree = "<group>"; };
 		07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_circle.png; sourceTree = "<group>"; };
 		07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_long.png; sourceTree = "<group>"; };
 		07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_square.png; sourceTree = "<group>"; };
@@ -275,6 +265,20 @@
 		7691BF641AA746EC005002B0 /* won_screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = won_screen1.png; path = Resources/Resources/won_screen1.png; sourceTree = "<group>"; };
 		76D546681AE494670005E7C5 /* trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trashcan.png; sourceTree = "<group>"; };
 		76D546761AE4B4D70005E7C5 /* triangle_body.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = triangle_body.plist; sourceTree = "<group>"; };
+		76D546781AE4E63E0005E7C5 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
+		76D546801AE5027E0005E7C5 /* inv_glass_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_circle.png; sourceTree = "<group>"; };
+		76D546821AE503C80005E7C5 /* inv_glass_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_square.png; sourceTree = "<group>"; };
+		76D546841AE504DA0005E7C5 /* inv_glass_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_triangle.png; sourceTree = "<group>"; };
+		76D546861AE505CD0005E7C5 /* inv_glass_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_glass_long.png; sourceTree = "<group>"; };
+		76D546881AE509280005E7C5 /* inv_wood_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_square.png; sourceTree = "<group>"; };
+		76D5468A1AE50AB10005E7C5 /* inv_wood_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_triangle.png; sourceTree = "<group>"; };
+		76D5468C1AE50BBB0005E7C5 /* inv_wood_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_circle.png; sourceTree = "<group>"; };
+		76D5468E1AE50D8F0005E7C5 /* inv_wood_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_wood_long.png; sourceTree = "<group>"; };
+		76D546901AE510630005E7C5 /* inv_stone_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_square.png; sourceTree = "<group>"; };
+		76D546921AE511C00005E7C5 /* inv_stone_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_triangle.png; sourceTree = "<group>"; };
+		76D546941AE512760005E7C5 /* inv_stone_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_circle.png; sourceTree = "<group>"; };
+		76D546961AE513D40005E7C5 /* inv_stone_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inv_stone_long.png; sourceTree = "<group>"; };
+		76D546981AE514380005E7C5 /* stone_block_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stone_block_long.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -360,18 +364,6 @@
 				07E190C11AA5DBC500EAD6A1 /* glass_block_square.png */,
 				07E190C21AA5DBC500EAD6A1 /* glass_block_triangle.png */,
 				07E190C31AA5DBC500EAD6A1 /* inv_bg.png */,
-				07E190C41AA5DBC500EAD6A1 /* inv_glass_circle.png */,
-				07E190C51AA5DBC500EAD6A1 /* inv_glass_long.png */,
-				07E190C61AA5DBC500EAD6A1 /* inv_glass_square.png */,
-				07E190C71AA5DBC500EAD6A1 /* inv_glass_triangle.png */,
-				07E190C81AA5DBC500EAD6A1 /* inv_stone_circle.png */,
-				07E190C91AA5DBC500EAD6A1 /* inv_stone_long.png */,
-				07E190CA1AA5DBC500EAD6A1 /* inv_stone_square.png */,
-				07E190CB1AA5DBC500EAD6A1 /* inv_stone_triangle.png */,
-				07E190CC1AA5DBC500EAD6A1 /* inv_wood_circle.png */,
-				07E190CD1AA5DBC500EAD6A1 /* inv_wood_long.png */,
-				07E190CE1AA5DBC500EAD6A1 /* inv_wood_square.png */,
-				07E190CF1AA5DBC500EAD6A1 /* inv_wood_triangle.png */,
 				07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */,
 				07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */,
 				07E190BB1AA5DB7B00EAD6A1 /* circle_body.plist */,
@@ -747,43 +739,42 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F26B6EF31AA5FC700048A9AC /* inv_wood_triangle.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				077667841AE086560029B9A8 /* CatapultSpriteSheet.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				076425361AA7032F007E537E /* playsprite.png in Resources */,
+				76D546811AE5027E0005E7C5 /* inv_glass_circle.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				075A17951A75F22F008195CB /* ducky.png in Resources */,
+				76D546891AE509280005E7C5 /* inv_wood_square.png in Resources */,
 				761DFEF61AA7261500A1C4AC /* win_screen_bg.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				07C61D1C1AE51512006A5A48 /* close.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
-				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
+				76D546791AE4E63E0005E7C5 /* coin.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */,
 				761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				76D5468B1AE50AB10005E7C5 /* inv_wood_triangle.png in Resources */,
 				076425331AA6EF56007E537E /* tank_fire.mp3 in Resources */,
-				07E190DB1AA5DBC500EAD6A1 /* inv_stone_circle.png in Resources */,
 				07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */,
+				76D546971AE513D40005E7C5 /* inv_stone_long.png in Resources */,
 				07E190B81AA5D63900EAD6A1 /* glass_block_circle.png in Resources */,
-				07E190D81AA5DBC500EAD6A1 /* inv_glass_long.png in Resources */,
-				07E190DE1AA5DBC500EAD6A1 /* inv_stone_triangle.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				761DFEF01AA7193B00A1C4AC /* lost_screen1.png in Resources */,
 				07E190D61AA5DBC500EAD6A1 /* inv_bg.png in Resources */,
-				07E190D91AA5DBC500EAD6A1 /* inv_glass_square.png in Resources */,
 				071AC7F01A9D079A00084BE9 /* testbg.jpg in Resources */,
 				07E190E41AA5DBC500EAD6A1 /* wood_block_long.png in Resources */,
 				0760CDD11A9BC6F2007B779A /* play.png in Resources */,
 				761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
-				07E190DC1AA5DBC500EAD6A1 /* inv_stone_long.png in Resources */,
 				076425421AA70459007E537E /* title.png in Resources */,
 				761DFEE91AA704E300A1C4AC /* level_title.png in Resources */,
+				76D546951AE512760005E7C5 /* inv_stone_circle.png in Resources */,
 				761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */,
 				07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */,
 				07E190D41AA5DBC500EAD6A1 /* glass_block_square.png in Resources */,
@@ -791,12 +782,17 @@
 				07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				76D546771AE4B4D70005E7C5 /* triangle_body.plist in Resources */,
+				76D5468F1AE50D8F0005E7C5 /* inv_wood_long.png in Resources */,
 				0711F30F1AA011FC001A97E0 /* cannon.png in Resources */,
-				07E190E01AA5DBC500EAD6A1 /* inv_wood_long.png in Resources */,
 				0764253C1AA70424007E537E /* cannonSpriteSheet.png in Resources */,
+				76D546991AE514380005E7C5 /* stone_block_long.png in Resources */,
 				0735DBC61A9BB92C004A4B64 /* juanTitle.png in Resources */,
+				76D546851AE504DA0005E7C5 /* inv_glass_triangle.png in Resources */,
+				76D546911AE510630005E7C5 /* inv_stone_square.png in Resources */,
+				76D5468D1AE50BBB0005E7C5 /* inv_wood_circle.png in Resources */,
 				0764253E1AA7043D007E537E /* background.mp3 in Resources */,
 				0773EB2A1A6974B400ED19BD /* .gitkeep in Resources */,
+				76D546931AE511C00005E7C5 /* inv_stone_triangle.png in Resources */,
 				076425411AA70459007E537E /* Sombrero.png in Resources */,
 				077667831AE086560029B9A8 /* CatapultSpriteSheet.plist in Resources */,
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
@@ -812,16 +808,14 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				761975451AE2F3F500F0508E /* trashcan.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
-				07E190E11AA5DBC500EAD6A1 /* inv_wood_square.png in Resources */,
-				07E190DA1AA5DBC500EAD6A1 /* inv_glass_triangle.png in Resources */,
+				76D546831AE503C80005E7C5 /* inv_glass_square.png in Resources */,
 				07DACC751AA5BFFF009A6418 /* SpriteSheetJuan.png in Resources */,
 				7691BF651AA746EC005002B0 /* won_screen1.png in Resources */,
-				07E190DF1AA5DBC500EAD6A1 /* inv_wood_circle.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				761DFEED1AA705B900A1C4AC /* level2_title.png in Resources */,
-				07E190D71AA5DBC500EAD6A1 /* inv_glass_circle.png in Resources */,
 				0756B5D71AA74CE10079BEF0 /* woosh.mp3 in Resources */,
 				07DACC631AA58BB7009A6418 /* juan.png in Resources */,
+				76D546871AE505CD0005E7C5 /* inv_glass_long.png in Resources */,
 				07DACC741AA5BFFF009A6418 /* SpriteSheetJuan.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
