@@ -16,6 +16,7 @@ class EnemiesObject{
 public:
     int type;
     int style;
+    int timesFired;
     Vec2 velocity;
     Point Position;
     SpriteBatchNode* enemieSpriteBatch;
@@ -24,7 +25,7 @@ public:
     
     EnemiesObject();
     EnemiesObject(int type, Point position, Vec2 v);
-    EnemiesObject(int type, int style, Point position, Vec2 v);
+    EnemiesObject(int type, int style, Point position, Vec2 v, int numFire);
     void startAnimation();
     Point getPosition();
     Vec2 getVelocity();

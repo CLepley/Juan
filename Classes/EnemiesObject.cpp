@@ -40,61 +40,81 @@ EnemiesObject::EnemiesObject(int t,Point position, Vec2 v){
     enemieSpriteBatch->addChild(this->enemieSprite);
 }
 
-EnemiesObject::EnemiesObject(int t, int s, Point position, Vec2 v){
+EnemiesObject::EnemiesObject(int t, int s, Point position, Vec2 v, int numFire){
     SpriteFrameCache* cache;
-    
     this->type = t;
     this->style = s;
     this->velocity = v;
-    CCLOG("style: %i",s);
-    this->enemieSpriteBatch = SpriteBatchNode::create("cannonSpriteSheet.png");
-    cache = SpriteFrameCache::getInstance();
-    cache->addSpriteFramesWithFile("cannonSprites.plist");
-    switch (style) {
-        case 1:
-        {
-            this->enemieSprite = Sprite::createWithSpriteFrameName("cannonNormal.png");
-            char str[100] = {0};
-            for (int i = 1; i < 6; ++i) {
-                sprintf(str, "cannonNormalFire%d.png", i);
-                SpriteFrame *frame = cache->getSpriteFrameByName( str );
-                this->enemieFrames.pushBack(frame);
+    this->timesFired = numFire;
+    if (t == 1) {
+        this->enemieSpriteBatch = SpriteBatchNode::create("cannonSpriteSheet.png");
+        cache = SpriteFrameCache::getInstance();
+        cache->addSpriteFramesWithFile("cannonSprites.plist");
+        switch (style) {
+            case 1:
+            {
+                this->enemieSprite = Sprite::createWithSpriteFrameName("cannonNormal.png");
+                char str[100] = {0};
+                for (int i = 1; i < 6; ++i) {
+                    sprintf(str, "cannonNormalFire%d.png", i);
+                    SpriteFrame *frame = cache->getSpriteFrameByName( str );
+                    this->enemieFrames.pushBack(frame);
+                }
+                SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonNormal.png");
+                this->enemieFrames.pushBack(startingCannon);
             }
-            SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonNormal.png");
-            this->enemieFrames.pushBack(startingCannon);
-        }
-            break;
-        case 2:
-        {
-            this->enemieSprite = Sprite::createWithSpriteFrameName("cannonElevated.png");
-            char str[100] = {0};
-            for (int i = 1; i < 6; ++i) {
-                sprintf(str, "cannonElevatedFire%d.png", i);
-                SpriteFrame *frame = cache->getSpriteFrameByName( str );
-                this->enemieFrames.pushBack(frame);
+                break;
+            case 2:
+            {
+                this->enemieSprite = Sprite::createWithSpriteFrameName("cannonElevated.png");
+                char str[100] = {0};
+                for (int i = 1; i < 6; ++i) {
+                    sprintf(str, "cannonElevatedFire%d.png", i);
+                    SpriteFrame *frame = cache->getSpriteFrameByName( str );
+                    this->enemieFrames.pushBack(frame);
+                }
+                SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
+                this->enemieFrames.pushBack(startingCannon);
             }
-            SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonElevated.png");
-            this->enemieFrames.pushBack(startingCannon);
-        }
-            break;
-        case 3:
-        {
-            this->enemieSprite = Sprite::createWithSpriteFrameName("cannonHigh.png");
-            char str[100] = {0};
-            for (int i = 1; i < 6; ++i) {
-                sprintf(str, "cannonHighFire%d.png", i);
-                SpriteFrame *frame = cache->getSpriteFrameByName( str );
-                this->enemieFrames.pushBack(frame);
+                break;
+            case 3:
+            {
+                this->enemieSprite = Sprite::createWithSpriteFrameName("cannonHigh.png");
+                char str[100] = {0};
+                for (int i = 1; i < 6; ++i) {
+                    sprintf(str, "cannonHighFire%d.png", i);
+                    SpriteFrame *frame = cache->getSpriteFrameByName( str );
+                    this->enemieFrames.pushBack(frame);
+                }
+                SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonHigh.png");
+                this->enemieFrames.pushBack(startingCannon);
             }
-            SpriteFrame *startingCannon = cache->getSpriteFrameByName("cannonHigh.png");
-            this->enemieFrames.pushBack(startingCannon);
+            default:
+                break;
         }
-        default:
-            break;
+        this->enemieSprite->setPosition(position);
+        this->enemieSprite->setFlippedX(true);
+        this->enemieSpriteBatch->addChild(this->enemieSprite);
+    }else{
+        enemieSpriteBatch = SpriteBatchNode::create("CatapultSpriteSheet.png");
+        cache = SpriteFrameCache::getInstance();
+        cache->addSpriteFramesWithFile("CatapultSpriteSheet.plist");
+        
+        this->enemieSprite = Sprite::createWithSpriteFrameName("catapult/Catapult_4.png");
+        SpriteFrame *frame = cache->getSpriteFrameByName("catapult/Catapult_4.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_5.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_3.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_2.png");
+        enemieFrames.pushBack(frame);
+        frame = cache->getSpriteFrameByName("catapult/Catapult_4.png");
+        enemieFrames.pushBack(frame);
+        
+        this->enemieSprite->setPosition(position);
+        enemieSpriteBatch->addChild(this->enemieSprite);
     }
-    this->enemieSprite->setPosition(position);
-    this->enemieSprite->setFlippedX(true);
-    this->enemieSpriteBatch->addChild(this->enemieSprite);
 }
 
 Point EnemiesObject::getPosition(){

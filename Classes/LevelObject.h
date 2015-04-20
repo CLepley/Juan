@@ -16,11 +16,14 @@ struct Spot{
     Point position;
     Vec2 velocity;
     int timesToFire;
+    int type;
+    int style = 0;
 };
 
 struct Level{
     Spot spots[10];
     int numSpots;
+    int totalTimeToFire;
 };
 
 class LevelObject {
@@ -35,6 +38,11 @@ public:
     Point getPositionOfSpot(int spot);
     Vec2 getVelocityOfSpot(int spot);
     int getTimesToFireOfSpot(int spot);
+    int getType(int spot);
+    int getStyle(int spot);
+    int getNumSpots();
+    int getTotalTimeToFire();
+    
     
 };
 
