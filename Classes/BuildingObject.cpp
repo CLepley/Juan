@@ -179,7 +179,7 @@ int BuildingObject::getObjectHealth(){
 
 void BuildingObject::calcDamage(int dmg){
     this->objectHealth -= dmg;
-    //CCLOG("Damage: %d",dmg);
+    CCLOG("Damage: %d",dmg);
     //CCLOG("Health: %d", this->objectHealth);
     if (this->objectHealth <= 0){
 
@@ -187,7 +187,7 @@ void BuildingObject::calcDamage(int dmg){
         
         //buildingObjectSprite->removeFromParentAndCleanup(true);
         auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-        audio->playEffect("woosh.mp3", false, 1.0f, 1.0f, 1.0f);
+        //audio->playEffect("woosh.mp3", false, 1.0f, 1.0f, 1.0f);
         this->buildingObjectSprite->setVisible(false);
         this->buildingObjectSprite->getPhysicsBody()->setEnable(false);
     }
