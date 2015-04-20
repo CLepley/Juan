@@ -38,7 +38,7 @@ bool MainMenu::init()
     }
     
     //Background sound
-    backgroundMusic->playBackgroundMusic("background.mp3", true);
+    //backgroundMusic->playBackgroundMusic("background.mp3", true);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();

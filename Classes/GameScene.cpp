@@ -1177,7 +1177,6 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             }
             buildingList[numBlocks - 1] = NULL;
             numBlocks--;
-            //////////////////////////// NEED TO ADD MONEY BACK FOR DELETED OBJECT ////////////////////////////////
         }
     }
 }
@@ -1189,6 +1188,7 @@ void GameScreen::hideInterfaceOptions(){
 //    woodTextField->setVisible(false);
 //    stoneTextField->setVisible(false);
     moneyCounterTextField->setVisible(false);
+    trash -> setVisible(false);
     
     for (int i = 0; i < 12; i++) {
         inv_items[i] -> setVisible(false);
@@ -1316,7 +1316,7 @@ void GameScreen::fireCannonBall(float dt){
     Point location = currentEnemies[numTimeFired]->getPosition();
     
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
+    //audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
     cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
     
     // cannonBall position is set for cannonBallElevated
