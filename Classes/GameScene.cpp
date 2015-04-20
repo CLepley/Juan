@@ -1362,3 +1362,46 @@ void GameScreen::fireCannon1(float dt){
         fireCannonBall(0.0);
     }
 }
+void GameScreen::addMoney(int objectClass) {
+    switch (objectClass) {
+        case 1:
+            money += woodBoxPrice;
+            break;
+        case 2:
+            money += woodTrianglePrice;
+            break;
+        case 3:
+            money += woodBarrelPrice;
+            break;
+        case 4:
+            money += woodLogPrice;
+            break;
+        case 5:
+            money += stoneBoxPrice;
+            break;
+        case 6:
+            money += stoneTrianglePrice;
+            break;
+        case 7:
+            money += stoneBarrelPrice;
+            break;
+        case 8:
+            money += stoneLogPrice;
+            break;
+        case 9:
+            money += glassBoxPrice;
+            break;
+        case 10:
+            money += glassTrianglePrice;
+            break;
+        case 11:
+            money += glassBarrelPrice;
+            break;
+        case 12:
+            money += glassLogPrice;
+            break;
+            
+        default:
+            break;
+    }
+}
