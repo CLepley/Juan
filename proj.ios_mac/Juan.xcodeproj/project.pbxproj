@@ -29,6 +29,7 @@
 		079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079757E51ADE8F3000273B98 /* EnemiesObject.cpp */; };
 		07B930661A67784D009C3642 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07B930641A67784D009C3642 /* GameScene.cpp */; };
 		07C61D1A1AE4EC69006A5A48 /* LevelObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07C61D181AE4EC69006A5A48 /* LevelObject.cpp */; };
+		07C61D1C1AE51512006A5A48 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 07C61D1B1AE51512006A5A48 /* close.png */; };
 		07DACC631AA58BB7009A6418 /* juan.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC621AA58BB7009A6418 /* juan.png */; };
 		07DACC741AA5BFFF009A6418 /* SpriteSheetJuan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC721AA5BFFF009A6418 /* SpriteSheetJuan.plist */; };
 		07DACC751AA5BFFF009A6418 /* SpriteSheetJuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC731AA5BFFF009A6418 /* SpriteSheetJuan.png */; };
@@ -181,6 +182,7 @@
 		07B930651A67784D009C3642 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		07C61D181AE4EC69006A5A48 /* LevelObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelObject.cpp; sourceTree = "<group>"; };
 		07C61D191AE4EC69006A5A48 /* LevelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelObject.h; sourceTree = "<group>"; };
+		07C61D1B1AE51512006A5A48 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		07DACC621AA58BB7009A6418 /* juan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = juan.png; sourceTree = "<group>"; };
 		07DACC721AA5BFFF009A6418 /* SpriteSheetJuan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SpriteSheetJuan.plist; sourceTree = "<group>"; };
 		07DACC731AA5BFFF009A6418 /* SpriteSheetJuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpriteSheetJuan.png; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				07C61D1B1AE51512006A5A48 /* close.png */,
 				76D546761AE4B4D70005E7C5 /* triangle_body.plist */,
 				76D546681AE494670005E7C5 /* trashcan.png */,
 				077667811AE086560029B9A8 /* CatapultSpriteSheet.plist */,
@@ -754,6 +757,7 @@
 				075A17951A75F22F008195CB /* ducky.png in Resources */,
 				761DFEF61AA7261500A1C4AC /* win_screen_bg.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
+				07C61D1C1AE51512006A5A48 /* close.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				07E190DD1AA5DBC500EAD6A1 /* inv_stone_square.png in Resources */,
