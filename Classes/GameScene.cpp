@@ -407,19 +407,21 @@ bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
         if (nodeBForce < 0){
             nodeBForce = nodeBForce * -1;
         }
-        finalForce = (nodeAForce - nodeBForce) / 20;
+        finalForce = (nodeAForce - nodeBForce) / 5;
         if (finalForce < 0){
             finalForce = finalForce * -1;
         }
 
         if (contact.getShapeA()->getBody()->getTag() >= 0){
             buildingList[contact.getShapeA()->getBody()->getTag()] -> calcDamage(finalForce);
+            buildingList[contact.getShapeA()->getBody()->getTag()]->buildingObjectSprite->getPhysicsBody()->setTag(-2);
         }
         else if ( contact.getShapeA()->getBody()->getTag() == -1){
             theJuanAndOnly->calcDamage(1);
         }
         if (contact.getShapeB()->getBody()->getTag() >= 0) {
             buildingList[contact.getShapeB()->getBody()->getTag()] -> calcDamage(finalForce);
+            buildingList[contact.getShapeB()->getBody()->getTag()]->buildingObjectSprite->getPhysicsBody()->setTag(-2);
         }
         else if (contact.getShapeB()->getBody()->getTag() == -1){
             theJuanAndOnly->calcDamage(1);
@@ -1321,6 +1323,11 @@ void GameScreen::fireCannonBall(float dt){
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
     //audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
     cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
+    
+    // reset building object sprites tags
+    for (int i = 0; i < numBlocks; i++) {
+        buildingList[i]->buildingObjectSprite->getPhysicsBody()->setTag(i);
+    }
     
     // cannonBall position is set for cannonBallElevated
     cannonBall-> setPosition(Point(location.x + 5,location.y + 8));

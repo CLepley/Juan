@@ -179,7 +179,8 @@ int BuildingObject::getObjectHealth(){
 
 void BuildingObject::calcDamage(int dmg){
     this->objectHealth -= dmg;
-    CCLOG("Damage: %d",dmg);
+    CCLOG("Damage: %d\n\n\n",dmg);
+    
     //CCLOG("Health: %d", this->objectHealth);
     if (this->objectHealth <= 0){
 
