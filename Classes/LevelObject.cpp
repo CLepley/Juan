@@ -38,26 +38,26 @@ LevelObject::LevelObject(Point org){
     levels[1].numSpots = 2;
     levels[1].totalTimeToFire = 3;
     // Level 3
-    levels[0].spots[0].position = Point(origin.x - 250, origin.y - 60);
-    levels[0].spots[0].velocity = Vec2(117,250);
-    levels[0].spots[0].timesToFire = 1;
-    levels[0].spots[0].type = 1;
-    levels[0].spots[0].style = 2;
+    levels[2].spots[0].position = Point(origin.x - 250, origin.y - 60);
+    levels[2].spots[0].velocity = Vec2(117,250);
+    levels[2].spots[0].timesToFire = 1;
+    levels[2].spots[0].type = 1;
+    levels[2].spots[0].style = 2;
     // spot 2
-    levels[0].spots[1].position = Point(origin.x - 25, origin.y - 60);
-    levels[0].spots[1].velocity = Vec2(300,25);
-    levels[0].spots[1].timesToFire = 2;
-    levels[0].spots[1].type = 1;
-    levels[0].spots[1].style = 1;
+    levels[2].spots[1].position = Point(origin.x - 25, origin.y - 60);
+    levels[2].spots[1].velocity = Vec2(300,25);
+    levels[2].spots[1].timesToFire = 2;
+    levels[2].spots[1].type = 1;
+    levels[2].spots[1].style = 1;
     // spot 3
-    levels[0].spots[2].position = Point(origin.x - 500, origin.y - 60);
-    levels[0].spots[2].velocity = Vec2(150,275);
-    levels[0].spots[2].timesToFire = 1;
-    levels[0].spots[2].type = 1;
-    levels[0].spots[2].style = 3;
+    levels[2].spots[2].position = Point(origin.x - 500, origin.y - 60);
+    levels[2].spots[2].velocity = Vec2(150,275);
+    levels[2].spots[2].timesToFire = 1;
+    levels[2].spots[2].type = 1;
+    levels[2].spots[2].style = 3;
     
-    levels[0].numSpots = 3;
-    levels[0].totalTimeToFire = 4;
+    levels[2].numSpots = 3;
+    levels[2].totalTimeToFire = 4;
     // Level 4
     // spot 1
     levels[3].spots[0].position = Point(origin.x - 370, origin.y - 60);

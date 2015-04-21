@@ -181,7 +181,9 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             backgroundMusic1->pauseBackgroundMusic();
 
             auto director = Director::getInstance();
-            auto scene = GameScreen::createScene();
+            GameScreen::setMyLevel(4);
+            auto scene = GameScreen::createScene(2);
+            
             director->pushScene(scene);
         }
     } else if (target == level2_title) {
@@ -191,7 +193,7 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             backgroundMusic1->pauseBackgroundMusic();
             // Push level 2 scene
             auto director = Director::getInstance();
-            auto scene = GameScreen::createScene();
+            auto scene = GameScreen::createScene(2);
             director->pushScene(scene);
         }
     } else if (target == main_menu) {

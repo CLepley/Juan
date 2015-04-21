@@ -113,7 +113,7 @@ auto fadeInv = FadeTo::create(1.0, 0x7F);
 
 
 
-Scene* GameScreen::createScene()
+Scene* GameScreen::createScene(int i)
 {
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
@@ -126,11 +126,14 @@ Scene* GameScreen::createScene()
     
     // add layer as a child to scene
     scene->addChild(layer);
-    
     // return the scene
     return scene;
 }
 
+ void GameScreen::setMyLevel(int lvl){
+     CCLOG("here");
+     currentLevel = lvl;
+}
 // on "init" you need to initialize your instance
 bool GameScreen::init()
 {
@@ -148,7 +151,7 @@ bool GameScreen::init()
     glClearColor(1,1,1,1.0);
     
     myLevels = new LevelObject(origin);
-    currentLevel = 3;
+    CCLOG("level: %i", currentLevel);
     myLevels->setLevel(currentLevel);
     
     

@@ -14,7 +14,7 @@ public:
     { this->sceneWorld = world; }; // c++ inline
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene* createScene(int i);
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
@@ -22,6 +22,7 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(GameScreen);
     
+    static void setMyLevel(int lvl);
     void initPhysicsSprites();
     void addEnemiesToEnemiesArrayForLevel();
     void update(float delta);
