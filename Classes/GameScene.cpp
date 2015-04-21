@@ -258,7 +258,6 @@ void GameScreen::initPhysicsSprites(){
     bg -> setScale(0.5);
     this -> addChild(bg);
     Vec2 p = bg -> getPhysicsBody() -> getPosition();
-    CCLOG("bg location %f %f ", p.x, p.y);
     
     // play button
     playButton = Sprite::create("playsprite.png");
@@ -1301,7 +1300,7 @@ void GameScreen::startBattle(){
     hideInterfaceOptions();
     ////////////////////////////////////////////////
     // make juan dynamic
-    theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(true);
+    theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     ////////////////////////////////////////////////
     // fire cannons
     this->schedule(schedule_selector(GameScreen::fireCannon1), 8.0f,1000000000000, 1.0f);

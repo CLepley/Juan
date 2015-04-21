@@ -26,7 +26,7 @@ BuildingObject::BuildingObject(int ID, Point point, int tag){
     switch (ID) {
         case 0:
             this->buildingObjectSprite =  Sprite::createWithSpriteFrameName("Juan_Front_1.png");
-            this->objectHealth = 1;
+            this->objectHealth = 10000;
             //this->spritebatch->addChild(this->buildingObjectSprite);
             break;
         case 1:
