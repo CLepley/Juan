@@ -148,6 +148,7 @@ bool GameScreen::init()
     glClearColor(1,1,1,1.0);
     
     myLevels = new LevelObject(origin);
+    currentLevel = 3;
     myLevels->setLevel(currentLevel);
     
     
@@ -277,6 +278,20 @@ void GameScreen::initPhysicsSprites(){
     theJuanAndOnly->buildingObjectSprite->getPhysicsBody()->setDynamic(false);
     this -> addChild(theJuanAndOnly->buildingObjectSprite);
     
+    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
+    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
+                                                            // density, restitution, friction,
+                                                            PhysicsMaterial(cDen,0.2,2));
+    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
+    cannonBall-> setPosition(Point(-11000,-10000));
+    this -> addChild(cannonBall);
+    
+    cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
+    cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
+    cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
+    cannonBall-> setTag(-1);
+    cannonBall->getPhysicsBody()->setTag(-2);
+    
     //Setup the enemy array
     addEnemiesToEnemiesArrayForLevel();
     
@@ -394,14 +409,14 @@ void GameScreen::addEnemiesToEnemiesArrayForLevel() {
 
 void GameScreen::ballTimer (float dt) {
     //Check if ball needs to be removed from the scene
-    if (removeBallCounter == 2) {
-        this -> removeChild(cannonBall);
-        removeBallCounter = 0;
-        this ->unschedule(schedule_selector(GameScreen::ballTimer));
-        removeCannonBall = false;
-    } else {
-        removeBallCounter++;
-    }
+//    if (removeBallCounter == 2) {
+//        this -> removeChild(cannonBall);
+//        removeBallCounter = 0;
+//        this ->unschedule(schedule_selector(GameScreen::ballTimer));
+//        removeCannonBall = false;
+//    } else {
+//        removeBallCounter++;
+//    }
 }
 
 bool GameScreen::physicsOnContactBegin(const cocos2d::PhysicsContact &contact)
@@ -1333,7 +1348,6 @@ void GameScreen::fireCannonBall(float dt){
     
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
     //audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
-    cannonBall = Sprite::createWithSpriteFrameName("cannonball.png");
     
     // reset building object sprites tags
     for (int i = 0; i < numBlocks; i++) {
@@ -1342,18 +1356,8 @@ void GameScreen::fireCannonBall(float dt){
     
     // cannonBall position is set for cannonBallElevated
     cannonBall-> setPosition(Point(location.x + 5,location.y + 8));
-    auto cannonBallPhysicisBody = PhysicsBody::createCircle(cannonBall-> getContentSize().width/2,
-                                                            // density, restitution, friction,
-                                                            PhysicsMaterial(cDen,0.2,2));
-    cannonBall -> setPhysicsBody(cannonBallPhysicisBody); // attach
     
-    this -> addChild(cannonBall);
-    cannonBall->getPhysicsBody()->setVelocity(ballVelocity);
-    cannonBall->getPhysicsBody()->setCollisionBitmask(0x01);
-    cannonBall->getPhysicsBody()->setCategoryBitmask(0x11);
-    cannonBall -> getPhysicsBody()->setContactTestBitmask(0x1);
-    cannonBall-> setTag(-1);
-    cannonBall->getPhysicsBody()->setTag(-2);
+     cannonBall->getPhysicsBody()->setVelocity(ballVelocity);
     auto cannonoBallContactListener = EventListenerPhysicsContact::create();
     cannonoBallContactListener -> onContactBegin = CC_CALLBACK_1(GameScreen::physicsOnContactBegin,
                                                                  this);
@@ -1384,7 +1388,7 @@ void GameScreen::fireCannon1(float dt){
             fireCannonBall(0.0);
         }
     }else{
-        this->schedule(schedule_selector(GameScreen::fireCannon1), 0.1f,1000000000000, 0.0f);
+        this->schedule(schedule_selector(GameScreen::fireCannon1), 0.3f,1000000000000, 0.0f);
         numTimeFired++;
     }
 }
