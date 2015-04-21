@@ -25,6 +25,7 @@ public:
     void changeJuan1();
     void changeJuan2();
     void changeJuan3();
+    
 };
 
 

@@ -19,8 +19,7 @@ Point origin;
 Size visibleSize;
 // array of levels
 LevelObject *myLevels;
-// current level the user is on
-int currentLevel;
+
 // background sprite
 Sprite *bg;
 Sprite *playButton;
@@ -107,7 +106,7 @@ int glassBoxPrice = 150;
 int glassLogPrice = 100;
 int glassTrianglePrice = 50;
 int glassBarrelPrice = 25;
-
+int currentLevel = 0;
 
 auto fadeInv = FadeTo::create(1.0, 0x7F);
 
@@ -137,6 +136,8 @@ Scene* GameScreen::createScene(int i)
 // on "init" you need to initialize your instance
 bool GameScreen::init()
 {
+    
+    CCLOG("%d", currentLevel);
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )

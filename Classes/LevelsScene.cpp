@@ -5,8 +5,14 @@
 
 USING_NS_CC;
 
+Sprite *level_titles[6];
+
 Sprite *level1_title;
 Sprite *level2_title;
+Sprite *level3_title;
+Sprite *level4_title;
+Sprite *level5_title;
+Sprite *level6_title;
 
 Sprite *menu_juan;
 Sprite *play;
@@ -65,16 +71,41 @@ bool Levels::init()
     
     // Levels
     // Level 1
-    level1_title = Sprite::create("level1_title.png");
-    level1_title->setPosition(Point(origin.x + visibleSize.width/2,
-                                    level_title->getPositionY() - 1.75 * level1_title->getContentSize().height));
-    this->addChild(level1_title);
+    level_titles[0] = Sprite::create("level1Title.png");
+    level_titles[0]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_title->getPositionY() - 2.25 * level_titles[0]->getContentSize().height));
+    this->addChild(level_titles[0]);
     
     // Level 2
-    level2_title = Sprite::create("level2_title.png");
-    level2_title->setPosition(Point(origin.x + visibleSize.width/2,
-                                    level1_title->getPositionY() - 1.5 * level2_title->getContentSize().height));
-    //this->addChild(level2_title);
+    level_titles[1] = Sprite::create("level2Title.png");
+    level_titles[1]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_titles[0]->getPositionY() - 1.5 * level_titles[1]->getContentSize().height));
+    this->addChild(level_titles[1]);
+    
+    // Level 3
+    level_titles[2] = Sprite::create("level3Title.png");
+    level_titles[2]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_titles[1]->getPositionY() - 1.3 * level_titles[2]->getContentSize().height));
+    this->addChild(level_titles[2]);
+    
+    // Level 4
+    level_titles[3] = Sprite::create("level4Title.png");
+    level_titles[3]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_titles[2]->getPositionY() - 1.3 * level_titles[3]->getContentSize().height));
+    this->addChild(level_titles[3]);
+    
+    // Level 5
+    level_titles[4] = Sprite::create("level5Title.png");
+    level_titles[4]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_titles[3]->getPositionY() - 1.3 * level_titles[4]->getContentSize().height));
+    this->addChild(level_titles[4]);
+    
+    // Level 6
+    level_titles[5] = Sprite::create("level6Title.png");
+    level_titles[5]->setPosition(Point(origin.x + visibleSize.width/2,
+                                    level_titles[4]->getPositionY() - 1.3 * level_titles[5]->getContentSize().height));
+    this->addChild(level_titles[5]);
+    
     
     // Juan
     menu_juan = Sprite::createWithSpriteFrameName("Juan_Side_2.png");
@@ -124,9 +155,12 @@ bool Levels::init()
     touchListener -> onTouchEnded =
     CC_CALLBACK_2(Levels::onTouchEnded, this);
     
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, level1_title);
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), level2_title);
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), main_menu);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, main_menu);
+    
+    for (int i = 0; i < 6; i++) {
+        _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), level_titles[i]);
+    }
+    
     
     return true;
 }
@@ -138,33 +172,28 @@ bool Levels::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    if (target == level1_title) {
-        if (rect.containsPoint(locationInNode)) {
-            auto fadeTitle = FadeTo::create(0, 0xAF);
-            level1_title->runAction(fadeTitle);
-            return true;
-        } else {
-            return false;
+    for (int i = 0; i < 6; i++) {
+        if (target == level_titles[i]) {
+            if (rect.containsPoint(locationInNode)) {
+                auto fadeTitle = FadeTo::create(0, 0xAF);
+                level_titles[i]->runAction(fadeTitle);
+                return true;
+            } else {
+                return false;
+            }
         }
-    } else if (target == level2_title) {
-        if (rect.containsPoint(locationInNode)) {
-            auto fadeTitle = FadeTo::create(0, 0xAF);
-            level2_title->runAction(fadeTitle);
-            return true;
-        } else {
-            return false;
-        }
-    } else if (target == main_menu) {
-        if (rect.containsPoint(locationInNode)) {
-            auto fadeTitle = FadeTo::create(0, 0xAF);
-            main_menu->runAction(fadeTitle);
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
     }
+        if (target == main_menu) {
+            if (rect.containsPoint(locationInNode)) {
+                auto fadeTitle = FadeTo::create(0, 0xAF);
+                main_menu->runAction(fadeTitle);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     
 }
 void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
@@ -198,10 +227,7 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
         }
     } else if (target == main_menu) {
         if (rect.containsPoint(locationInNode)) {
-            auto fadeTitleBack = FadeTo::create(0, 0xFF);
             main_menu->runAction(fadeTitleBack);
-            
-            auto director = Director::getInstance();
             auto scene = MainMenu::createScene();
             director->pushScene(scene);
         }
