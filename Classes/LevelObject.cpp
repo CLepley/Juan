@@ -7,6 +7,7 @@
 //
 
 #include "LevelObject.h"
+#include <unistd.h>
 LevelObject::LevelObject(){
 }
 
@@ -16,11 +17,11 @@ LevelObject::LevelObject(Point org){
     // spot 1
     levels[0].spots[0].position = Point(origin.x - 250, origin.y - 60);
     levels[0].spots[0].velocity = Vec2(93,300);
-    levels[0].spots[0].timesToFire = 1;
+    levels[0].spots[0].timesToFire = 2;
     levels[0].spots[0].type = 1;
     levels[0].spots[0].style = 3;
     levels[0].numSpots = 1;
-    levels[0].totalTimeToFire = 1;
+    levels[0].totalTimeToFire = 2;
      // Level 2
      // spot 1
     levels[1].spots[0].position = Point(origin.x - 500, origin.y - 60);
@@ -122,7 +123,7 @@ LevelObject::LevelObject(Point org){
     levels[5].spots[1].type = 2;
     levels[5].spots[1].style = 1;
     // spot 3
-    levels[5].spots[2].position = Point(origin.x - 10, origin.y - 60);
+    levels[5].spots[2].position = Point(origin.x - 20, origin.y - 60);
     levels[5].spots[2].velocity = Vec2(112,150);
     levels[5].spots[2].timesToFire = 1;
     levels[5].spots[2].type = 1;
@@ -136,6 +137,31 @@ LevelObject::LevelObject(Point org){
     levels[5].numSpots = 4;
     levels[5].totalTimeToFire = 6;
     
+    // level 7
+    int numSpots = rand() % 10 + 1; // 1 to 10
+    int numX;
+    int numToFire;
+    int numType;
+    int numStyle;
+    int vecX;
+    int vecY;
+    
+    for (int i = 0; i < numSpots; i++){
+        srand(time(0));
+        numX = rand() % 10 + 350;
+        vecX = rand() % 20 + 200;
+        vecY = rand() % 20 + 200;
+        numToFire = rand() % 4 + 1;
+        numType =  rand() % 2 + 1;
+        numStyle = rand() % 3 + 1;
+        levels[6].spots[i].position = Point(origin.x - numX, origin.y - 60);
+        levels[6].spots[i].velocity = Vec2(vecX,vecY);
+        levels[6].spots[i].timesToFire = numToFire;
+        levels[6].spots[i].type = numType;
+        levels[6].spots[i].style = numStyle;
+        levels[6].totalTimeToFire += numToFire;
+    }
+    levels[6].numSpots = numSpots;
 }
 
 void LevelObject::setLevel(int lvl){

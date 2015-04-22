@@ -203,30 +203,33 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
     Size s = target->getContentSize();
     Rect rect = Rect(0, 0, s.width, s.height);
     
-    if (target == level1_title) {
+    auto fadeTitleBack = FadeTo::create(0, 0xFF);
+    auto director = Director::getInstance();
+    
+    for (int i = 0; i < 6; i++) {
+        if (target == level_titles[i]) {
+            if (rect.containsPoint(locationInNode)) {
+                level_titles[i]->runAction(fadeTitleBack);
+                GameScreen::setMyLevel(i);
+                auto scene = GameScreen::createScene(i);
+                director->pushScene(scene);
+            }
+        }
+    }
+//    if (target == main_menu) {
+//        if (rect.containsPoint(locationInNode)) {
+//            auto fadeTitleBack = FadeTo::create(0, 0xFF);
+//            //level2_title->runAction(fadeTitleBack);
+//            backgroundMusic1->pauseBackgroundMusic();
+//            // Push level 2 scene
+//            auto director = Director::getInstance();
+//            auto scene = GameScreen::createScene(2);
+//            director->pushScene(scene);
+//        }
+//    } else
+    if (target == main_menu) {
         if (rect.containsPoint(locationInNode)) {
             auto fadeTitleBack = FadeTo::create(0, 0xFF);
-            level1_title->runAction(fadeTitleBack);
-            backgroundMusic1->pauseBackgroundMusic();
-
-            auto director = Director::getInstance();
-            GameScreen::setMyLevel(4);
-            auto scene = GameScreen::createScene(2);
-            
-            director->pushScene(scene);
-        }
-    } else if (target == level2_title) {
-        if (rect.containsPoint(locationInNode)) {
-            auto fadeTitleBack = FadeTo::create(0, 0xFF);
-            level2_title->runAction(fadeTitleBack);
-            backgroundMusic1->pauseBackgroundMusic();
-            // Push level 2 scene
-            auto director = Director::getInstance();
-            auto scene = GameScreen::createScene(2);
-            director->pushScene(scene);
-        }
-    } else if (target == main_menu) {
-        if (rect.containsPoint(locationInNode)) {
             main_menu->runAction(fadeTitleBack);
             auto scene = MainMenu::createScene();
             director->pushScene(scene);

@@ -28,6 +28,7 @@
 		077667841AE086560029B9A8 /* CatapultSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 077667821AE086560029B9A8 /* CatapultSpriteSheet.png */; };
 		079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079757E51ADE8F3000273B98 /* EnemiesObject.cpp */; };
 		07B930661A67784D009C3642 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07B930641A67784D009C3642 /* GameScene.cpp */; };
+		07BF061A1AE68615008A6F1E /* level6Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 07BF06191AE68615008A6F1E /* level6Title.png */; };
 		07C61D1A1AE4EC69006A5A48 /* LevelObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07C61D181AE4EC69006A5A48 /* LevelObject.cpp */; };
 		07C61D1C1AE51512006A5A48 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 07C61D1B1AE51512006A5A48 /* close.png */; };
 		07DACC631AA58BB7009A6418 /* juan.png in Resources */ = {isa = PBXBuildFile; fileRef = 07DACC621AA58BB7009A6418 /* juan.png */; };
@@ -123,7 +124,6 @@
 		76D546BF1AE663430005E7C5 /* level2Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546BE1AE663430005E7C5 /* level2Title.png */; };
 		76D546C11AE6641F0005E7C5 /* level4Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546C01AE6641F0005E7C5 /* level4Title.png */; };
 		76D546C31AE664A70005E7C5 /* level6Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546C21AE664A70005E7C5 /* level6Title.png */; };
-		76D546C51AE67B9A0005E7C5 /* level6Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546C41AE67B9A0005E7C5 /* level6Title.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -189,6 +189,7 @@
 		079757E61ADE8F3000273B98 /* EnemiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemiesObject.h; sourceTree = "<group>"; };
 		07B930641A67784D009C3642 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		07B930651A67784D009C3642 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		07BF06191AE68615008A6F1E /* level6Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level6Title.png; sourceTree = "<group>"; };
 		07C61D181AE4EC69006A5A48 /* LevelObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelObject.cpp; sourceTree = "<group>"; };
 		07C61D191AE4EC69006A5A48 /* LevelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelObject.h; sourceTree = "<group>"; };
 		07C61D1B1AE51512006A5A48 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
@@ -292,7 +293,6 @@
 		76D546BE1AE663430005E7C5 /* level2Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level2Title.png; sourceTree = "<group>"; };
 		76D546C01AE6641F0005E7C5 /* level4Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level4Title.png; sourceTree = "<group>"; };
 		76D546C21AE664A70005E7C5 /* level6Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level6Title.png; sourceTree = "<group>"; };
-		76D546C41AE67B9A0005E7C5 /* level6Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level6Title.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -345,7 +345,7 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				76D546C41AE67B9A0005E7C5 /* level6Title.png */,
+				07BF06191AE68615008A6F1E /* level6Title.png */,
 				07C61D1B1AE51512006A5A48 /* close.png */,
 				76D546981AE514380005E7C5 /* stone_block_long.png */,
 				76D546961AE513D40005E7C5 /* inv_stone_long.png */,
@@ -808,7 +808,6 @@
 				0760CDD11A9BC6F2007B779A /* play.png in Resources */,
 				761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
-				76D546C51AE67B9A0005E7C5 /* level6Title.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				076425421AA70459007E537E /* title.png in Resources */,
 				761DFEE91AA704E300A1C4AC /* level_title.png in Resources */,
@@ -820,6 +819,7 @@
 				761DFEF21AA7212300A1C4AC /* black_screen.png in Resources */,
 				07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				07BF061A1AE68615008A6F1E /* level6Title.png in Resources */,
 				76D546771AE4B4D70005E7C5 /* triangle_body.plist in Resources */,
 				76D5468F1AE50D8F0005E7C5 /* inv_wood_long.png in Resources */,
 				0711F30F1AA011FC001A97E0 /* cannon.png in Resources */,
