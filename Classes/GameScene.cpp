@@ -1597,7 +1597,7 @@ void GameScreen::fireCannonBall(float dt){
     Point location = currentEnemies[numTimeFired]->getPosition();
     
     auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-    //audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
+    audio->playEffect("tank_fire.mp3", false, 1.0f, 1.0f, 1.0f);
     
     // reset building object sprites tags
     for (int i = 0; i < numBlocks; i++) {

@@ -9,6 +9,7 @@ USING_NS_CC;
 
 #include "CredditScene.h"
 #include "MainMenuScene.h"
+#include "SimpleAudioEngine.h"
 
 
 
@@ -17,6 +18,9 @@ Sprite *creds1;
 Sprite *creds2;
 Sprite *creds3;
 Sprite *creds4;
+
+auto backgroundMusic2 = CocosDenshion::SimpleAudioEngine::getInstance();
+
 
 Scene* CredditScene::createScene()
 {
@@ -88,6 +92,8 @@ bool CredditScene::init()
     CC_CALLBACK_2(CredditScene::onTouchEnded, this);
     
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, bgc);
+    
+    backgroundMusic2->playBackgroundMusic("background.mp3", true);
     
     return true;
 }

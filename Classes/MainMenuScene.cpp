@@ -24,7 +24,7 @@ Scene* MainMenu::createScene()
     return scene;
 }
 void MainMenu::GoToGameScene(cocos2d::Ref *pSender){
-    //auto scene = GameScreen::createScene();
+    //auto scene = GameScreen::createScene(1);
     //Director::getInstance()->pushScene(TransitionFade::create(1.0, scene));
 }
 
@@ -39,7 +39,7 @@ bool MainMenu::init()
     }
     
     //Background sound
-    //backgroundMusic->playBackgroundMusic("background.mp3", true);
+    backgroundMusic->playBackgroundMusic("background.mp3", true);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -76,6 +76,7 @@ bool MainMenu::init()
     this->addChild(play1);
     
     credits = Sprite::create("Credits.png");
+    credits->setScale(0.5);
     credits-> setPosition(Point(origin.x + visibleSize.width/2, menu_title->getPositionY() - 2 * credits->getContentSize().height));
     this->addChild(credits);
    

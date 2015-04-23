@@ -52,6 +52,8 @@ bool Levels::init()
     }
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    backgroundMusic1->playBackgroundMusic("background.mp3", true);
+    
     
     // Background
     Sprite *levels_bg = Sprite::create("level_bg.png");
