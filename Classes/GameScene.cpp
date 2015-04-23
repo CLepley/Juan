@@ -685,9 +685,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
         
         }
         
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     } else if (target == inv_items[1]) {
         num++;
@@ -704,9 +706,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[2]) {
         num++;
@@ -724,9 +728,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[3]) {
         num++;
@@ -742,9 +748,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[4]) {
         num++;
@@ -761,10 +769,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-       
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
     }
     else if (target == inv_items[5]) {
         num++;
@@ -780,10 +789,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[6]) {
@@ -800,10 +810,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[7]) {
@@ -820,9 +831,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[8]) {
@@ -839,9 +852,13 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
+        
+        if (numBlocks > 0 ) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[9]) {
@@ -859,9 +876,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[10]) {
@@ -878,10 +897,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     }
     else if (target == inv_items[11]) {
@@ -899,10 +919,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        
-        touchLoc.x += delta.x;
-        touchLoc.y += delta.y;
-        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        if (numBlocks > 0) {
+            touchLoc.x += delta.x;
+            touchLoc.y += delta.y;
+            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        }
         
     
     } else if ( target == bg){
@@ -1129,9 +1150,9 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
 
     
     
-    if (target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
+    if ((target == inv_items[0] || target == inv_items[1] || target == inv_items[2] || target == inv_items[3] ||
              target == inv_items[4] || target == inv_items[5] || target == inv_items[6] || target == inv_items[7] ||
-             target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) {
+             target == inv_items[8] || target == inv_items[9] || target == inv_items[10] || target == inv_items[11]) && numBlocks > 0) {
         
         
         if ((target != inv_items[0] || target != inv_items[1] || target != inv_items[2] || target != inv_items[3] ||
