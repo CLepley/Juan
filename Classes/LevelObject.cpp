@@ -14,15 +14,19 @@ LevelObject::LevelObject(){
 LevelObject::LevelObject(Point org){
     origin = org;
     // level 1
+    levels[0].payout = 350;
+
     // spot 1
     levels[0].spots[0].position = Point(origin.x - 250, origin.y - 60);
     levels[0].spots[0].velocity = Vec2(93,300);
-    levels[0].spots[0].timesToFire = 2;
+    levels[0].spots[0].timesToFire = 1;
     levels[0].spots[0].type = 1;
     levels[0].spots[0].style = 3;
     levels[0].numSpots = 1;
-    levels[0].totalTimeToFire = 2;
+    levels[0].totalTimeToFire = 1;
      // Level 2
+    levels[1].payout = 400;
+
      // spot 1
     levels[1].spots[0].position = Point(origin.x - 500, origin.y - 60);
     levels[1].spots[0].velocity = Vec2(130,300);
@@ -38,9 +42,12 @@ LevelObject::LevelObject(Point org){
     
     levels[1].numSpots = 2;
     levels[1].totalTimeToFire = 3;
+    
     // Level 3
+    levels[2].payout = 450;
+    
     levels[2].spots[0].position = Point(origin.x - 250, origin.y - 60);
-    levels[2].spots[0].velocity = Vec2(117,250);
+    levels[2].spots[0].velocity = Vec2(130,220);
     levels[2].spots[0].timesToFire = 1;
     levels[2].spots[0].type = 1;
     levels[2].spots[0].style = 2;
@@ -59,7 +66,9 @@ LevelObject::LevelObject(Point org){
     
     levels[2].numSpots = 3;
     levels[2].totalTimeToFire = 4;
+    
     // Level 4
+    levels[3].payout = 650;
     // spot 1
     levels[3].spots[0].position = Point(origin.x - 370, origin.y - 60);
     levels[3].spots[0].velocity = Vec2(170,200);
@@ -82,6 +91,7 @@ LevelObject::LevelObject(Point org){
     levels[3].totalTimeToFire = 5;
     
     // Level 5
+    levels[4].payout = 800;
     // spot 1
     levels[4].spots[0].position = Point(origin.x - 10, origin.y - 60);
     levels[4].spots[0].velocity = Vec2(200,80);
@@ -110,6 +120,7 @@ LevelObject::LevelObject(Point org){
     levels[4].totalTimeToFire = 6;
     
     // Level 6
+    levels[6].payout = 1000;
     // spot 1
     levels[5].spots[0].position = Point(origin.x - 460, origin.y - 60);
     levels[5].spots[0].velocity = Vec2(140,275);

@@ -1,128 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<dict>
+	<key>metadata</key>
 	<dict>
-    <key>metadata</key>
-        <dict>
-            <key>format</key>
-            <integer>1</integer>
-        </dict>
-        <key>bodies</key>
+		<key>format</key>
+		<integer>1</integer>
+	</dict>
+	<key>bodies</key>
+	<dict>
+		<key>glass_block_triangle</key>
 		<dict>
-
-			<key>glass_block_triangle</key>
-			<dict>
-				<key>anchorpoint</key>
-                <string>{ 0.50000,0.50000 }</string>
-                <key>fixtures</key>
-                <array>
-
-					<dict>
-                        <key>mass</key>
-                        <real>2</real>
-                        <key>elasticity</key>
-                        <real>0</real>
-                        <key>friction</key>
-                        <real>2</real>
-                        <key>surface_velocity</key>
-                        <string>{ 0.00000,0.00000 }</string>
-                        <key>layers</key>
-                        <integer>0</integer>
-                        <key>group</key>
-                        <integer>0</integer>
-                        <key>collision_type</key>
-                        <integer>0</integer>
-                        <key>isSensor</key>
-                        <false/>
-                        <key>fixture_type</key>
-                        <string>POLYGON</string>
-                        
-						<key>polygons</key>
+			<key>anchorpoint</key>
+			<string>{ 0.50000,0.50000 }</string>
+			<key>fixtures</key>
+			<array>
+				<dict>
+					<key>mass</key>
+					<integer>2</integer>
+					<key>elasticity</key>
+					<real>0</real>
+					<key>friction</key>
+					<integer>1</integer>
+					<key>surface_velocity</key>
+					<string>{ 0.00000,0.00000 }</string>
+					<key>layers</key>
+					<integer>0</integer>
+					<key>group</key>
+					<integer>0</integer>
+					<key>collision_type</key>
+					<integer>1</integer>
+					<key>isSensor</key>
+					<false/>
+					<key>fixture_type</key>
+					<string>POLYGON</string>
+					<key>polygons</key>
+					<array>
 						<array>
-							<array>	
-								<string>{ -38.50000,40.00000 }</string>	
-								<string>{ -34.50000,39.00000 }</string>	
-								<string>{ 40.50000,-36.00000 }</string>	
-								<string>{ 39.50000,-40.00000 }</string>	
-								<string>{ -39.50000,-40.00000 }</string>
-							</array>
+							<string>{ -38.50000,40.00000 }</string>
+							<string>{ -34.50000,39.00000 }</string>
+							<string>{ 40.50000,-36.00000 }</string>
+							<string>{ 39.50000,-40.00000 }</string>
+							<string>{ -39.50000,-40.00000 }</string>
 						</array>
-                        
-					</dict>
-
-					<dict>
-                        <key>mass</key>
-                        <real>2</real>
-                        <key>elasticity</key>
-                        <real>0</real>
-                        <key>friction</key>
-                        <real>1</real>
-                        <key>surface_velocity</key>
-                        <string>{ 0.00000,0.00000 }</string>
-                        <key>layers</key>
-                        <integer>0</integer>
-                        <key>group</key>
-                        <integer>0</integer>
-                        <key>collision_type</key>
-                        <integer>0</integer>
-                        <key>isSensor</key>
-                        <false/>
-                        <key>fixture_type</key>
-                        <string>POLYGON</string>
-                        
-						<key>polygons</key>
+					</array>
+				</dict>
+				<dict>
+					<key>mass</key>
+					<real>2</real>
+					<key>elasticity</key>
+					<real>0</real>
+					<key>friction</key>
+					<real>1</real>
+					<key>surface_velocity</key>
+					<string>{ 0.00000,0.00000 }</string>
+					<key>layers</key>
+					<integer>0</integer>
+					<key>group</key>
+					<integer>0</integer>
+					<key>collision_type</key>
+					<integer>0</integer>
+					<key>isSensor</key>
+					<false/>
+					<key>fixture_type</key>
+					<string>POLYGON</string>
+					<key>polygons</key>
+					<array>
 						<array>
-							<array>	
-								<string>{ -38.50000,40.00000 }</string>	
-								<string>{ -34.50000,39.00000 }</string>	
-								<string>{ 40.50000,-36.00000 }</string>	
-								<string>{ 40.50000,-43.00000 }</string>	
-								<string>{ -40.50000,-43.00000 }</string>
-							</array>
+							<string>{ -38.50000,40.00000 }</string>
+							<string>{ -34.50000,39.00000 }</string>
+							<string>{ 40.50000,-36.00000 }</string>
+							<string>{ 40.50000,-43.00000 }</string>
+							<string>{ -40.50000,-43.00000 }</string>
 						</array>
-                        
-					</dict>
-
-					<dict>
-                        <key>mass</key>
-                        <real>1</real>
-                        <key>elasticity</key>
-                        <real>0</real>
-                        <key>friction</key>
-                        <real>1</real>
-                        <key>surface_velocity</key>
-                        <string>{ 0.00000,0.00000 }</string>
-                        <key>layers</key>
-                        <integer>0</integer>
-                        <key>group</key>
-                        <integer>0</integer>
-                        <key>collision_type</key>
-                        <integer>0</integer>
-                        <key>isSensor</key>
-                        <false/>
-                        <key>fixture_type</key>
-                        <string>POLYGON</string>
-                        
-						<key>polygons</key>
+					</array>
+				</dict>
+				<dict>
+					<key>mass</key>
+					<real>1</real>
+					<key>elasticity</key>
+					<real>0</real>
+					<key>friction</key>
+					<real>1</real>
+					<key>surface_velocity</key>
+					<string>{ 0.00000,0.00000 }</string>
+					<key>layers</key>
+					<integer>0</integer>
+					<key>group</key>
+					<integer>0</integer>
+					<key>collision_type</key>
+					<integer>0</integer>
+					<key>isSensor</key>
+					<false/>
+					<key>fixture_type</key>
+					<string>POLYGON</string>
+					<key>polygons</key>
+					<array>
 						<array>
-							<array>	
-								<string>{ -39.50000,40.00000 }</string>	
-								<string>{ -34.50000,39.00000 }</string>	
-								<string>{ 40.50000,-36.00000 }</string>	
-								<string>{ 40.50000,-43.00000 }</string>	
-								<string>{ -40.50000,-43.00000 }</string>
-							</array>
+							<string>{ -39.50000,40.00000 }</string>
+							<string>{ -34.50000,39.00000 }</string>
+							<string>{ 40.50000,-36.00000 }</string>
+							<string>{ 40.50000,-43.00000 }</string>
+							<string>{ -40.50000,-43.00000 }</string>
 						</array>
-                        
-					</dict>
-
-				</array>
-			</dict>
-
+					</array>
+				</dict>
+			</array>
 		</dict>
 	</dict>
+</dict>
 </plist>
-
-
-
-

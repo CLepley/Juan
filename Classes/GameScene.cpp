@@ -94,7 +94,8 @@ cocos2d::ui::TextField *moneyCounterTextField;
 //int stone = 4;
 //int glass = 6;
 
-int money = 10000;
+int money = 300;
+int roundBonus;
 
 //Item costs
 int woodBoxPrice = 250;
@@ -677,11 +678,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
         
         }
-        if (money >= glassBoxPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     } else if (target == inv_items[1]) {
         num++;
         if (numBlocks < 50 && num < 2 && money >= glassTrianglePrice){
@@ -697,11 +698,9 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        if (money >= glassTrianglePrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if (target == inv_items[2]) {
         num++;
@@ -711,6 +710,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             Point position = touch->getLocation();
             buildingList[numBlocks] = new BuildingObject(3, position, numBlocks);
              _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(),  buildingList[numBlocks]->buildingObjectSprite);
+            buildingList[numBlocks]->buildingObjectSprite->setScale(1.8);
             this-> addChild(buildingList[numBlocks]->buildingObjectSprite);
             //reorderChild(buildingList[numBlocks]->buildingObjectSprite, 1);
             option = inv_items[2];
@@ -718,11 +718,9 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        if ( money > glassBarrelPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if (target == inv_items[3]) {
         num++;
@@ -738,11 +736,9 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if ( money >= glassLogPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
     }
     else if (target == inv_items[4]) {
         num++;
@@ -759,11 +755,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        if ( money >= woodBoxPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }    }
+       
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+    }
     else if (target == inv_items[5]) {
         num++;
         if (numBlocks < 50 && num < 2 && money >= woodTrianglePrice){
@@ -778,11 +774,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if ( money >= woodTrianglePrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[6]) {
         num++;
@@ -798,11 +794,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if ( money >= woodBarrelPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[7]) {
         num++;
@@ -818,11 +814,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if (money >= woodLogPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[8]) {
         num++;
@@ -838,11 +833,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if ( money >= stoneBoxPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[9]) {
         num++;
@@ -859,11 +853,10 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        if ( money >= stoneTrianglePrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[10]) {
         num++;
@@ -879,11 +872,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             numBlocks++;
             
         }
-        if ( money >= stoneBarrelPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     }
     else if (target == inv_items[11]) {
         num++;
@@ -900,11 +893,11 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
             
             
         }
-        if ( money >= stoneLogPrice) {
-            touchLoc.x += delta.x;
-            touchLoc.y += delta.y;
-            buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
-        }
+        
+        touchLoc.x += delta.x;
+        touchLoc.y += delta.y;
+        buildingList[numBlocks-1]->buildingObjectSprite->setPosition(Point(touch->getLocation().x, touch->getLocation().y));
+        
     
     } else if ( target == bg){
         if (!zoomed) {
@@ -1161,7 +1154,12 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
             }
             else if (option == inv_items[2] || option == inv_items[6] || option == inv_items[10]) {
                 auto circle_body = PhysicsBody::createCircle(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width/2,PhysicsMaterial(bDen,0.5,1));
-                buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(circle_body);
+                if (option != inv_items[2]) {
+                    buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(circle_body);
+                } else {
+                    auto circle_body = PhysicsBody::createCircle(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width/2 * (1.8),PhysicsMaterial(bDen,0.5,1));
+                    buildingList[numBlocks-1]->buildingObjectSprite->setPhysicsBody(circle_body);
+                }
             }
             else {
                 auto newBlockPhysicisBody = PhysicsBody::createBox(Size(buildingList[numBlocks-1]->buildingObjectSprite-> getContentSize().width,
@@ -1282,6 +1280,11 @@ void GameScreen::hideInterfaceOptions(){
 
 // Call function if Juan is hit
 void GameScreen::showPlayerLostScreen() {
+    // check if user is bankrupt
+    if (money < 250) {
+        money = 250;
+    }
+    
     // zoom in
     zoomIn();
     
@@ -1322,6 +1325,44 @@ void GameScreen::showPlayerLostScreen() {
 }
 
 void GameScreen::showPlayerWonScreen() {
+    // Update money
+    // award victory points
+    money += myLevels->levels[currentLevel].payout;
+    
+    // award block points
+    roundBonus = 0;
+    for (int i = 0; i < numBlocks; i++) {
+        
+        if (buildingList[i]->objectClass == 1) {
+            roundBonus += 75;
+        } else if (buildingList[i]->objectClass == 2) {
+            roundBonus += 25;
+        } else if (buildingList[i]->objectClass == 3) {
+            roundBonus += 12;
+        } else if (buildingList[i]->objectClass == 4) {
+            roundBonus += 50;
+        } else if (buildingList[i]->objectClass == 5) {
+            roundBonus += 125;
+        } else if (buildingList[i]->objectClass == 6) {
+            roundBonus += 50;
+        } else if (buildingList[i]->objectClass == 7) {
+            roundBonus += 25;
+        } else if (buildingList[i]->objectClass == 8) {
+            roundBonus += 100;
+        } else if (buildingList[i]->objectClass == 9) {
+            roundBonus += 250;
+        } else if (buildingList[i]->objectClass == 10) {
+            roundBonus += 75;
+        } else if (buildingList[i]->objectClass == 11) {
+            roundBonus += 50;
+        } else if (buildingList[i]->objectClass == 12) {
+            roundBonus += 175;
+        }
+    }
+    
+    CCLOG("Payout: %d\nBonus: %d", myLevels->levels[currentLevel].payout, roundBonus);
+    
+    
     // zoom in
     zoomIn();
     
