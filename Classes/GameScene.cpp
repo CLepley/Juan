@@ -1085,6 +1085,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         if ( _camera && zoomed )
         {
             zoomIn();
+            return;
         }
     }
     auto target = static_cast<Sprite*>(event->getCurrentTarget());
@@ -1186,7 +1187,8 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         
     }
     else if (target == playButton){
-        startBattle();
+            startBattle();
+        
     
     }else if (target == close){
         // quit the game
@@ -1204,6 +1206,7 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         director->pushScene(scene);
     }else if (target == zoom) {
         if (!zoomed) {
+            
             Vec2 bgDifference = bg ->getPosition() - originalBackgroundPosition;
             
             // hacky hard coded numbers for now....
