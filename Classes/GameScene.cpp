@@ -167,6 +167,9 @@ bool GameScreen::init()
     
     myLevels = new LevelObject(origin);
     CCLOG("level: %i", currentLevel);
+    if (currentLevel == 6){
+        currentLevel = 0;
+    }
     myLevels->setLevel(currentLevel);
     
     
