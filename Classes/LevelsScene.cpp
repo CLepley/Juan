@@ -258,7 +258,6 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             main_menu->runAction(fadeTitleBack);
             auto scene = MainMenu::createScene();
             director->pushScene(scene);
-            backgroundMusic1->pauseBackgroundMusic();
         }
     } else if (target == presentation_sprite) {
         if (rect.containsPoint(locationInNode)) {

@@ -1416,6 +1416,7 @@ void GameScreen::showPlayerLostScreen() {
     // zoom in
     zoomIn();
     
+    this->removeChild(cannonBall);
     //zoomIn();
     
     // Black screen
@@ -1476,7 +1477,8 @@ void GameScreen::showPlayerWonScreen() {
     // Update money
     // award victory points
     money += myLevels->levels[currentLevel].payout;
-    
+    this->removeChild(cannonBall);
+
     // award block points
     roundBonus = 0;
     for (int i = 0; i < numBlocks; i++) {
