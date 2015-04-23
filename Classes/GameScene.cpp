@@ -1328,7 +1328,7 @@ void GameScreen::showMoneyEarned(int currentMoney, int level) {
     // Level Bonus
     
     char levelBonus[100];
-    sprintf(levelBonus, "Level Bonus: +%d", currentMoney);
+    sprintf(levelBonus, "Level Bonus: +%d", myLevels->levels[currentLevel].payout);
     
     levelBonusTextField = cocos2d::ui::TextField::create("Level Bonus: +","fonts/Marker Felt.ttf",30);
     levelBonusTextField->setTextColor(Color4B::YELLOW);
@@ -1344,7 +1344,7 @@ void GameScreen::showMoneyEarned(int currentMoney, int level) {
     // Block Bonus
     
     char blockBonus[100];
-    sprintf(blockBonus, "Block Bonus: +%d", currentMoney);
+    sprintf(blockBonus, "Block Bonus: +%d", roundBonus);
     
     blockBonusTextField = cocos2d::ui::TextField::create("Block Bonus: +","fonts/Marker Felt.ttf",30);
     blockBonusTextField->setTextColor(Color4B::YELLOW);
