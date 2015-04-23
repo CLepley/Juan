@@ -1388,8 +1388,8 @@ void GameScreen::hideInterfaceOptions(){
 // Call function if Juan is hit
 void GameScreen::showPlayerLostScreen() {
     // check if user is bankrupt
-    if (money < 250) {
-        money = 250;
+    if (money < 300) {
+        money = 300;
     }
     
     // zoom in
