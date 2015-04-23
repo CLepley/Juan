@@ -128,6 +128,7 @@ void CredditScene::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             auto director = Director::getInstance();
             auto scene = MainMenu::createScene();
             director->pushScene(scene);
+            backgroundMusic2->pauseBackgroundMusic();
         }
     }
 }
