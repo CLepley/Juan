@@ -1528,6 +1528,7 @@ void GameScreen::showPlayerWonScreen() {
 }
 
 void GameScreen::startBattle(){
+    _eventDispatcher->removeAllEventListeners();
     gameMode = 1;
     ////////////////////////////////////////////////
     // zoom out
