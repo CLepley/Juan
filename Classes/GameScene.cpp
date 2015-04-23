@@ -1475,6 +1475,7 @@ void GameScreen::showPlayerWonScreen() {
             roundBonus += 175;
         }
     }
+    money += roundBonus;
     
     CCLOG("Payout: %d\nBonus: %d", myLevels->levels[currentLevel].payout, roundBonus);
     
