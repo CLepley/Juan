@@ -42,6 +42,13 @@
 		07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */; };
 		07E190E41AA5DBC500EAD6A1 /* wood_block_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */; };
 		07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */; };
+		07E9368D1AE8CB6700B0B1B5 /* CredditScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E9368B1AE8CB6700B0B1B5 /* CredditScene.cpp */; };
+		07E9368F1AE8D2DF00B0B1B5 /* credit_background in Resources */ = {isa = PBXBuildFile; fileRef = 07E9368E1AE8D2DF00B0B1B5 /* credit_background */; };
+		07E936911AE8D84D00B0B1B5 /* Credits.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E936901AE8D84D00B0B1B5 /* Credits.png */; };
+		07E9369A1AE8E05C00B0B1B5 /* credits1.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E936961AE8E05C00B0B1B5 /* credits1.png */; };
+		07E9369B1AE8E05C00B0B1B5 /* credits2.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E936971AE8E05C00B0B1B5 /* credits2.png */; };
+		07E9369C1AE8E05C00B0B1B5 /* credits3.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E936981AE8E05C00B0B1B5 /* credits3.png */; };
+		07E9369D1AE8E05C00B0B1B5 /* credits4.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E936991AE8E05C00B0B1B5 /* credits4.png */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -207,6 +214,14 @@
 		07E190D01AA5DBC500EAD6A1 /* wood_block_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_circle.png; sourceTree = "<group>"; };
 		07E190D11AA5DBC500EAD6A1 /* wood_block_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_long.png; sourceTree = "<group>"; };
 		07E190E51AA5DDC700EAD6A1 /* wood_block_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_block_square.png; sourceTree = "<group>"; };
+		07E9368B1AE8CB6700B0B1B5 /* CredditScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CredditScene.cpp; sourceTree = "<group>"; };
+		07E9368C1AE8CB6700B0B1B5 /* CredditScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredditScene.h; sourceTree = "<group>"; };
+		07E9368E1AE8D2DF00B0B1B5 /* credit_background */ = {isa = PBXFileReference; lastKnownFileType = file; path = credit_background; sourceTree = "<group>"; };
+		07E936901AE8D84D00B0B1B5 /* Credits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Credits.png; sourceTree = "<group>"; };
+		07E936961AE8E05C00B0B1B5 /* credits1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits1.png; sourceTree = "<group>"; };
+		07E936971AE8E05C00B0B1B5 /* credits2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits2.png; sourceTree = "<group>"; };
+		07E936981AE8E05C00B0B1B5 /* credits3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits3.png; sourceTree = "<group>"; };
+		07E936991AE8E05C00B0B1B5 /* credits4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits4.png; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -345,6 +360,12 @@
 		0773EB1F1A6974B400ED19BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				07E936961AE8E05C00B0B1B5 /* credits1.png */,
+				07E936971AE8E05C00B0B1B5 /* credits2.png */,
+				07E936981AE8E05C00B0B1B5 /* credits3.png */,
+				07E936991AE8E05C00B0B1B5 /* credits4.png */,
+				07E936901AE8D84D00B0B1B5 /* Credits.png */,
+				07E9368E1AE8D2DF00B0B1B5 /* credit_background */,
 				07BF06191AE68615008A6F1E /* level6Title.png */,
 				07C61D1B1AE51512006A5A48 /* close.png */,
 				76D546981AE514380005E7C5 /* stone_block_long.png */,
@@ -622,6 +643,8 @@
 				079757DF1ADE312000273B98 /* BuildingObject */,
 				07C61D171AE4EB1E006A5A48 /* LevelObject */,
 				079757E01ADE312C00273B98 /* LevelScene */,
+				07E9368C1AE8CB6700B0B1B5 /* CredditScene.h */,
+				07E9368B1AE8CB6700B0B1B5 /* CredditScene.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -788,8 +811,11 @@
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				07C61D1C1AE51512006A5A48 /* close.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				07E9369C1AE8E05C00B0B1B5 /* credits3.png in Resources */,
+				07E9369A1AE8E05C00B0B1B5 /* credits1.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				76D546791AE4E63E0005E7C5 /* coin.png in Resources */,
+				07E936911AE8D84D00B0B1B5 /* Credits.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */,
 				761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */,
@@ -800,6 +826,7 @@
 				07E190BD1AA5DB7B00EAD6A1 /* circle_body.plist in Resources */,
 				76D546971AE513D40005E7C5 /* inv_stone_long.png in Resources */,
 				07E190B81AA5D63900EAD6A1 /* glass_block_circle.png in Resources */,
+				07E9369D1AE8E05C00B0B1B5 /* credits4.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				761DFEF01AA7193B00A1C4AC /* lost_screen1.png in Resources */,
 				07E190D61AA5DBC500EAD6A1 /* inv_bg.png in Resources */,
@@ -809,9 +836,11 @@
 				761DFE631A9EB42200A1C4AC /* Inventory.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
+				07E9368F1AE8D2DF00B0B1B5 /* credit_background in Resources */,
 				076425421AA70459007E537E /* title.png in Resources */,
 				761DFEE91AA704E300A1C4AC /* level_title.png in Resources */,
 				76D546951AE512760005E7C5 /* inv_stone_circle.png in Resources */,
+				07E9369B1AE8E05C00B0B1B5 /* credits2.png in Resources */,
 				76D546BA1AE65C000005E7C5 /* level3Title.png in Resources */,
 				761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */,
 				07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */,
@@ -881,6 +910,7 @@
 			files = (
 				0711F30D1AA00EF6001A97E0 /* BuildingObject.cpp in Sources */,
 				761DFECA1AA57CAD00A1C4AC /* PEShapeCache_X3_0.cpp in Sources */,
+				07E9368D1AE8CB6700B0B1B5 /* CredditScene.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				07C61D1A1AE4EC69006A5A48 /* LevelObject.cpp in Sources */,
 				079757E71ADE8F3000273B98 /* EnemiesObject.cpp in Sources */,

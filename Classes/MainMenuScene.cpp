@@ -6,6 +6,7 @@ USING_NS_CC;
 
 Sprite *menu_juan1;
 Sprite *play1;
+Sprite *credits;
 auto backgroundMusic = CocosDenshion::SimpleAudioEngine::getInstance();
 
 Scene* MainMenu::createScene()
@@ -73,6 +74,10 @@ bool MainMenu::init()
     play1->setPosition(Point(origin.x + visibleSize.width/2,
                             menu_title->getPositionY() - 1.5 * play1->getContentSize().height));
     this->addChild(play1);
+    
+    credits = Sprite::create("Credits.png");
+    credits-> setPosition(Point(origin.x + visibleSize.width/2, menu_title->getPositionY() - 2 * credits->getContentSize().height));
+    this->addChild(credits);
    
     
     // Juan actions
@@ -117,6 +122,7 @@ bool MainMenu::init()
     CC_CALLBACK_2(MainMenu::onTouchEnded, this);
     
    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, play1);
+   _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), credits);
     
     
     return true;
@@ -137,7 +143,14 @@ bool MainMenu::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
         } else {
             return false;
         }
-    } else {
+    }else if (target == credits) {
+        if (rect.containsPoint(locationInNode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    else {
         return false;
     }
     
@@ -157,8 +170,11 @@ void MainMenu::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             auto director = Director::getInstance();
             auto scene = Levels::createScene();
             director->pushScene(scene);
-            
         }
+    }else if(target == credits){
+        auto director = Director::getInstance();
+        auto scene = CredditScene::createScene();
+        director->pushScene(scene);
     }
 }
 
@@ -171,11 +187,4 @@ void MainMenu::changeJuan2() {
 void MainMenu::changeJuan3() {
     menu_juan1->setSpriteFrame("Juan_Side_3.png");
 }
-
-
-
-
-
-
-
 
