@@ -1402,6 +1402,7 @@ void GameScreen::showPlayerLostScreen() {
     for (auto&& currentEnemy: currentEnemies) {
         if (currentEnemy == NULL) break;
         this->removeChild(currentEnemy->enemieSpriteBatch);
+        currentEnemy = NULL;
         numEnemies--;
     }
     
@@ -1562,6 +1563,7 @@ void GameScreen::checkOnJuan(float dt){
         showPlayerLostScreen();
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
     }
 }
 
@@ -1569,6 +1571,7 @@ void GameScreen::checkOnJuan2(float dt){
     if (theJuanAndOnly->buildingObjectSprite->isVisible() == false){
         showPlayerLostScreen();
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
     }else if (theJuanAndOnly->buildingObjectSprite->isVisible() == true){
         showPlayerWonScreen();
