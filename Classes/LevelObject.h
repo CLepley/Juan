@@ -24,6 +24,7 @@ struct Level{
     Spot spots[10];
     int numSpots;
     int totalTimeToFire;
+    int payout;
 };
 
 class LevelObject {
@@ -42,6 +43,7 @@ public:
     int getStyle(int spot);
     int getNumSpots();
     int getTotalTimeToFire();
+    
     
     
 };

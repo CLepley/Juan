@@ -35,6 +35,11 @@ public:
     void doSomething();
     void showPlayerLostScreen();
     void showPlayerWonScreen();
+    void showMoneyEarned(int currentMoney, int level);
+    void showJuan();
+    void changeJuan1();
+    void changeJuan2();
+    void changeJuan3();
     
     void setLevel(int lvl);
     

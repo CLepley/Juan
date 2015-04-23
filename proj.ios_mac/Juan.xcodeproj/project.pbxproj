@@ -109,6 +109,12 @@
 		761DFEF61AA7261500A1C4AC /* win_screen_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEF51AA7261500A1C4AC /* win_screen_bg.png */; };
 		761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 761DFEF71AA72B2300A1C4AC /* main_menu.png */; };
 		7691BF651AA746EC005002B0 /* won_screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7691BF641AA746EC005002B0 /* won_screen1.png */; };
+		76A8E5541AE8AD2B00EF3EFA /* Juan_Stand_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E5531AE8AD2B00EF3EFA /* Juan_Stand_1.png */; };
+		76A8E5561AE8AD3500EF3EFA /* Juan_Stand_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E5551AE8AD3500EF3EFA /* Juan_Stand_2.png */; };
+		76A8E5581AE8AD4100EF3EFA /* Juan_Stand_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E5571AE8AD4100EF3EFA /* Juan_Stand_3.png */; };
+		76A8E55A1AE8C17600EF3EFA /* nextLevel.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E5591AE8C17600EF3EFA /* nextLevel.png */; };
+		76A8E55D1AE8D13900EF3EFA /* retry.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E55B1AE8D13900EF3EFA /* retry.png */; };
+		76A8E55E1AE8D13900EF3EFA /* selectLevel.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A8E55C1AE8D13900EF3EFA /* selectLevel.png */; };
 		76D546691AE494670005E7C5 /* trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546681AE494670005E7C5 /* trashcan.png */; };
 		76D546771AE4B4D70005E7C5 /* triangle_body.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76D546761AE4B4D70005E7C5 /* triangle_body.plist */; };
 		76D546791AE4E63E0005E7C5 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D546781AE4E63E0005E7C5 /* coin.png */; };
@@ -286,6 +292,12 @@
 		761DFEF51AA7261500A1C4AC /* win_screen_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = win_screen_bg.png; sourceTree = "<group>"; };
 		761DFEF71AA72B2300A1C4AC /* main_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_menu.png; sourceTree = "<group>"; };
 		7691BF641AA746EC005002B0 /* won_screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = won_screen1.png; path = Resources/Resources/won_screen1.png; sourceTree = "<group>"; };
+		76A8E5531AE8AD2B00EF3EFA /* Juan_Stand_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Juan_Stand_1.png; sourceTree = "<group>"; };
+		76A8E5551AE8AD3500EF3EFA /* Juan_Stand_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Juan_Stand_2.png; sourceTree = "<group>"; };
+		76A8E5571AE8AD4100EF3EFA /* Juan_Stand_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Juan_Stand_3.png; sourceTree = "<group>"; };
+		76A8E5591AE8C17600EF3EFA /* nextLevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextLevel.png; sourceTree = "<group>"; };
+		76A8E55B1AE8D13900EF3EFA /* retry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retry.png; sourceTree = "<group>"; };
+		76A8E55C1AE8D13900EF3EFA /* selectLevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectLevel.png; sourceTree = "<group>"; };
 		76D546681AE494670005E7C5 /* trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trashcan.png; sourceTree = "<group>"; };
 		76D546761AE4B4D70005E7C5 /* triangle_body.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = triangle_body.plist; sourceTree = "<group>"; };
 		76D546781AE4E63E0005E7C5 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
@@ -817,7 +829,9 @@
 				76D546791AE4E63E0005E7C5 /* coin.png in Resources */,
 				07E936911AE8D84D00B0B1B5 /* Credits.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
+				76A8E55E1AE8D13900EF3EFA /* selectLevel.png in Resources */,
 				761DFEF81AA72B2300A1C4AC /* main_menu.png in Resources */,
+				76A8E5541AE8AD2B00EF3EFA /* Juan_Stand_1.png in Resources */,
 				761DFEE31AA6FD9200A1C4AC /* level_bg.png in Resources */,
 				76D546C11AE6641F0005E7C5 /* level4Title.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -844,9 +858,11 @@
 				76D546BA1AE65C000005E7C5 /* level3Title.png in Resources */,
 				761DFED81AA6748B00A1C4AC /* menu_bg.png in Resources */,
 				07E190BA1AA5DAE100EAD6A1 /* zoom.png in Resources */,
+				76A8E5561AE8AD3500EF3EFA /* Juan_Stand_2.png in Resources */,
 				07E190D41AA5DBC500EAD6A1 /* glass_block_square.png in Resources */,
 				761DFEF21AA7212300A1C4AC /* black_screen.png in Resources */,
 				07E190E31AA5DBC500EAD6A1 /* wood_block_circle.png in Resources */,
+				76A8E55D1AE8D13900EF3EFA /* retry.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				07BF061A1AE68615008A6F1E /* level6Title.png in Resources */,
 				76D546771AE4B4D70005E7C5 /* triangle_body.plist in Resources */,
@@ -867,8 +883,10 @@
 				077667831AE086560029B9A8 /* CatapultSpriteSheet.plist in Resources */,
 				07E190E61AA5DDC700EAD6A1 /* wood_block_square.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				76A8E55A1AE8C17600EF3EFA /* nextLevel.png in Resources */,
 				0773EB331A6979E800ED19BD /* pink_balloon.jpg in Resources */,
 				761DFEEB1AA7058100A1C4AC /* level1_title.png in Resources */,
+				76A8E5581AE8AD4100EF3EFA /* Juan_Stand_3.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				76D546691AE494670005E7C5 /* trashcan.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
