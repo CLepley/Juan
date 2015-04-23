@@ -17,8 +17,10 @@ Sprite *level6_title;
 Sprite *menu_juan;
 Sprite *play;
 Sprite *main_menu;
+Sprite *presentation_sprite;
 auto backgroundMusic1 = CocosDenshion::SimpleAudioEngine::getInstance();
 
+bool presentationMode = false;
 
 Scene* Levels::createScene()
 {
@@ -106,6 +108,12 @@ bool Levels::init()
                                     level_titles[4]->getPositionY() - 1.3 * level_titles[5]->getContentSize().height));
     this->addChild(level_titles[5]);
     
+    // Debug Button
+    presentation_sprite = Sprite::create("presentation.png");
+    presentation_sprite->setScale(0.2);
+    presentation_sprite ->setPosition(Point(origin.x + visibleSize.width - (presentation_sprite->getContentSize().width/2)*(0.2), origin.y + (presentation_sprite->getContentSize().height/2)*(0.2) ));
+    
+    this->addChild(presentation_sprite);
     
     // Juan
     menu_juan = Sprite::createWithSpriteFrameName("Juan_Side_2.png");
@@ -156,6 +164,7 @@ bool Levels::init()
     CC_CALLBACK_2(Levels::onTouchEnded, this);
     
     _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, main_menu);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), presentation_sprite);
     
     for (int i = 0; i < 6; i++) {
         _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), level_titles[i]);
@@ -183,17 +192,27 @@ bool Levels::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) {
             }
         }
     }
-        if (target == main_menu) {
-            if (rect.containsPoint(locationInNode)) {
-                auto fadeTitle = FadeTo::create(0, 0xAF);
-                main_menu->runAction(fadeTitle);
-                return true;
-            } else {
-                return false;
-            }
+    if (target == main_menu) {
+        if (rect.containsPoint(locationInNode)) {
+            auto fadeTitle = FadeTo::create(0, 0xAF);
+            main_menu->runAction(fadeTitle);
+            return true;
         } else {
             return false;
         }
+        
+    } else if (target == presentation_sprite) {
+        if (rect.containsPoint(locationInNode)) {
+            CCLOG("pressed");
+            return true;
+        } else {
+            return false;
+        }
+        
+    
+    } else {
+        return false;
+    }
     
 }
 void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
@@ -211,6 +230,9 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             if (rect.containsPoint(locationInNode)) {
                 level_titles[i]->runAction(fadeTitleBack);
                 GameScreen::setMyLevel(i);
+                if (presentationMode) {
+                    GameScreen::setPresentationMode();
+                }
                 auto scene = GameScreen::createScene(i);
                 director->pushScene(scene);
             }
@@ -233,6 +255,10 @@ void Levels::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) {
             main_menu->runAction(fadeTitleBack);
             auto scene = MainMenu::createScene();
             director->pushScene(scene);
+        }
+    } else if (target == presentation_sprite) {
+        if (rect.containsPoint(locationInNode)) {
+            presentationMode = !presentationMode;
         }
     }
     

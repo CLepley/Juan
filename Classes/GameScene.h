@@ -23,6 +23,7 @@ public:
     CREATE_FUNC(GameScreen);
     
     static void setMyLevel(int lvl);
+    static void setPresentationMode();
     void initPhysicsSprites();
     void addEnemiesToEnemiesArrayForLevel();
     void update(float delta);

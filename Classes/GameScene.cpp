@@ -88,17 +88,13 @@ GameScreen THIS;
 int cDen = 6;
 int bDen = 5;
 
-//cocos2d::ui::TextField* glassTextField;
-//cocos2d::ui::TextField* woodTextField;
-//cocos2d::ui::TextField* stoneTextField;
+//Music Variables
+auto winMusic = CocosDenshion::SimpleAudioEngine::getInstance();
+auto loseMusic = CocosDenshion::SimpleAudioEngine::getInstance();
+
 cocos2d::ui::TextField *moneyCounterTextField;
 cocos2d::ui::TextField *levelBonusTextField;
 cocos2d::ui::TextField *blockBonusTextField;
-
-//Level 1 vars
-//int wood = 4;
-//int stone = 4;
-//int glass = 6;
 
 int money = 300;
 int roundBonus;
@@ -145,6 +141,10 @@ Scene* GameScreen::createScene(int i)
 
 void GameScreen::setMyLevel(int lvl){
     currentLevel = lvl;
+}
+
+void GameScreen::setPresentationMode() {
+    money = 100000;
 }
 
 // on "init" you need to initialize your instance
@@ -1065,22 +1065,24 @@ void GameScreen::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event){
 
 void GameScreen::zoomIn(){
     // zoom in
-    _camera -> removeFromParent();
+   
+        _camera -> removeFromParent();
+        
+        // unhide interface options
+        zoom -> setVisible(true);
+        playButton-> setVisible(true);
+        trash-> setVisible(true);
+        close-> setVisible(true);
+    //    glassTextField->setVisible(true);
+    //    woodTextField->setVisible(true);
+    //    stoneTextField->setVisible(true);
+        moneyCounterTextField->setVisible(true);
+        for (int i = 0; i < 12; i++) {
+            inv_items[i] -> setVisible(true);
+        }
+        inv_bg -> setVisible(true);
+        zoomed = false;
     
-    // unhide interface options
-    zoom -> setVisible(true);
-    playButton-> setVisible(true);
-    trash-> setVisible(true);
-    close-> setVisible(true);
-//    glassTextField->setVisible(true);
-//    woodTextField->setVisible(true);
-//    stoneTextField->setVisible(true);
-    moneyCounterTextField->setVisible(true);
-    for (int i = 0; i < 12; i++) {
-        inv_items[i] -> setVisible(true);
-    }
-    inv_bg -> setVisible(true);
-    zoomed = false;
 }
 
 void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
@@ -1390,6 +1392,8 @@ void GameScreen::showPlayerLostScreen() {
     // zoom in
     zoomIn();
     
+    //zoomIn();
+    
     // Black screen
     blackScreen = Sprite::create("black_screen.png");
     blackScreen->setPosition(origin + Point(visibleSize.width/2,
@@ -1404,6 +1408,9 @@ void GameScreen::showPlayerLostScreen() {
         this->removeChild(currentEnemy->enemieSpriteBatch);
         numEnemies--;
     }
+    
+    // play lost sounds
+    loseMusic->playEffect("loser.mp3");
     
     // Player lost
     playerLost = Sprite::create("lost_screen1.png");
@@ -1489,6 +1496,9 @@ void GameScreen::showPlayerWonScreen() {
                                             visibleSize.height/2));
     this->addChild(winScreen);
     
+    // play win sounds
+    winMusic->playEffect("winner.mp3");
+    
     // Player won
     playerWon = Sprite::create("won_screen1.png");
     playerWon->setPosition(origin + Point(visibleSize.width/2,
@@ -1562,6 +1572,8 @@ void GameScreen::checkOnJuan(float dt){
         showPlayerLostScreen();
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
+
     }
 }
 
@@ -1570,6 +1582,8 @@ void GameScreen::checkOnJuan2(float dt){
         showPlayerLostScreen();
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
         this ->unschedule(schedule_selector(GameScreen::checkOnJuan2));
+        this ->unschedule(schedule_selector(GameScreen::checkOnJuan));
+
     }else if (theJuanAndOnly->buildingObjectSprite->isVisible() == true){
         showPlayerWonScreen();
         this ->unschedule(schedule_selector(GameScreen::fireCannon1));
