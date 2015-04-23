@@ -17,11 +17,11 @@ LevelObject::LevelObject(Point org){
     // spot 1
     levels[0].spots[0].position = Point(origin.x - 250, origin.y - 60);
     levels[0].spots[0].velocity = Vec2(93,300);
-    levels[0].spots[0].timesToFire = 2;
+    levels[0].spots[0].timesToFire = 1;
     levels[0].spots[0].type = 1;
     levels[0].spots[0].style = 3;
     levels[0].numSpots = 1;
-    levels[0].totalTimeToFire = 2;
+    levels[0].totalTimeToFire = 1;
      // Level 2
      // spot 1
     levels[1].spots[0].position = Point(origin.x - 500, origin.y - 60);

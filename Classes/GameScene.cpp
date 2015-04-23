@@ -41,6 +41,10 @@ Sprite *blackScreen; // shows when player loses
 Sprite *playerWon;
 Sprite *winScreen; // shows when player wins
 Sprite *coin;
+Sprite *won_juan;
+Sprite* nextLevel;
+Sprite* selectLevel;
+Sprite* retry;
 int inv_page;
 
 int moneySpent = 0;
@@ -88,6 +92,8 @@ int bDen = 5;
 //cocos2d::ui::TextField* woodTextField;
 //cocos2d::ui::TextField* stoneTextField;
 cocos2d::ui::TextField *moneyCounterTextField;
+cocos2d::ui::TextField *levelBonusTextField;
+cocos2d::ui::TextField *blockBonusTextField;
 
 //Level 1 vars
 //int wood = 4;
@@ -552,14 +558,14 @@ bool GameScreen::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event){
             return false; // let the next thing on the list check it. do not swallow
         }
     }
-    else if (target == playerLost || target == blackScreen) {
+    else if (target == retry || target == selectLevel) {
         if (rect.containsPoint(locationInNode)) {
             return true;
         } else {
             return false;
         }
     }
-    else if (target == playerWon || target == winScreen) {
+    else if (target == nextLevel) {
         if (rect.containsPoint(locationInNode)) {
             return true;
         } else {
@@ -1222,15 +1228,27 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
         }
         
     }
-    else if (target == playerLost || target == blackScreen) {
+    else if (target == retry) {
         auto director = Director::getInstance();
-        auto scene = MainMenu::createScene();
+        auto scene = GameScreen::createScene(currentLevel);
         director->pushScene(scene);
     }
-    else if (target == playerWon || target == winScreen) {
+    else if (target == selectLevel) {
         auto director = Director::getInstance();
         auto scene = Levels::createScene();
         director->pushScene(scene);
+    }
+    else if (target == nextLevel) {
+        auto director = Director::getInstance();
+        // If current level is the last level, go to levels screen
+        // Otherwise go to next level
+        if (currentLevel == 6) {
+            auto scene = Levels::createScene();
+            director->pushScene(scene);
+        } else {
+            auto scene = GameScreen::createScene(++currentLevel);
+            director->pushScene(scene);
+        }
     }
     
     for (int i = 0; i < numBlocks; i++) {
@@ -1262,6 +1280,87 @@ void GameScreen::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event){
     }
 }
 
+void GameScreen::showJuan() {
+    
+    // Juan
+    won_juan = Sprite::create("Juan_Stand_1.png");
+    won_juan->setPosition(origin + Point(won_juan->getContentSize().width*4.5,
+                                           won_juan->getContentSize().height*2.5));
+    won_juan->setScale(2.0);
+    this->addChild(won_juan);
+
+    
+    // Juan actions
+    auto animationDelay = DelayTime::create(0.3f);
+    
+    auto doneMovingCallback1 = CallFunc::create( [=]() {
+        this->changeJuan1(); });
+    auto doneMovingCallback2 = CallFunc::create( [=]() {
+        this->changeJuan2(); });
+    auto doneMovingCallback3 = CallFunc::create( [=]() {
+        this->changeJuan3(); });
+    
+    
+    
+    auto juan_animate_seq = Sequence::create(animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback3, animationDelay, doneMovingCallback1, animationDelay, doneMovingCallback2, NULL);
+    
+    RepeatForever *repeat_animation = RepeatForever::create(juan_animate_seq);
+    
+    won_juan->runAction(repeat_animation);
+
+}
+
+// Animation for won when level is won
+void GameScreen::changeJuan1() {
+    won_juan->setTexture("Juan_Stand_1.png");
+    won_juan->setScale(2.0);
+}
+void GameScreen::changeJuan2() {
+    won_juan->setTexture("Juan_Stand_2.png");
+    won_juan->setScale(2.0);
+}
+void GameScreen::changeJuan3() {
+    won_juan->setTexture("Juan_Stand_3.png");
+    won_juan->setScale(2.0);
+}
+
+
+void GameScreen::showMoneyEarned(int currentMoney, int level) {
+    
+    // Level Bonus
+    
+    char levelBonus[100];
+    sprintf(levelBonus, "Level Bonus: +%d", currentMoney);
+    
+    levelBonusTextField = cocos2d::ui::TextField::create("Level Bonus: +","fonts/Marker Felt.ttf",30);
+    levelBonusTextField->setTextColor(Color4B::YELLOW);
+    levelBonusTextField->ignoreContentAdaptWithSize(false);
+    levelBonusTextField->setEnabled(false);
+    levelBonusTextField->setContentSize(Size(240, 160));
+    levelBonusTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+    levelBonusTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
+    levelBonusTextField->setPosition(origin + Point(visibleSize.width/2 + 55,visibleSize.height/2 - 15));
+    levelBonusTextField->setString(levelBonus);
+    this->addChild(levelBonusTextField);
+    
+    // Block Bonus
+    
+    char blockBonus[100];
+    sprintf(blockBonus, "Block Bonus: +%d", currentMoney);
+    
+    blockBonusTextField = cocos2d::ui::TextField::create("Block Bonus: +","fonts/Marker Felt.ttf",30);
+    blockBonusTextField->setTextColor(Color4B::YELLOW);
+    blockBonusTextField->ignoreContentAdaptWithSize(false);
+    blockBonusTextField->setEnabled(false);
+    blockBonusTextField->setContentSize(Size(240, 160));
+    blockBonusTextField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+    blockBonusTextField->setTextVerticalAlignment(TextVAlignment::CENTER);
+    blockBonusTextField->setPosition(origin + Point(visibleSize.width/2 + 55,visibleSize.height/2 - 65));
+    blockBonusTextField->setString(blockBonus);
+    this->addChild(blockBonusTextField);
+
+}
+
 void GameScreen::hideInterfaceOptions(){
     zoom -> setVisible(false);
     playButton-> setVisible(false);
@@ -1291,6 +1390,8 @@ void GameScreen::showPlayerLostScreen() {
                                             visibleSize.height/2));
     this->addChild(blackScreen);
     
+    
+    
     // remove all the ennemies
     for (auto&& currentEnemy: currentEnemies) {
         if (currentEnemy == NULL) break;
@@ -1301,9 +1402,21 @@ void GameScreen::showPlayerLostScreen() {
     // Player lost
     playerLost = Sprite::create("lost_screen1.png");
     playerLost->setPosition(origin + Point(visibleSize.width/2,
-                                           visibleSize.height/2));
+                                           visibleSize.height/2 + 50));
     this->addChild(playerLost);
-   
+    
+    // Retry level sprite
+    retry = Sprite::create("retry.png");
+    retry -> setPosition(origin + Point(visibleSize.width/2,
+                                        visibleSize.height/2 - 50));
+    this -> addChild(retry);
+    
+    // Select level sprite
+    selectLevel = Sprite::create("selectLevel.png");
+    selectLevel -> setPosition(retry->getPosition() + Point(0, -50));
+    this -> addChild(selectLevel);
+    
+    
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener -> setSwallowTouches(true);
     // setup the callback
@@ -1317,8 +1430,8 @@ void GameScreen::showPlayerLostScreen() {
     //Hide interface options
     hideInterfaceOptions();
     
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerLost);
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), blackScreen);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, retry);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), selectLevel);
 }
 
 void GameScreen::showPlayerWonScreen() {
@@ -1334,8 +1447,18 @@ void GameScreen::showPlayerWonScreen() {
     // Player won
     playerWon = Sprite::create("won_screen1.png");
     playerWon->setPosition(origin + Point(visibleSize.width/2,
-                                           visibleSize.height/2));
+                                           visibleSize.height/2 + playerWon->getContentSize().height));
     this->addChild(playerWon);
+    
+    
+    
+    showMoneyEarned(money, 1);
+    showJuan();
+    
+    // Next Level Sprite
+    nextLevel = Sprite::create("nextLevel.png");
+    nextLevel -> setPosition(blockBonusTextField->getPosition() + Point(0 , - 40));
+    this->addChild(nextLevel);
     
     // remove all the ennemies
     for (auto&& currentEnemy: currentEnemies) {
@@ -1360,8 +1483,7 @@ void GameScreen::showPlayerWonScreen() {
     //Hide interface options
     hideInterfaceOptions();
     
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, playerWon);
-    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener->clone(), winScreen);
+    _eventDispatcher-> addEventListenerWithSceneGraphPriority(touchListener, nextLevel);
 }
 
 void GameScreen::startBattle(){
